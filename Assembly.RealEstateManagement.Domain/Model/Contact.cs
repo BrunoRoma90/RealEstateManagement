@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Assembly.RealEstateManagement.Domain.Common;
 using Assembly.RealEstateManagement.Domain.Enums;
 
-namespace Assembly.RealEstateManagement.Domain;
+namespace Assembly.RealEstateManagement.Domain.Model;
 
 public class Contact : AuditableEntity<int>
 {
@@ -11,7 +11,12 @@ public class Contact : AuditableEntity<int>
 
     public string Value { get; private set; }
 
-   
+    private Contact()
+    {
+        ContactType = default;
+        Value = string.Empty;
+    }
+
     private Contact(ContactType contactType, string value)
     {
         ValidateContact(contactType, value);
@@ -40,24 +45,24 @@ public class Contact : AuditableEntity<int>
         {
             case ContactType.Email:
                 if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                { 
+                {
                     throw new ArgumentException("Email is not in a valid format.");
                 }
-            break;
+                break;
 
             case ContactType.Phone:
                 if (!Regex.IsMatch(value, @"^\+?\d{10,15}$"))
                 {
                     throw new ArgumentException("Phone number is not in a valid format.");
                 }
-            break;
+                break;
 
             case ContactType.Mobile:
-                if(!Regex.IsMatch(value, @"^\+?\d{10,15}$"))
+                if (!Regex.IsMatch(value, @"^\+?\d{10,15}$"))
                 {
                     throw new ArgumentException("Mobile number is not in a valid format.");
                 }
-            break;
+                break;
 
             default: throw new ArgumentException("Unsupported contact type.");
 

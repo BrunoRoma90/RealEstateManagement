@@ -1,5 +1,6 @@
 ﻿using Assembly.RealEstateManagement.Domain.Common;
 using Assembly.RealEstateManagement.Domain.Interfaces;
+using Assembly.RealEstateManagement.Domain.Model;
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 

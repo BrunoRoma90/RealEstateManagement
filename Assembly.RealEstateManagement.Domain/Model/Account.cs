@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Assembly.RealEstateManagement.Domain;
+namespace Assembly.RealEstateManagement.Domain.Model;
 
 public class Account
 {
@@ -9,7 +9,7 @@ public class Account
     //public string PasswordHash { get; set; }
     //public string PasswordSalt { get; set; }
 
-    private Account() 
+    private Account()
     {
         Email = string.Empty;
         Password = string.Empty;
@@ -26,7 +26,7 @@ public class Account
 
     public static Account Create(string email, string password)
     {
-        return new Account(email,password);
+        return new Account(email, password);
     }
     public void UpdateEmail(string newEmail)
     {
@@ -39,9 +39,9 @@ public class Account
         Password = newPassword;
     }
 
-    private void ValidateEmail(string email) 
+    private void ValidateEmail(string email)
     {
-        if (string.IsNullOrEmpty(email)) 
+        if (string.IsNullOrEmpty(email))
         {
             throw new ArgumentNullException("Email is required");
         }
@@ -54,11 +54,11 @@ public class Account
 
     private void ValidatePassword(string password)
     {
-        if(string.IsNullOrEmpty(password)) 
+        if (string.IsNullOrEmpty(password))
         {
-            throw new ArgumentNullException("Password is required"); 
+            throw new ArgumentNullException("Password is required");
         }
-        if(password.Length < 5)
+        if (password.Length < 5)
         {
             throw new ArgumentException("Password must be at least 8 characters long");
         }

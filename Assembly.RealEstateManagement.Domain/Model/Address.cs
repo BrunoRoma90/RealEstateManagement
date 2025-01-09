@@ -4,7 +4,7 @@ using System.IO;
 using Assembly.RealEstateManagement.Domain.Common;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Assembly.RealEstateManagement.Domain;
+namespace Assembly.RealEstateManagement.Domain.Model;
 
 public class Address : AuditableEntity<int>
 {
@@ -12,7 +12,7 @@ public class Address : AuditableEntity<int>
     public int Number { get; private set; }
     public string PostalCode { get; private set; }
     public string City { get; private set; }
-    public string Country { get; private set; }   
+    public string Country { get; private set; }
 
 
     private Address()
@@ -26,7 +26,7 @@ public class Address : AuditableEntity<int>
 
     private Address(string street, int number, string postalCode, string city, string country)
     {
-        ValidateAddress( street, number, postalCode, city, country);
+        ValidateAddress(street, number, postalCode, city, country);
         Street = street;
         Number = number;
         PostalCode = postalCode;
@@ -36,11 +36,11 @@ public class Address : AuditableEntity<int>
 
     private void ValidateAddress(string street, int number, string postalCode, string city, string country)
     {
-        if(string.IsNullOrEmpty(street))
+        if (string.IsNullOrEmpty(street))
         {
             throw new ArgumentNullException("Street is required.");
         }
-        if(number <= 0)
+        if (number <= 0)
         {
             throw new ArgumentException("Number must be grater than 0");
         }
@@ -52,7 +52,7 @@ public class Address : AuditableEntity<int>
         {
             throw new ArgumentException("City is required");
         }
-        if (!string.IsNullOrEmpty(country)) 
+        if (!string.IsNullOrEmpty(country))
         {
             throw new ArgumentException("Country is required");
         }
