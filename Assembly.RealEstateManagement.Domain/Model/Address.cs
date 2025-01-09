@@ -1,8 +1,5 @@
-﻿
-using System.Diagnostics.Metrics;
-using System.IO;
-using Assembly.RealEstateManagement.Domain.Common;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Assembly.RealEstateManagement.Domain.Common;
+
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
