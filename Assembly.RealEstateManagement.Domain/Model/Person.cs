@@ -1,4 +1,9 @@
-﻿using Assembly.RealEstateManagement.Domain.Common;
+﻿using System.Data;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Xml.Linq;
+using Assembly.RealEstateManagement.Domain.Common;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
@@ -23,49 +28,6 @@ public abstract class Person : AuditableEntity<int>
     }
 
 
-}
-
-public abstract class Employee : Person
-{
-
-    public int EmployeeNumber { get; private set; }
-    public Address Address { get; private set; }
-
-    private Employee(Name name, Account account, Contact contact, Address address) : base(name, account, contact)
-    {
-
-        Address = address;
-
-    }
-}
-
-public class Client : Person
-{
-    public bool IsRegisted { get; private set; }
-    public List<FavoriteProperties> FavoriteProperties { get; private set; }
-
-    public List<Rating> Ratings { get; private set; }
-
-    public List<Comment> Comments { get; private set; }
-
-   private Client()
-    {
-        
-        IsRegisted = false;
-        FavoriteProperties = new List<FavoriteProperties>();
-        Ratings = new List<Rating>(); 
-        Comments = new List<Comment>(); 
-    }
-
-    private Client(Name name, Account account, Contact contact, bool isRegisted,
-        List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)
-        : base(name, account, contact)
-    {
-        IsRegisted = isRegisted;
-        FavoriteProperties = favoriteProperties;
-        Ratings = ratings;
-        Comments = comments;
-    }
 }
 
 public class Rating : AuditableEntity<int>
@@ -126,10 +88,65 @@ public class FavoriteProperties : AuditableEntity<int>
         Property = property;
     }
 }
-
-public class Agent : Employee
+public class Visit
 {
+    public Property Property { get; private set; }
+    public Client Client { get; private set; }
+    public Agent Agent { get; private set; }
+    public DateTime VisitDate { get; private set; }
+    public string Notes { get; private set; }
 
+    private Visit() 
+    {
+       
+        VisitDate = DateTime.MinValue;
+        Notes = string.Empty;
+    }
+
+    private Visit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
+    {
+        ValidateVisit(property, client, agent, visitDate);
+        Property = property;
+        Client = client;
+        Agent = agent;
+        VisitDate = visitDate;
+        Notes = notes;
+    }
+
+    public static Visit CreateVisit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
+    {
+        return new Visit(property, client, agent, visitDate, notes);
+    }
+    public void UpdateVisit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
+    {
+        ValidateVisit(property,client, agent, visitDate);
+        Property = property;
+        Client = client;
+        Agent = agent;
+        VisitDate = visitDate;
+        Notes = notes;
+
+    }
+    private void ValidateVisit(Property property, Client client, Agent agent, DateTime visitDate)
+    {
+        if (property == null) 
+        {
+            throw new ArgumentNullException(nameof(property) ," Property is required");
+        }
+        if (client == null)
+        {
+            throw new ArgumentNullException(nameof(client), "Client is required");
+        }
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent), "Agent is required");
+        }
+
+        if(visitDate == DateTime.MinValue)
+        {
+            throw new InvalidOperationException("Visit date is required");
+        }
+    }
 }
 public class Manager : Employee
 {

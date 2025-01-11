@@ -17,19 +17,19 @@ public class Contact : AuditableEntity<int>
         Value = string.Empty;
     }
 
-    private Contact(ContactType contactType, string value)
+    private Contact(ContactType contactType, string value) :this()
     {
         ValidateContact(contactType, value);
         ContactType = contactType;
         Value = value;
     }
 
-    public static Contact Create(ContactType contactType, string value)
+    public static Contact CreateContact(ContactType contactType, string value)
     {
         return new Contact(contactType, value);
     }
 
-    public void Update(Contact newContact)
+    public void UpdateContact(Contact newContact)
     {
         ValidateContact(newContact.ContactType, newContact.Value);
         ContactType = newContact.ContactType;

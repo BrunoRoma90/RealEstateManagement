@@ -28,12 +28,21 @@ public class Account
     {
         return new Account(email, password);
     }
-    public void UpdateEmail(string newEmail)
+
+    public void UpdateEmailAndPassword(string newEmail, string newPassword)
+    {
+        UpdateEmail(newEmail);
+        UpdatePasswordl(newPassword);
+        Email = newEmail;
+        Password = newPassword;
+
+    }
+    private void UpdateEmail(string newEmail)
     {
         ValidateEmail(newEmail);
         Email = newEmail;
     }
-    public void UpdatePasswordl(string newPassword)
+    private void UpdatePasswordl(string newPassword)
     {
         ValidatePassword(newPassword);
         Password = newPassword;

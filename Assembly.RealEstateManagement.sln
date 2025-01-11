@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly.RealEstateManagement.Domain", "Assembly.RealEstateManagement.Domain\Assembly.RealEstateManagement.Domain.csproj", "{1235EB01-8AC8-44A4-88C0-2C123F648B13}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly.RealEstateManagement.Domain.Core", "Assembly.RealEstateManagement.Domain.Core\Assembly.RealEstateManagement.Domain.Core.csproj", "{F5EB9962-4D12-4568-BFF5-2D8C8A982E67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly.RealEstateManagement.ConsoleApp", "Assembly.RealEstateManagement.ConsoleApp\Assembly.RealEstateManagement.ConsoleApp.csproj", "{764ED81A-23CA-4D46-9744-9A04889D764A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{F5EB9962-4D12-4568-BFF5-2D8C8A982E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5EB9962-4D12-4568-BFF5-2D8C8A982E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5EB9962-4D12-4568-BFF5-2D8C8A982E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764ED81A-23CA-4D46-9744-9A04889D764A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764ED81A-23CA-4D46-9744-9A04889D764A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764ED81A-23CA-4D46-9744-9A04889D764A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764ED81A-23CA-4D46-9744-9A04889D764A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,5 +44,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1235EB01-8AC8-44A4-88C0-2C123F648B13} = {3DB815E8-0B82-4AA2-9C93-BF28D5942157}
 		{F5EB9962-4D12-4568-BFF5-2D8C8A982E67} = {3DB815E8-0B82-4AA2-9C93-BF28D5942157}
+		{764ED81A-23CA-4D46-9744-9A04889D764A} = {25B5B17F-FB0C-4623-9610-404C12C5D836}
 	EndGlobalSection
 EndGlobal

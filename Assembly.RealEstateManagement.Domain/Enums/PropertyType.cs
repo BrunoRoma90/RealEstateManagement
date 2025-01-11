@@ -5,5 +5,6 @@ public enum PropertyType
     Apartment,
     House,
     Land,
-    Garage
+    Garage,
+    Default
 }

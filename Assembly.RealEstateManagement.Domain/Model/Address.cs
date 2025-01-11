@@ -55,12 +55,12 @@ public class Address : AuditableEntity<int>
         }
     }
 
-    public static Address Create(string street, int number, string postalCode, string city, string country)
+    public static Address CreateAddress(string street, int number, string postalCode, string city, string country)
     {
         return new Address(street, number, postalCode, city, country);
     }
 
-    public void Update(string street, int number, string postalCode, string city, string country)
+    public void UpdateAddress(string street, int number, string postalCode, string city, string country)
     {
         ValidateAddress(street, number, postalCode, city, country);
         Street = street;

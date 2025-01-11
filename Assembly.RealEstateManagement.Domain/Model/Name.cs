@@ -32,12 +32,13 @@ public class Name
         MiddleNames = middleNames ?? Array.Empty<string>();
     }
 
-    public static Name Create(string firstName, string[] middleNames, string lastName)
+    public static Name CreateName(string firstName, string[] middleNames, string lastName)
     {
+        
         return new Name(firstName, middleNames, lastName);
 
     }
-    public void Update(string firstName, string[] middleNames, string lastName)
+    public void UpdateName(string firstName, string[] middleNames, string lastName)
     {
         ValidateName(firstName, lastName);
         ValidateMiddleNames(middleNames);
