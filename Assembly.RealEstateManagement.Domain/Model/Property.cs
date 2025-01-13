@@ -62,6 +62,20 @@ public class Property : AuditableEntity<int>
         PropertyImages = newProperty.PropertyImages;
     }
 
+
+    public void UpdateAvailability(Availability availability)
+    {
+        ValidateAvailability(availability);
+        Availability = availability;
+    }
+    private void ValidateAvailability(Availability availability)
+    {
+        if (availability == default)
+        { 
+            throw new ArgumentNullException(nameof(availability), "Availability is required."); 
+        }
+    }
+
     private void ValidateProperty(PropertyType propertyType, decimal price, decimal priceBySquareMeter, decimal sizeBySquareMeters,
         string description, Address address, TransactionType transactionType, Availability availability, List<Room> rooms, List<PropertyImage> propertyImages)
     {

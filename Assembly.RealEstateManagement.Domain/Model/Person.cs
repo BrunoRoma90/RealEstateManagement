@@ -1,6 +1,9 @@
-﻿using System.Data;
+﻿using System.ComponentModel;
+using System.Data;
+using System.IO.Pipes;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Xml.Linq;
 using Assembly.RealEstateManagement.Domain.Common;
@@ -88,77 +91,76 @@ public class FavoriteProperties : AuditableEntity<int>
         Property = property;
     }
 }
-public class Visit
+public class Admin : Employee
 {
-    public Property Property { get; private set; }
-    public Client Client { get; private set; }
-    public Agent Agent { get; private set; }
-    public DateTime VisitDate { get; private set; }
-    public string Notes { get; private set; }
-
-    private Visit() 
+    public int AdminNumber { get; private set; }
+    private Admin()
     {
-       
-        VisitDate = DateTime.MinValue;
-        Notes = string.Empty;
+        AdminNumber = 0;
+    }
+    private Admin(Name name, Account account, Contact contact, Address address, int employeeNumber) 
+        : base(name, account, contact, address, employeeNumber)
+    { 
+        AdminNumber = 0;
+    }
+    private Admin(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber) 
+        : this(name, account, contact, address, employeeNumber)
+    {
+        ValidateAdminInfo(adminNumber,name,account,contact,address);
+        AdminNumber = adminNumber;
+    }
+    public static Admin CreateAdmin(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber)
+    {
+        return new Admin(name, account, contact, address, employeeNumber, adminNumber);
     }
 
-    private Visit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
+    public void UpdateAdmin(Admin admin)
     {
-        ValidateVisit(property, client, agent, visitDate);
-        Property = property;
-        Client = client;
-        Agent = agent;
-        VisitDate = visitDate;
-        Notes = notes;
-    }
-
-    public static Visit CreateVisit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
-    {
-        return new Visit(property, client, agent, visitDate, notes);
-    }
-    public void UpdateVisit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
-    {
-        ValidateVisit(property,client, agent, visitDate);
-        Property = property;
-        Client = client;
-        Agent = agent;
-        VisitDate = visitDate;
-        Notes = notes;
-
-    }
-    private void ValidateVisit(Property property, Client client, Agent agent, DateTime visitDate)
-    {
-        if (property == null) 
+        if (admin == null)
         {
-            throw new ArgumentNullException(nameof(property) ," Property is required");
+            throw new ArgumentNullException(nameof(admin), "Name is required.");
         }
-        if (client == null)
-        {
-            throw new ArgumentNullException(nameof(client), "Client is required");
-        }
-        if (agent == null)
-        {
-            throw new ArgumentNullException(nameof(agent), "Agent is required");
-        }
-
-        if(visitDate == DateTime.MinValue)
-        {
-            throw new InvalidOperationException("Visit date is required");
-        }
+        ValidateAdminInfo(admin.AdminNumber, admin.Name, admin.Account, admin.Contact, admin.Address);
+        AdminNumber = admin.AdminNumber;
+        Name.UpdateName(admin.Name.FirstName, admin.Name.MiddleNames, admin.Name.LastName); 
+        Account.UpdateEmailAndPassword(admin.Account.Email, admin.Account.Password);
+        Contact.UpdateContact(admin.Contact);
+        Address.UpdateAddress(admin.Address.Street, admin.Address.Number, admin.Address.PostalCode, admin.Address.City, admin.Address.Country);
     }
-}
-public class Manager : Employee
-{
 
-}
 
-public class AdministrativeUsers
-{
+    public void ManageUser(Employee employee, Name newName, Account newAccount, Contact newContact)
+    { 
+        (employee);
+        e(newName, newAccount, newContact); }
 
-}
-public class Admin
-{
+    private void ValidateAdminInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
+    {
+        if (adminNumber <= 0)
+        {
+            throw new ArgumentException(nameof(adminNumber), "Agent number must be greater than zero.");
+        }
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name), "Name is required.");
+        }
+        if (account == null)
+        {
+            throw new ArgumentNullException(nameof(account), "Account is required.");
+        }
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+        if (address == null)
+        {
+            throw new ArgumentNullException(nameof(address), "Address is required.");
+        }
+    
+    }
+
+
+
 
 }
 
