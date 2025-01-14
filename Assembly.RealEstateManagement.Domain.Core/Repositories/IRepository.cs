@@ -1,6 +1,5 @@
 ﻿using Assembly.RealEstateManagement.Domain.Common;
-using Assembly.RealEstateManagement.Domain.Interfaces;
-using Assembly.RealEstateManagement.Domain.Model;
+
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
@@ -17,19 +16,4 @@ public interface IRepository<TEntity, TId> where TEntity : IEntity<TId>
     TEntity Delete(TEntity obj);
 
     TEntity Delete(TId id);
-}
-
-public interface IPersonRepository : IRepository<Person, int>
-{
-    
-}
-
-public interface IAddressRepository : IRepository<Address, int>
-{
-
-}
-
-public interface IContactRepository : IRepository<Contact, int>
-{
-
 }

@@ -18,6 +18,8 @@ public class Name
         MiddleNames = Array.Empty<string>();
     }
 
+    
+
     private Name(string firstName, string lastName) : this()
     {
         ValidateName(firstName, lastName);

@@ -45,11 +45,11 @@ public class Address : AuditableEntity<int>
         {
             throw new ArgumentNullException("Postal Code is required");
         }
-        if (!string.IsNullOrEmpty(city))
+        if (string.IsNullOrEmpty(city))
         {
             throw new ArgumentException("City is required");
         }
-        if (!string.IsNullOrEmpty(country))
+        if (string.IsNullOrEmpty(country))
         {
             throw new ArgumentException("Country is required");
         }

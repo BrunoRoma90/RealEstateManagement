@@ -19,6 +19,8 @@ public class Agent : Employee
         Contacts = new List<Contact>();
 
     }
+
+  
     private Agent(Name name, Account account, Contact contact, Address address, int employeeNumber) : base(name, account, contact, address, employeeNumber)
     {
 
