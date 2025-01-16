@@ -1,6 +1,8 @@
-﻿namespace Assembly.RealEstateManagement.Domain.Model;
+﻿using Assembly.RealEstateManagement.Domain.Interfaces;
 
-public class Manager : Employee
+namespace Assembly.RealEstateManagement.Domain.Model;
+
+public class Manager : Employee, IManager
 {
     public int ManagerNumber { get; private set; }
     public List<Agent> ManagedAgents { get; private set; }
@@ -112,6 +114,44 @@ public class Manager : Employee
         agent.AddVisit(visit);
     }
 
+    public void AddAgent(Agent agent)
+    {
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent), "Agent cannot be null.");
+        }
+
+        if (ManagedAgents.Contains(agent))
+        {
+            throw new InvalidOperationException("This agent is already managed by this manager.");
+        }
+
+        ManagedAgents.Add(agent);
+    }
+
+    public void RemoveAgent(Agent agent)
+    {
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent), "Agent cannot be null.");
+        }
+
+        if (!ManagedAgents.Contains(agent))
+        {
+            throw new InvalidOperationException("This agent is not managed by the manager.");
+        }
+
+        ManagedAgents.Remove(agent);
+    }
+
+    public List<Agent> GetAllManagedAgents()
+    {
+        return ManagedAgents;
+    }
+
+
+
+
 
     private void ValidateManagerInfo(int managerNumber, int employeeNumber, Name name, Account account, Contact contact, Address address)
     {
@@ -150,5 +190,4 @@ public class Manager : Employee
         }
     }
 }
-
 

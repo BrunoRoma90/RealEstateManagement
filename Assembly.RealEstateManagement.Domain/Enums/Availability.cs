@@ -3,5 +3,6 @@
 public enum Availability
 {
     ForSale,
-    ForRent
+    ForRent,
+    Default
 }

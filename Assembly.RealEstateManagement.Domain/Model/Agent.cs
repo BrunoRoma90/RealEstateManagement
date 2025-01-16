@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Assembly.RealEstateManagement.Domain.Enums;
+using Assembly.RealEstateManagement.Domain.Interfaces;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
-public class Agent : Employee
+public class Agent : Employee , IAgent
 {
     public int AgentNumber { get; private set; }
     public List<Property> ManagedProperties { get; private set; }
@@ -20,22 +21,15 @@ public class Agent : Employee
 
     }
 
-  
-    private Agent(Name name, Account account, Contact contact, Address address, int employeeNumber) : base(name, account, contact, address, employeeNumber)
-    {
 
-        AgentNumber = 0;
+    private Agent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber) 
+    {
+        ValidateAgentInfo(agentNumber, name, account, contact, address);
+        Id = id;
+        AgentNumber = agentNumber;
         ManagedProperties = new List<Property>();
         Visits = new List<Visit>();
         Contacts = new List<Contact>();
-    }
-
-    private Agent(Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber) : this(name, account, contact, address, employeeNumber)
-    {
-        ValidateAgentInfo(agentNumber, name, account, contact, address);
-
-        AgentNumber = agentNumber;
-
     }
     private Agent(Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber, List<Property> managedProperties, List<Visit> visits, List<Contact> contacts) :
         base(name, account, contact, address, employeeNumber)
@@ -47,9 +41,9 @@ public class Agent : Employee
         Contacts = contacts ?? new List<Contact>();
     }
 
-    public static Agent CreateAgent(Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber)
+    public static Agent CreateAgent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber)
     {
-        return new Agent(name, account, contact, address, employeeNumber, agentNumber);
+        return new Agent(id,name, account, contact, address, employeeNumber, agentNumber);
     }
 
     private void ValidateAgentInfo(int agentNumber, Name name, Account account, Contact contact, Address address /*List<Property> managedProperties, List<Visit> visits, List<Contact> contacts*/)

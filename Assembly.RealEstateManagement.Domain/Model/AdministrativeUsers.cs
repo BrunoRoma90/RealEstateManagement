@@ -57,31 +57,59 @@ public class AdministrativeUsers : Employee
         Address.UpdateAddress(address.Street, address.Number, address.PostalCode, address.City, address.Country);
 
     }
-    private void ValidateAdministrativeUsersInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
+
+    public void CreateClient(Name name, Account account, Contact contact)
+{
+    if (name == null || account == null || contact == null)
     {
-        if (adminNumber <= 0)
-        {
-            throw new ArgumentException(nameof(adminNumber), "Agent number must be greater than zero.");
-        }
-        if (name == null)
-        {
-            throw new ArgumentNullException(nameof(name), "Name is required.");
-        }
-        if (account == null)
-        {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
-        }
-        if (contact == null)
-        {
-            throw new ArgumentNullException(nameof(contact), "Contact is required.");
-        }
-        if (address == null)
-        {
-            throw new ArgumentNullException(nameof(address), "Address is required.");
-        }
-       
+        throw new ArgumentNullException("All client information is required.");
     }
 
+    var newClient = Client.CreateClient(name, account, contact);
+    Clients.Add(newClient);
+}
+
+    public void DeleteClient(Client client)
+    {
+        if (client == null)
+        {
+            throw new ArgumentNullException(nameof(client), "Client cannot be null.");
+        }
+        if (!Clients.Contains(client))
+        {
+            throw new InvalidOperationException("Client is not in the list of managed clients.");
+        }
+
+        Clients.Remove(client);
+    }
+
+    public Client GetClientProfile(int clientId)
+    {
+        foreach (var client in Clients)
+        {
+            if (client.Id == clientId)
+            {
+                return client;
+            }
+        }
+
+        throw new InvalidOperationException("Client not found.");
+    }
+
+    public List<Visit> GetAllVisits()
+    {
+        var allAppointments = new List<Visit>();
+
+        foreach (var employee in Employees)
+        {
+            if (employee is Agent agent)
+            {
+                allAppointments.AddRange(agent.Visits);
+            }
+        }
+
+        return allAppointments;
+    }
    
     public void ManageClientInfo(Client client, Name newName, Account newAccount, Contact newContact, bool isRegistered)
     {
@@ -117,8 +145,46 @@ public class AdministrativeUsers : Employee
         agent.AddVisit(visit);
     }
 
+    public void DeleteAgentAppointment(Agent agent, Visit visit)
+    {
+
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent), "Agent is required.");
+        }
+        if (visit == null)
+        {
+            throw new ArgumentNullException(nameof(visit), "Visit is required.");
+        }
+
+        agent.Visits.Remove(visit);
+    }
 
 
+    private void ValidateAdministrativeUsersInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
+    {
+        if (adminNumber <= 0)
+        {
+            throw new ArgumentException(nameof(adminNumber), "Agent number must be greater than zero.");
+        }
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name), "Name is required.");
+        }
+        if (account == null)
+        {
+            throw new ArgumentNullException(nameof(account), "Account is required.");
+        }
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+        if (address == null)
+        {
+            throw new ArgumentNullException(nameof(address), "Address is required.");
+        }
+
+    }
 
 }
 

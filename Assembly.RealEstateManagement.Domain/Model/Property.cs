@@ -40,10 +40,11 @@ public class Property : AuditableEntity<int>
         PropertyImages = propertyImages;
     }
 
-    public static Property CreateProperty(Property property)
+    public static Property CreateProperty(PropertyType propertyType, decimal price, decimal priceBySquareMeter, decimal sizeBySquareMeters, string description,
+        Address address, TransactionType transactionType, Availability availability, List<Room> rooms, List<PropertyImage> propertyImages)
     {
-        return new Property(property.PropertyType, property.Price, property.PriceBySquareMeter, property.SizeBySquareMeters,
-            property.Description, property.Address, property.TransactionType, property.Availability, property.Rooms, property.PropertyImages);
+        return new Property(propertyType, price, priceBySquareMeter, sizeBySquareMeters,
+            description, address, transactionType, availability, rooms, propertyImages);
     }
 
     public void UpdateProperty(Property newProperty)
@@ -112,13 +113,13 @@ public class Property : AuditableEntity<int>
         {
             throw new ArgumentNullException(nameof(availability), "Availability type is required");
         }
-        if (rooms == null || rooms.Count == 0)
-        { throw new ArgumentNullException(nameof(rooms), "Rooms list is required.");
-        }
-        if (propertyImages == null || propertyImages.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(propertyImages), "PropertyImages list is required.");
-        }
+        //if (rooms == null || rooms.Count == 0)
+        //{ throw new ArgumentNullException(nameof(rooms), "Rooms list is required.");
+        //}
+        //if (propertyImages == null || propertyImages.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(propertyImages), "PropertyImages list is required.");
+        //}
 
     }
 

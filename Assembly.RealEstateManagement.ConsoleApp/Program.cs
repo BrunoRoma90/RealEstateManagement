@@ -28,3 +28,6 @@ var start = serviceProvider.GetService<Start>();
 
 start.Create();
 start.GetAll();
+
+start.AddVisit(1);
+start.GetMyVisits(1);

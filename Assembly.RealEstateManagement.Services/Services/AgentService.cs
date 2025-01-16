@@ -14,6 +14,16 @@ public class AgentService : IAgentService
         _agentRepository = agentRepository;
     }
 
+    public Agent GetAgentById(int id)
+    {
+        var agent = _agentRepository.GetById(id);
+        if (agent == null)
+        {
+            throw new KeyNotFoundException($"Agent with ID {id} not found.");
+        }
+        return agent;
+    }
+
     public List<Agent> GetAgents()
     {
         return _agentRepository.GetAll();
@@ -24,4 +34,40 @@ public class AgentService : IAgentService
         return _agentRepository.Add(agent);
 
     }
+
+    public Visit AddVisit(Agent agent, Visit visit)
+    {
+        if (visit == null)
+        {
+            throw new ArgumentNullException(nameof(visit), "Visit cannot be null.");
+        }
+
+        var agentId = GetAgentById(agent.Id);
+
+        if (agent == null)
+        {
+            throw new KeyNotFoundException($"Agent with ID {agentId} not found.");
+        }
+
+        agent.AddVisit(visit);
+        //_agentRepository.Update(agent);
+
+        return visit;
+
+
+
+    }
+
+    public List<Visit> GetAllVisits(int agentId)
+    {
+        if (agentId <= 0)
+        {
+            throw new ArgumentException("Agent ID must be greater than zero.", nameof(agentId));
+        }
+
+        
+        return _agentRepository.GetVisitsByAgentId(agentId);
+    }
+
+    
 }

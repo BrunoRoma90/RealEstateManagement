@@ -66,9 +66,20 @@ namespace Assembly.RealEstateManagement.Data.InMemory.Repositories
             throw new NotImplementedException();
         }
 
+       
         public List<Visit> GetVisitsByAgentId(int agentId)
         {
-            throw new NotImplementedException();
+            var visits = new List<Visit>();
+
+            foreach (var agent in _db.Agents)
+            {
+                if(agent.Id == agentId)
+                {
+                    visits.AddRange(agent.Visits);
+                    break;
+                }
+            }
+            return visits;
         }
 
         public Agent Update(Agent agent)

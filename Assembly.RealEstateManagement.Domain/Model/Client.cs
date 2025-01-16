@@ -21,6 +21,7 @@ public class Client : Person
 
     private Client(Name name, Account account, Contact contact) : base(name, account, contact) 
     {
+        ValidateClient(name, account,contact);
         IsRegistered = false;
         FavoriteProperties = new List<FavoriteProperties>(); 
         Ratings = new List<Rating>();
@@ -61,6 +62,21 @@ public class Client : Person
     }
 
   
+    private void ValidateClient(Name name, Account account, Contact contact)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name), "Name is required.");
+        }
+        if (account == null)
+        {
+            throw new ArgumentNullException(nameof(account), "Account is required.");
+        }
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+    }
 }
 
 
