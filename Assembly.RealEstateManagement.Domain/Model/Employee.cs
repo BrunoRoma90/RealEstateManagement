@@ -16,11 +16,21 @@ public abstract class Employee : Person
     protected Employee(Name name, Account account, Contact contact, Address address, int employeeNumber) : base(name, account, contact)
     {
         //ValidateEmployee(name, account, contact, address, employeeNumber);
+        UpdateEmployeeNumber(employeeNumber);
         EmployeeNumber = employeeNumber;
         Address = address;
 
     }
 
+    protected int UpdateEmployeeNumber(int newEmployeeNumber)
+    {
+        if (newEmployeeNumber <= 0)
+        {
+            throw new ArgumentException("Employee number must be greater than zero.", nameof(newEmployeeNumber));
+        }
+
+        return EmployeeNumber = newEmployeeNumber;
+    }
 
 
     //public static Employee CreateEmployee(Employee employee)

@@ -37,16 +37,10 @@ public class AgentService : IAgentService
 
     public Visit AddVisit(Agent agent, Visit visit)
     {
-        if (visit == null)
-        {
-            throw new ArgumentNullException(nameof(visit), "Visit cannot be null.");
-        }
-
-        var agentId = GetAgentById(agent.Id);
-
+   
         if (agent == null)
         {
-            throw new KeyNotFoundException($"Agent with ID {agentId} not found.");
+            throw new KeyNotFoundException($"Agent not found.");
         }
 
         agent.AddVisit(visit);

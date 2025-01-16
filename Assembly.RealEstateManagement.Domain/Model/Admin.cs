@@ -1,11 +1,14 @@
 ﻿namespace Assembly.RealEstateManagement.Domain.Model;
 
-public class Admin : Employee
+public class Admin : Employee, IAdmin
 {
     public int AdminNumber { get; private set; }
+
+    public List<Employee> Employees { get; private set; }
     private Admin()
     {
         AdminNumber = 0;
+        Employees = new List<Employee>();
     }
     private Admin(Name name, Account account, Contact contact, Address address, int employeeNumber) 
         : base(name, account, contact, address, employeeNumber)
@@ -40,6 +43,79 @@ public class Admin : Employee
 
   
 
+  
+
+    public void CreateEmployee(Employee employee)
+    {
+        if (employee == null)
+        {
+            throw new ArgumentNullException(nameof(employee), "Employee is required.");
+        }
+
+       
+        foreach (var existingEmployee in Employees)
+        {
+            if (existingEmployee.EmployeeNumber == employee.EmployeeNumber)
+            {
+                throw new InvalidOperationException("An employee with the same employee number already exists.");
+            }
+        }
+
+        
+        Employees.Add(employee);
+
+    }
+
+    public void UpdateEmployee(Employee employee)
+    {
+        ValidateEmployee(employee.EmployeeNumber, employee.Name, employee.Account, employee.Contact, employee.Address);
+        UpdateEmployeeNumber(employee.EmployeeNumber);
+        Name.UpdateName(employee.Name.FirstName, employee.Name.MiddleNames, employee.Name.LastName);
+        Account.UpdateEmailAndPassword(employee.Account.Email, employee.Account.Password);
+        Contact.UpdateContact(employee.Contact);
+        Address.UpdateAddress(employee.Address.Street, employee.Address.Number, employee.Address.PostalCode, employee.Address.City, employee.Address.Country);
+
+    }
+
+  
+    private void ValidateEmployee(int employeeNumber, Name name, Account account, Contact contact, Address address)
+    {
+        if (employeeNumber <= 0)
+        {
+            throw new ArgumentException("Employee ID must be greater than zero.", nameof(employeeNumber));
+        }
+
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name), "Name is required.");
+        }
+
+        if (account == null)
+        {
+            throw new ArgumentNullException(nameof(account), "Account is required.");
+        }
+
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+
+        if (address == null)
+        {
+            throw new ArgumentNullException(nameof(address), "Address is required.");
+        }
+    }
+    public void DeleteEmployee(int employeeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Employee GetEmployee(int employeeId)
+    {
+        throw new NotImplementedException();
+    }
+
+
     private void ValidateAdminInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
     {
         if (adminNumber <= 0)
@@ -62,12 +138,28 @@ public class Admin : Employee
         {
             throw new ArgumentNullException(nameof(address), "Address is required.");
         }
-    
+
     }
-
-
-
-
 }
 
+public interface IAdmin
+{
+    public int AdminNumber { get; }
+    void CreateEmployee(Employee employee);
 
+    void UpdateEmployee(int employeeNumber, Name name, Account account, Contact contact, Address address);
+    void DeleteEmployee(int employeeId);
+    Employee GetEmployee(int employeeId);
+
+
+    
+    void CreateProperty(Property property);
+    void UpdatePorperty(int propertyId, Property updatedProperty);
+    void DeleteProperty(int propertyId);
+    List<Property> GetAllProperties();
+
+    
+    List<Visit> GetAllAppointments();
+    void CreateAppointment(Visit visit, Employee employee);
+    void DeleteAppointment(Visit visit, Employee employee);
+}

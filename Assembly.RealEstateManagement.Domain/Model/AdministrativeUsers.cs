@@ -30,9 +30,6 @@ public class AdministrativeUsers : Employee
 
     }
 
-
-
-
     private AdministrativeUsers(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber,
         List<Client> clients, List<Employee> employees)
         : base(name, account, contact, address, employeeNumber)
@@ -137,10 +134,7 @@ public class AdministrativeUsers : Employee
         {
             throw new ArgumentNullException(nameof(agent), "Agent is required.");
         }
-        if (visit == null)
-        {
-            throw new ArgumentNullException(nameof(visit), "Visit is required.");
-        }
+      
 
         agent.AddVisit(visit);
     }
