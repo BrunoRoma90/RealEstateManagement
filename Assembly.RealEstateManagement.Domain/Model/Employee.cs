@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
-
+﻿
 namespace Assembly.RealEstateManagement.Domain.Model;
 
 public abstract class Employee : Person
 {
 
-    public int EmployeeNumber { get; private set; }
+    public int EmployeeNumber { get; protected set; }
     public Address Address { get; private set; }
 
     protected Employee()
@@ -15,53 +14,47 @@ public abstract class Employee : Person
     }
     protected Employee(Name name, Account account, Contact contact, Address address, int employeeNumber) : base(name, account, contact)
     {
-        //ValidateEmployee(name, account, contact, address, employeeNumber);
-        UpdateEmployeeNumber(employeeNumber);
+        ValidateEmployee(address, employeeNumber);
         EmployeeNumber = employeeNumber;
         Address = address;
 
     }
 
-    protected int UpdateEmployeeNumber(int newEmployeeNumber)
+    public void UpdateEmployee(Address address, int newEmployeeNumber)
     {
-        if (newEmployeeNumber <= 0)
-        {
-            throw new ArgumentException("Employee number must be greater than zero.", nameof(newEmployeeNumber));
-        }
-
-        return EmployeeNumber = newEmployeeNumber;
+        ValidateEmployee(address, newEmployeeNumber);
+        Address.UpdateAddress(address.Street, address.Number, address.PostalCode, address.City, address.Country);
+        EmployeeNumber = newEmployeeNumber;
     }
 
+    public void UpdateEmployeeNumber(int newEmployeeNumber)
+    {
+        ValidateEmployeeNumber(newEmployeeNumber);
 
-    //public static Employee CreateEmployee(Employee employee)
-    //{
-    //    return new Employee(employee.Name, employee.Account, employee.Contact, employee.Address, employee.EmployeeNumber);
-    //}
+        EmployeeNumber = newEmployeeNumber;
+    }
+    private void ValidateEmployeeNumber(int employeeNumber) 
+    {
+        if (employeeNumber <= 0)
+        {
+            throw new ArgumentNullException(nameof(employeeNumber), "Employee Number must be greater than zero.");
+        }
+    }
 
-    //private void ValidateEmployee(Name name, Account account, Contact contact, Address address, int employeeNmeber)
-    //{
-    //    if (name == null)
-    //    {
-    //        throw new ArgumentNullException(nameof(name), "Name is required.");
-    //    }
-    //    if (account == null)
-    //    {
-    //        throw new ArgumentNullException(nameof(account), "Account is required.");
-    //    }
-    //    if (contact == null)
-    //    {
-    //        throw new ArgumentNullException(nameof(contact), "Contact is required.");
-    //    }
-    //    if (address == null)
-    //    {
-    //        throw new ArgumentNullException(nameof(name), "Name is required.");
-    //    }
-    //    if (employeeNmeber <= 0)
-    //    {
-    //        throw new ArgumentNullException(nameof(employeeNmeber), "Employee Number must be greater than zero.");
-    //    }
+    private void ValidateEmployee(Address address, int employeeNumber)
+    {
 
-    //}
+        if (address == null)
+        {
+            throw new ArgumentNullException(nameof(address), "Address is required.");
+        }
+        if (employeeNumber <= 0)
+        {
+            throw new ArgumentNullException(nameof(employeeNumber), "Employee Number must be greater than zero.");
+        }
+
+
+    }
 }
 
 

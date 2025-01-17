@@ -64,7 +64,7 @@ public class AdministrativeUsers : Employee
 
     var newClient = Client.CreateClient(name, account, contact);
     Clients.Add(newClient);
-}
+    }
 
     public void DeleteClient(Client client)
     {

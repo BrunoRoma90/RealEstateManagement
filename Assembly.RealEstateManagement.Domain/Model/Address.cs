@@ -55,6 +55,34 @@ public class Address : AuditableEntity<int>
         }
     }
 
+    public string GetFormattedAddress()
+    {
+        return $"{Street}, {Number}, {PostalCode} {City}, {Country}";
+    }
+
+    public Address WithUpdatedStreet(string street)
+    {
+        return new Address(street, Number, PostalCode, City, Country);
+    }
+
+    public Address WithUpdatedNumber(int number) 
+    {
+        return new Address(Street, number, PostalCode, City, Country);
+    }
+    public Address WithUpdatedPostalCode(string postalCode)
+    {
+        return new Address(Street, Number, postalCode, City, Country);
+    }
+
+    public Address WithUpdatedCity(string city)
+    { 
+        return new Address(Street, Number, PostalCode, city, Country);
+    }
+    public Address WithUpdatedCountry(string country)
+    {
+        return new Address(Street, Number, PostalCode, City, country);
+    }
+
     public static Address CreateAddress(string street, int number, string postalCode, string city, string country)
     {
         return new Address(street, number, postalCode, city, country);

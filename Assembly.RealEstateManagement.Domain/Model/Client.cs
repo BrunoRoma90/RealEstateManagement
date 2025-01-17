@@ -19,63 +19,60 @@ public class Client : Person
         
     }
 
-    private Client(Name name, Account account, Contact contact) : base(name, account, contact) 
-    {
-        ValidateClient(name, account,contact);
-        IsRegistered = false;
-        FavoriteProperties = new List<FavoriteProperties>(); 
-        Ratings = new List<Rating>();
-        Comments = new List<Comment>();
-    }
 
     private Client(Name name, Account account, Contact contact, bool isRegistered,
         List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)
         : base(name, account, contact)
     {
+        ValidateClient(isRegistered,favoriteProperties, ratings, comments);
         IsRegistered = isRegistered;
         FavoriteProperties = favoriteProperties ?? new List<FavoriteProperties>();
         Ratings = ratings ?? new List<Rating>();
         Comments = comments ?? new List<Comment>();
     }
 
-    public static Client CreateClient(Name name, Account account, Contact contact)
+    public static Client CreateClient(Name name, Account account, Contact contact, bool isRegistered , List<FavoriteProperties> favoriteProperties,
+        List<Rating> ratings, List<Comment> comments)
     {
-        return new Client(name, account, contact);
+        return new Client(name, account, contact, isRegistered, favoriteProperties, ratings, comments );
     }
 
-    public void UpdateClient(Name newName, Account newAccount, Contact newCntact, bool isRegistered)
+    public void UpdateClient(Name name, Account account, Contact contact, bool isRegistered, List<FavoriteProperties> favoriteProperties,
+        List<Rating> ratings, List<Comment> comments)
     {
-        if(newName != null)
-        {
-            Name.UpdateName(newName.FirstName,newName.MiddleNames, newName.LastName);
-        }
-        if(newAccount != null)
-        {
-            Account.UpdateEmailAndPassword(newAccount.Email, newAccount.Password);
-        }
-        if(newCntact != null)
-        {
-            Contact.UpdateContact(newCntact);
-        }
-
+        ValidateClient(isRegistered, favoriteProperties, ratings, comments);
+        Name.UpdateName(name.FirstName, name.MiddleNames, name.LastName);
+        Account.UpdateEmailAndPassword(account.Email, account.Password);
+        Contact.UpdateContact(contact);
         IsRegistered = isRegistered;
+        FavoriteProperties = favoriteProperties;
+        Ratings = ratings;
+        Comments = comments;
+
+
     }
 
   
-    private void ValidateClient(Name name, Account account, Contact contact)
+    private void ValidateClient( bool isRegistered, List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)
     {
-        if (name == null)
+        
+        if (favoriteProperties == null)
         {
-            throw new ArgumentNullException(nameof(name), "Name is required.");
+            throw new ArgumentNullException(nameof(favoriteProperties), "Favorite properties list is required.");
         }
-        if (account == null)
+        if (ratings == null)
         {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
+            throw new ArgumentNullException(nameof(ratings), "Ratings list is required.");
         }
-        if (contact == null)
+        if (comments == null)
         {
-            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+            throw new ArgumentNullException(nameof(comments), "Comments list is required.");
         }
+        if (isRegistered == false)
+        {
+            throw new ArgumentNullException(nameof(isRegistered), "Cannot be false.");
+        }
+
     }
 }
 

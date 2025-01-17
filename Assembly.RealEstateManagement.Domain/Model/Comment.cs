@@ -11,14 +11,67 @@ public class Comment : AuditableEntity<int>
     private Comment()
     {
         Text = string.Empty;
-        Property = null;
-        Client = null;
+        Property = Property.CreateProperty
+            (default,
+            0,
+            0,
+            0,
+            string.Empty,
+            Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty),
+            default,
+            default,
+            new List<Room>(),
+            new List<PropertyImage>());
+        Client = Client.CreateClient
+            (Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
+            Account.Create(string.Empty, string.Empty),
+            Contact.CreateContact(default, string.Empty));
     }
-    private Comment(string text, Property property, Client client)
-    {
+    private Comment(string text, Property property, Client client) : this()
+    {   ValidateComment(text, property, client);
         Text = text;
         Property = property;
         Client = client;
+    }
+
+    private void ValidateComment(string text, Property property, Client client)
+    { 
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new ArgumentException("Text is required.", nameof(text));
+        }
+        if (property == null)
+        {
+            throw new ArgumentNullException(nameof(property), "Property is required.");
+        } 
+        if (client == null)
+        {
+            throw new ArgumentNullException(nameof(client), "Client is required."); 
+        }
+    }
+
+
+    public static Comment CreateComment(string text, Property property, Client client)
+    {
+        return new Comment(text, property, client);
+
+    }
+
+    public void UpdateComment(string text, Property property, Client client) 
+    {
+        ValidateComment(text, property, client);
+        Text = text;
+        Property = property;
+        Client = client;
+    }
+    public Comment WithUpdatedText(string text)
+    {
+        return new Comment(text, Property, Client);
+    }
+
+    public string GetFormattedComment()
+    {
+        return $"{Text} (Property: {Property.Id}, Client: {Client.Id})";
     }
 }
 

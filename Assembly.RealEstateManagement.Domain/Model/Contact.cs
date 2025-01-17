@@ -35,6 +35,14 @@ public class Contact : AuditableEntity<int>
         ContactType = newContact.ContactType;
         Value = newContact.Value;
     }
+
+
+    public Contact WithUpdatedContact(ContactType contactType, string value) { return new Contact(contactType, value); }
+    public Contact WithUpdatedValue(string value)
+    {
+        return new Contact(ContactType, value);
+    }
+
     private void ValidateContact(ContactType contactType, string value)
     {
         if (string.IsNullOrEmpty(value))

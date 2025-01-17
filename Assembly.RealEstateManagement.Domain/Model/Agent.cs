@@ -4,7 +4,7 @@ using Assembly.RealEstateManagement.Domain.Interfaces;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
-public class Agent : Employee , IAgent
+public class Agent : Employee
 {
     public int AgentNumber { get; private set; }
     public List<Property> ManagedProperties { get; private set; }
@@ -14,6 +14,7 @@ public class Agent : Employee , IAgent
 
     private Agent()
     {
+        Id = 0;
         AgentNumber = 0;
         ManagedProperties = new List<Property>();
         Visits = new List<Visit>();
@@ -22,64 +23,63 @@ public class Agent : Employee , IAgent
     }
 
 
-    private Agent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber) 
+    private Agent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber,
+        List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)
+        : base(name, account, contact, address, employeeNumber)
     {
-        ValidateAgentInfo(agentNumber, name, account, contact, address);
+        ValidateAgent(id ,agentNumber, managedProperties, visits, contacts);
         Id = id;
-        AgentNumber = agentNumber;
-        ManagedProperties = new List<Property>();
-        Visits = new List<Visit>();
-        Contacts = new List<Contact>();
-    }
-    private Agent(Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber, List<Property> managedProperties, List<Visit> visits, List<Contact> contacts) :
-        base(name, account, contact, address, employeeNumber)
-    {
-        ValidateAgentInfo(agentNumber, name, account, contact, address);
         AgentNumber = agentNumber;
         ManagedProperties = managedProperties ?? new List<Property>();
         Visits = visits ?? new List<Visit>();
         Contacts = contacts ?? new List<Contact>();
     }
+    
 
-    public static Agent CreateAgent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber)
+    public static Agent CreateAgent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber,
+        List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)
     {
-        return new Agent(id,name, account, contact, address, employeeNumber, agentNumber);
+        return new Agent(id ,name, account, contact, address, employeeNumber, agentNumber, managedProperties, visits, contacts);
     }
 
-    private void ValidateAgentInfo(int agentNumber, Name name, Account account, Contact contact, Address address /*List<Property> managedProperties, List<Visit> visits, List<Contact> contacts*/)
+    public void UpdateAgent(int id, int agentNumber, Name name, Account account, Contact contact, Address address, int employeeNumber, List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)
     {
+        ValidateAgent(id, agentNumber, managedProperties, visits, contacts);
+        Id = id;
+        AgentNumber = agentNumber;
+        ManagedProperties = managedProperties;
+        EmployeeNumber = employeeNumber;
+        Visits = visits;
+        Contacts = contacts;
+        Name.UpdateName(name.FirstName, name.MiddleNames, name.LastName);
+        Account.UpdateEmailAndPassword(account.Email, account.Password);
+        Contact.UpdateContact(contact);
+        Address.UpdateAddress(address.Street, address.Number, address.PostalCode, address.City, address.Country);
+
+    }
+
+    private void ValidateAgent(int id, int agentNumber, List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)
+    {
+        if(id <= 0)
+        {
+            throw new ArgumentException(nameof(agentNumber), "Id must be greater than zero.");
+        }
         if (agentNumber <= 0)
         {
             throw new ArgumentException(nameof(agentNumber), "Agent number must be greater than zero.");
         }
-        if (name == null)
+        if (managedProperties == null || managedProperties.Count == 0)
         {
-            throw new ArgumentNullException(nameof(name), "Name is required.");
+            throw new ArgumentNullException(nameof(managedProperties), "Managed properties list is required.");
         }
-        if (account == null)
+        if (visits == null || visits.Count == 0)
         {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
+            throw new ArgumentNullException(nameof(visits), "Visits list is required.");
         }
-        if (contact == null)
+        if (contacts == null || contacts.Count == 0)
         {
-            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+            throw new ArgumentNullException(nameof(contacts), "Contacts list is required.");
         }
-        if (address == null)
-        {
-            throw new ArgumentNullException(nameof(address), "Address is required.");
-        }
-        //if (managedProperties == null || managedProperties.Count == 0)
-        //{
-        //    throw new ArgumentNullException(nameof(managedProperties), "Managed properties list is required.");
-        //}
-        //if (visits == null || visits.Count == 0)
-        //{ 
-        //    throw new ArgumentNullException(nameof(visits), "Visits list is required.");
-        //}
-        //if (contacts == null || contacts.Count == 0)
-        //{ 
-        //    throw new ArgumentNullException(nameof(contacts), "Contacts list is required.");
-        //}
     }
 
     private void ValidateVisitDate(DateTime visitDate)
@@ -104,6 +104,8 @@ public class Agent : Employee , IAgent
         }
     }
  
+
+    // Não sei se estes metodos deviam estar nos services
     public void AddContact(Contact contact)
     {
         if (contact == null)
@@ -217,17 +219,7 @@ public class Agent : Employee , IAgent
 
     }
 
-    public void UpdateAgentInfo(int agentNumber, Name name, Account account, Contact contact, Address address)
-    {
-        ValidateAgentInfo(agentNumber, name, account, contact, address);
-        AgentNumber = agentNumber;
-        Name.UpdateName(name.FirstName, name.MiddleNames, name.LastName);
-        Account.UpdateEmailAndPassword(account.Email, account.Password);
-        Contact.UpdateContact(contact);
-        Address.UpdateAddress(address.Street, address.Number, address.PostalCode, address.City, address.Country);
-
-    }
-
+ 
     
 
 

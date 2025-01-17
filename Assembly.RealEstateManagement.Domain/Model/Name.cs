@@ -8,7 +8,7 @@ public class Name
     public string[] MiddleNames { get; private set; }
     public string LastName { get; private set; }
 
-    public string FullName => $"{FirstName} {string.Join(" ", MiddleNames)} {LastName}";
+    public string FullName => GetFormattedName();
 
 
     private Name()
@@ -29,7 +29,6 @@ public class Name
 
     private Name(string firstName, string[] middleNames, string lastName) : this(firstName, lastName)
     {
-        ValidateName(firstName, lastName);
         ValidateMiddleNames(middleNames);
         MiddleNames = middleNames ?? Array.Empty<string>();
     }
@@ -82,5 +81,10 @@ public class Name
                 }
             }
         }
+    }
+
+    private string GetFormattedName() 
+    {
+        return $"{FirstName} {string.Join(" ", MiddleNames)} {LastName}";
     }
 }

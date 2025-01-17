@@ -52,6 +52,7 @@ public class Manager : Employee, IManager
     }
 
 
+    // Não sei se estes métodos deviam ser nos Services?
     public void ReassignSingleProperty(Property property, Agent fromAgent, Agent toAgent)
     {
         if (property == null)

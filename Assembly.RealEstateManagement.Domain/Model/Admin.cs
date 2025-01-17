@@ -69,7 +69,7 @@ public class Admin : Employee, IAdmin
     public void UpdateEmployee(Employee employee)
     {
         ValidateEmployee(employee.EmployeeNumber, employee.Name, employee.Account, employee.Contact, employee.Address);
-        UpdateEmployeeNumber(employee.EmployeeNumber);
+        UpdateEmployee(employee.EmployeeNumber);
         Name.UpdateName(employee.Name.FirstName, employee.Name.MiddleNames, employee.Name.LastName);
         Account.UpdateEmailAndPassword(employee.Account.Email, employee.Account.Password);
         Contact.UpdateContact(employee.Contact);
