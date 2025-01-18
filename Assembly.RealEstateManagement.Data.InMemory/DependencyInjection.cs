@@ -12,6 +12,7 @@ namespace Assembly.RealEstateManagement.Data.InMemory
         {
             services.AddSingleton<Database>();
             services.AddScoped<IAgentRepository, AgentRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
             return services;
         }
     }

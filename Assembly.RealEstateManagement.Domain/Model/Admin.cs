@@ -1,6 +1,8 @@
-﻿namespace Assembly.RealEstateManagement.Domain.Model;
+﻿using System.Net.Http.Headers;
 
-public class Admin : Employee /*IAdmin*/
+namespace Assembly.RealEstateManagement.Domain.Model;
+
+public class Admin : Employee , IAdmin
 {
     public int AdminNumber { get; private set; }
 
@@ -105,9 +107,7 @@ public class Admin : Employee /*IAdmin*/
     public Employee GetEmployee(int employeeId)
     {
         throw new NotImplementedException();
-    }
-
-
+    }    
     private void ValidateAdmin(int adminNumber, List<Employee> employees)
     {
         if (adminNumber <= 0)
@@ -121,26 +121,76 @@ public class Admin : Employee /*IAdmin*/
         
 
     }
-}
+
+    //Create All
+    public Agent CreateAgent(Agent agent)
+    {
+        return Agent.CreateAgent(agent.Id, agent.Name, agent.Account, agent.Contact, agent.Address, agent.EmployeeNumber,
+            agent.AgentNumber, agent.ManagedProperties, agent.Visits, agent.Contacts);
+    }
+    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers adminUser)
+    {
+        return AdministrativeUsers.CreateAdministrativeUser(adminUser.Name, adminUser.Account, adminUser.Contact, adminUser.Address, adminUser.EmployeeNumber,
+            adminUser.AdministrativeNumber, adminUser.Clients, adminUser.Employees);
+    }
+    public Manager CreateManager(Manager manager)
+    {
+        return Manager.CreateManager(manager);
+    }
+    public Client CreateClient(Client client)
+    {
+        return Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties, client.Ratings, client.Comments);
+    }
+
+    //Update All
+    public void UpdateAgent(Agent agent)
+    {
+        agent.UpdateAgent(agent.Id, agent.AgentNumber, agent.Name, agent.Account, agent.Contact, agent.Address, agent.EmployeeNumber,
+            agent.ManagedProperties, agent.Visits, agent.Contacts);
+    }
+    public void UpdateAdministrativeUsers(AdministrativeUsers administrativeUser)
+    {
+        administrativeUser.UpdateAdministrativeUser(administrativeUser.Name, administrativeUser.Account,administrativeUser.Contact,administrativeUser.Address,
+            administrativeUser.EmployeeNumber, administrativeUser.AdministrativeNumber, administrativeUser.Clients, administrativeUser.Employees);
+    }
+    public void UpdateManager(Manager manager)
+    {
+        manager.UpdateManager(manager);
+    }
+    public void UpdateClient(Client client)
+    {
+        client.UpdateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties, client.Ratings, client.Comments);
+    }
+
+}   
+    
 
 public interface IAdmin
 {
     public int AdminNumber { get; }
-    void CreateEmployee(Employee employee);
+    public  Agent CreateAgent(Agent agent);
+    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers adminUsers);
+    public Manager CreateManager(Manager manager);
 
-    void UpdateEmployee(int employeeNumber, Name name, Account account, Contact contact, Address address);
-    void DeleteEmployee(int employeeId);
-    Employee GetEmployee(int employeeId);
+    public Client CreateClient(Client client);
+
+    public void UpdateAgent(Agent agent);
+    public void UpdateAdministrativeUsers(AdministrativeUsers administrativeUsers);
+    public void UpdateManager(Manager manager);
+
+    public void UpdateClient(Client client);
+    //void DeleteEmployee(int employeeId);
+    //Employee GetEmployee(int employeeId);
 
 
-    
-    void CreateProperty(Property property);
-    void UpdatePorperty(int propertyId, Property updatedProperty);
-    void DeleteProperty(int propertyId);
-    List<Property> GetAllProperties();
 
-    
-    List<Visit> GetAllAppointments();
-    void CreateAppointment(Visit visit, Employee employee);
-    void DeleteAppointment(Visit visit, Employee employee);
+    //void CreateProperty(Property property);
+    //void UpdatePorperty(int propertyId, Property updatedProperty);
+    //void DeleteProperty(int propertyId);
+    //List<Property> GetAllProperties();
+
+
+    //List<Visit> GetAllAppointments();
+    //void CreateAppointment(Visit visit, Employee employee);
+    //void DeleteAppointment(Visit visit, Employee employee);
 }

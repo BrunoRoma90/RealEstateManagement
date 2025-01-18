@@ -13,6 +13,6 @@ public interface IManager
     List<Visit> GetAgentCalendar(Agent agent);
     void CreateAppointment(Agent agent, Visit visit);
     List<Agent> GetAllManagedAgents();
-    void UpdateManagerInfo(Manager manager);
+    void UpdateManager(Manager manager);
 }
 

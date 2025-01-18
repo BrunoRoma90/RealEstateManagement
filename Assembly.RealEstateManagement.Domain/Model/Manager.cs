@@ -27,7 +27,7 @@ public class Manager : Employee, IManager
         return new Manager(manager.Name, manager.Account, manager.Contact, manager.Address, manager.EmployeeNumber, manager.ManagerNumber, manager.ManagedAgents);
     }
 
-    public void UpdateManagerInfo(Manager manager)
+    public void UpdateManager(Manager manager)
     {
         ValidateManagerInfo(manager.ManagerNumber, manager.ManagedAgents);
         ManagerNumber = manager.ManagerNumber;
