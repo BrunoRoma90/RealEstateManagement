@@ -110,7 +110,7 @@ public class Agent : Employee
     {
         if (contact == null)
         {
-            throw new ArgumentNullException(nameof(contact), "Visit cannot be null.");
+            throw new ArgumentNullException(nameof(contact), "Contact cannot be null.");
         }
         ValidateContactValue(contact.Value);
         Contacts.Add(contact);

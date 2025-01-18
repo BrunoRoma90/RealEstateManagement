@@ -25,7 +25,8 @@ public class Comment : AuditableEntity<int>
         Client = Client.CreateClient
             (Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
             Account.Create(string.Empty, string.Empty),
-            Contact.CreateContact(default, string.Empty));
+            Contact.CreateContact(default, string.Empty),
+            false, new List<FavoriteProperties>(), new List<Rating>(), new List<Comment>());
     }
     private Comment(string text, Property property, Client client) : this()
     {   ValidateComment(text, property, client);

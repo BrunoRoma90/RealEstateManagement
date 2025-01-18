@@ -11,38 +11,28 @@ public class Manager : Employee, IManager
         ManagerNumber = 0;
         ManagedAgents = new List<Agent>();
     }
-
-    private Manager(Name name, Account account, Contact contact, Address address, int managedNumber): base(name, account, contact, address, managedNumber)
+    private Manager(Name name, Account account, Contact contact, Address address, int employeeNumber, int managedNumber, List<Agent> managedAgents)
+        : base(name, account, contact, address, employeeNumber)
     {
-        ManagerNumber = 0;
-        ManagedAgents = new List<Agent>();
-    }
-
-    private Manager(Name name, Account account, Contact contact, Address address, int employeeNumber, int managedNumber)
-        : this(name, account, contact, address, managedNumber)
-    {
-        ValidateManagerInfo(managedNumber, employeeNumber, name,account,contact,address);
-        ManagerNumber = managedNumber;
-
-    }
-
-    private Manager(Name name, Account account, Contact contact, Address address, int employeeNumber, int managedNumber, List<Agent> managedAgents ) :
-        base(name, account, contact, address, employeeNumber)
-    {
-        ValidateManagerInfo(managedNumber, employeeNumber, name,account,contact,address);
+        ValidateManagerInfo(managedNumber, managedAgents);
         ManagerNumber = managedNumber;
         ManagedAgents = managedAgents;
+
     }
+
+    
 
     public static Manager CreateManager(Manager manager)
     {
-        return new Manager(manager.Name, manager.Account, manager.Contact, manager.Address, manager.EmployeeNumber, manager.ManagerNumber);
+        return new Manager(manager.Name, manager.Account, manager.Contact, manager.Address, manager.EmployeeNumber, manager.ManagerNumber, manager.ManagedAgents);
     }
 
     public void UpdateManagerInfo(Manager manager)
     {
-        ValidateManagerInfo(manager.ManagerNumber, manager.EmployeeNumber, manager.Name, manager.Account, manager.Contact, manager.Address);
+        ValidateManagerInfo(manager.ManagerNumber, manager.ManagedAgents);
         ManagerNumber = manager.ManagerNumber;
+        ManagedAgents = manager.ManagedAgents;
+        EmployeeNumber = manager.EmployeeNumber;
         Name.UpdateName(manager.Name.FirstName, manager.Name.MiddleNames, manager.Name.LastName);
         Account.UpdateEmailAndPassword(manager.Account.Email, manager.Account.Password);
         Contact.UpdateContact(manager.Contact);
@@ -154,31 +144,15 @@ public class Manager : Employee, IManager
 
 
 
-    private void ValidateManagerInfo(int managerNumber, int employeeNumber, Name name, Account account, Contact contact, Address address)
+    private void ValidateManagerInfo(int managerNumber, List<Agent> managedAgents)
     {
-        if (employeeNumber <= 0)
+        if (managedAgents == null)
         {
-            throw new ArgumentException(nameof(managerNumber), "Employee number must be greater than zero.");
+            throw new ArgumentException(nameof(managedAgents), "Managed Agents cannot be null.");
         }
         if (managerNumber <= 0)
         {
             throw new ArgumentException(nameof(managerNumber), "Agent number must be greater than zero.");
-        }
-        if (name == null)
-        {
-            throw new ArgumentNullException(nameof(name), "Name is required.");
-        }
-        if (account == null)
-        {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
-        }
-        if (contact == null)
-        {
-            throw new ArgumentNullException(nameof(contact), "Contact is required.");
-        }
-        if (address == null)
-        {
-            throw new ArgumentNullException(nameof(address), "Address is required.");
         }
        
     }

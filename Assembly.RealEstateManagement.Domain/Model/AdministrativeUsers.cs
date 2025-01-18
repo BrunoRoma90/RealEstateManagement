@@ -2,7 +2,7 @@
 
 public class AdministrativeUsers : Employee
 {
-    public int AdminNumber { get;  private set; }
+    public int AdministrativeNumber { get;  private set; }
 
     public List<Client> Clients { get; private set; }
 
@@ -10,59 +10,51 @@ public class AdministrativeUsers : Employee
 
     private AdministrativeUsers()
     { 
-      AdminNumber = 0;
+      AdministrativeNumber = 0;
       Clients = new List<Client>();
       Employees = new List<Employee>();
     }
 
-    private AdministrativeUsers(Name name, Account account, Contact contact, Address address, int employeeNumber)
+    private AdministrativeUsers(Name name, Account account, Contact contact, Address address, int employeeNumber , int administrativeNumber, List<Client> clients, 
+        List<Employee> employees)
         : base(name , account, contact, address, employeeNumber)
     {
-        AdminNumber = 0;
-        Clients = new List<Client>();
-        Employees = new List<Employee>();
-    }
-    private AdministrativeUsers(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber) : this(name, account, contact, address, employeeNumber)
-    {
-        ValidateAdministrativeUsersInfo(adminNumber, name, account, contact, address);
-
-        AdminNumber = adminNumber;
-
-    }
-
-    private AdministrativeUsers(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber,
-        List<Client> clients, List<Employee> employees)
-        : base(name, account, contact, address, employeeNumber)
-    {
-        AdminNumber = adminNumber;
+        ValidateAdministrativeUsers(administrativeNumber, clients, employees);
+        AdministrativeNumber = administrativeNumber;
         Clients = clients ?? new List<Client>();
         Employees = employees ?? new List<Employee>();
     }
+   
 
-    public static AdministrativeUsers CreateAdministrativeUser(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber)
+    public static AdministrativeUsers CreateAdministrativeUser(Name name, Account account, Contact contact, Address address, int employeeNumber,
+        int administrativeNumber, List<Client> clients, List<Employee> employees)
     { 
-        return new AdministrativeUsers(name, account, contact, address, employeeNumber, adminNumber);
+        return new AdministrativeUsers(name, account, contact, address, employeeNumber, administrativeNumber, clients, employees);
     }
 
-    public void UpdateAdministrativeUserInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
+    public void UpdateAdministrativeUser(Name name, Account account, Contact contact, Address address, int employeeNumber,
+        int administrativeNumber, List<Client> clients, List<Employee> employees)
     {
-        ValidateAdministrativeUsersInfo(adminNumber, name, account, contact, address);
-        AdminNumber = adminNumber;
+        ValidateAdministrativeUsers(administrativeNumber, clients, employees);
         Name.UpdateName(name.FirstName, name.MiddleNames, name.LastName);
         Account.UpdateEmailAndPassword(account.Email, account.Password);
         Contact.UpdateContact(contact);
         Address.UpdateAddress(address.Street, address.Number, address.PostalCode, address.City, address.Country);
-
+        EmployeeNumber = employeeNumber;
+        AdministrativeNumber = administrativeNumber;
+        Clients = clients;
+        Employees = employees;
     }
 
-    public void CreateClient(Name name, Account account, Contact contact)
+    public void CreateClient(Client client)
 {
-    if (name == null || account == null || contact == null)
+    if (client == null)
     {
         throw new ArgumentNullException("All client information is required.");
     }
 
-    var newClient = Client.CreateClient(name, account, contact);
+    var newClient = Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered,
+        client.FavoriteProperties, client.Ratings, client.Comments);
     Clients.Add(newClient);
     }
 
@@ -108,13 +100,14 @@ public class AdministrativeUsers : Employee
         return allAppointments;
     }
    
-    public void ManageClientInfo(Client client, Name newName, Account newAccount, Contact newContact, bool isRegistered)
+    public void ManageClientInfo(Client client)
     {
         if (client == null)
         {
-            throw new ArgumentNullException(nameof(client), "Contact is required.");
+            throw new ArgumentNullException(nameof(client), "client is required.");
         }
-        client.UpdateClient(newName, newAccount, newContact, isRegistered);
+        client.UpdateClient(client.Name, client.Account, client.Contact, client.IsRegistered,
+        client.FavoriteProperties, client.Ratings, client.Comments);
 
     }
 
@@ -155,29 +148,20 @@ public class AdministrativeUsers : Employee
     }
 
 
-    private void ValidateAdministrativeUsersInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
+    private void ValidateAdministrativeUsers(int adminNumber, List<Client> clients, List<Employee> employees)
     {
         if (adminNumber <= 0)
         {
             throw new ArgumentException(nameof(adminNumber), "Agent number must be greater than zero.");
         }
-        if (name == null)
+        if (clients == null)
         {
-            throw new ArgumentNullException(nameof(name), "Name is required.");
+            throw new ArgumentNullException(nameof(clients), "Clients cannot be null.");
         }
-        if (account == null)
+        if (employees == null)
         {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
+            throw new ArgumentNullException(nameof(employees), "Employees cannot be null.");
         }
-        if (contact == null)
-        {
-            throw new ArgumentNullException(nameof(contact), "Contact is required.");
-        }
-        if (address == null)
-        {
-            throw new ArgumentNullException(nameof(address), "Address is required.");
-        }
-
     }
 
 }

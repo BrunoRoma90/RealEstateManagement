@@ -1,6 +1,6 @@
 ﻿namespace Assembly.RealEstateManagement.Domain.Model;
 
-public class Admin : Employee, IAdmin
+public class Admin : Employee /*IAdmin*/
 {
     public int AdminNumber { get; private set; }
 
@@ -10,40 +10,32 @@ public class Admin : Employee, IAdmin
         AdminNumber = 0;
         Employees = new List<Employee>();
     }
-    private Admin(Name name, Account account, Contact contact, Address address, int employeeNumber) 
+    private Admin(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber, List<Employee> employees) 
         : base(name, account, contact, address, employeeNumber)
     { 
-        AdminNumber = 0;
-    }
-    private Admin(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber) 
-        : this(name, account, contact, address, employeeNumber)
-    {
-        ValidateAdminInfo(adminNumber,name,account,contact,address);
+        ValidateAdmin(adminNumber, employees);
         AdminNumber = adminNumber;
+        Employees = employees;
     }
-    public static Admin CreateAdmin(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber)
+    
+    public static Admin CreateAdmin(Name name, Account account, Contact contact, Address address, int employeeNumber, int adminNumber , List<Employee> employees)
     {
-        return new Admin(name, account, contact, address, employeeNumber, adminNumber);
+        return new Admin(name, account, contact, address, employeeNumber, adminNumber, employees);
     }
 
     public void UpdateAdmin(Admin admin)
     {
-        if (admin == null)
-        {
-            throw new ArgumentNullException(nameof(admin), "Name is required.");
-        }
-        ValidateAdminInfo(admin.AdminNumber, admin.Name, admin.Account, admin.Contact, admin.Address);
+        
+        ValidateAdmin(admin.AdminNumber, admin.Employees);
         AdminNumber = admin.AdminNumber;
+        Employees = admin.Employees;
+        EmployeeNumber = admin.EmployeeNumber;
         Name.UpdateName(admin.Name.FirstName, admin.Name.MiddleNames, admin.Name.LastName); 
         Account.UpdateEmailAndPassword(admin.Account.Email, admin.Account.Password);
         Contact.UpdateContact(admin.Contact);
         Address.UpdateAddress(admin.Address.Street, admin.Address.Number, admin.Address.PostalCode, admin.Address.City, admin.Address.Country);
     }
 
-
-  
-
-  
 
     public void CreateEmployee(Employee employee)
     {
@@ -69,7 +61,7 @@ public class Admin : Employee, IAdmin
     public void UpdateEmployee(Employee employee)
     {
         ValidateEmployee(employee.EmployeeNumber, employee.Name, employee.Account, employee.Contact, employee.Address);
-        UpdateEmployee(employee.EmployeeNumber);
+        UpdateEmployeeNumber(employee.EmployeeNumber);
         Name.UpdateName(employee.Name.FirstName, employee.Name.MiddleNames, employee.Name.LastName);
         Account.UpdateEmailAndPassword(employee.Account.Email, employee.Account.Password);
         Contact.UpdateContact(employee.Contact);
@@ -116,28 +108,17 @@ public class Admin : Employee, IAdmin
     }
 
 
-    private void ValidateAdminInfo(int adminNumber, Name name, Account account, Contact contact, Address address)
+    private void ValidateAdmin(int adminNumber, List<Employee> employees)
     {
         if (adminNumber <= 0)
         {
             throw new ArgumentException(nameof(adminNumber), "Agent number must be greater than zero.");
         }
-        if (name == null)
+        if (employees == null)
         {
-            throw new ArgumentNullException(nameof(name), "Name is required.");
+            throw new ArgumentNullException(nameof(employees), "Employee cannot be null.");
         }
-        if (account == null)
-        {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
-        }
-        if (contact == null)
-        {
-            throw new ArgumentNullException(nameof(contact), "Contact is required.");
-        }
-        if (address == null)
-        {
-            throw new ArgumentNullException(nameof(address), "Address is required.");
-        }
+        
 
     }
 }
