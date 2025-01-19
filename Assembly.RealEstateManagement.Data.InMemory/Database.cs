@@ -7,6 +7,7 @@ namespace Assembly.RealEstateManagement.Data.InMemory
         public List<Agent> Agents { get; set; }
         public List<Visit> Visits { get; set; }
 
+        public List<Property> Properties { get; set; }
         public List<Admin> Admins { get; set; }
 
         public List<Manager> Managers { get; set; }
@@ -24,6 +25,7 @@ namespace Assembly.RealEstateManagement.Data.InMemory
             Clients = new List<Client>();
             AdministrativeUsers = new List<AdministrativeUsers>();
             Comments = new List<Comment>();
+            Properties = new List<Property>();
         }        
     }
 }

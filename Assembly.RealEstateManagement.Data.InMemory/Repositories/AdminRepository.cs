@@ -8,12 +8,20 @@ internal class AdminRepository : IAdminRepository
 {
     private readonly Database _db;
     private readonly AgentRepository _agentRepository;
+    private readonly ManagerRepository _managerRepository;
+    private readonly AdministrativeUserRepository _administrativeUserRepository;
+    private readonly ClientRepository _clientRepository;
+   
     
 
-    public AdminRepository(Database database, AgentRepository agentRepository)
+    public AdminRepository(Database database, AgentRepository agentRepository, ManagerRepository managerRepository,
+        AdministrativeUserRepository administrativeUserRepository, ClientRepository clientRepository)
     {
         _db = database;
         _agentRepository = agentRepository;
+        _managerRepository = managerRepository;
+        _administrativeUserRepository = administrativeUserRepository;
+        _clientRepository = clientRepository;
     }
     public Admin Add(Admin admin)
     {
@@ -92,35 +100,17 @@ internal class AdminRepository : IAdminRepository
     }
     public List<Manager> GetManagers()
     {
-       var allManagers = new List<Manager>();
-        foreach (var manager in _db.Managers)
-        {
-            allManagers.Add(manager);
-        }
-        return allManagers;
+       return _managerRepository.GetAll();
     }
     public List<AdministrativeUsers> GetAdministrativeUsers()
     {
-        var allAdministrativeUsers = new List<AdministrativeUsers>();
-        foreach (var administrativeUser in _db.AdministrativeUsers)
-        {
-            allAdministrativeUsers.Add(administrativeUser);
-        }
-        return allAdministrativeUsers;
+        return _administrativeUserRepository.GetAll();
     }
 
     public List<Client> GetClients()
     {
-        var allClients = new List<Client>();
-        foreach (var client in _db.Clients)
-        {
-            allClients.Add(client);
-            
-        }
-        return allClients;
+        return _clientRepository.GetAll();
     }
-
-    
     
     public Agent GetAgent(int id)
     {
@@ -130,38 +120,16 @@ internal class AdminRepository : IAdminRepository
 
     public Manager GetManager(int id)
     {
-        foreach (var manager in _db.Managers)
-        {
-            if (manager.Id == id)
-            {
-                return manager;
-            }
-        }
-        return null;
+        return _managerRepository.GetById(id);
     }
 
     public AdministrativeUsers GetAdministrativeUser(int id)
     {
-        foreach (var administrativeUsers in _db.AdministrativeUsers)
-        {
-            if (administrativeUsers.Id == id)
-            {
-                return administrativeUsers;
-            }
-        }
-        return null;
+        return _administrativeUserRepository.GetById(id);
     }
 
     public Client GetClient(int id)
     {
-        
-        foreach (var client in _db.Clients)
-        {
-            if (client.Id == id)
-            {
-                return client;
-            }
-        }
-        return null;
+        return _clientRepository.GetById(id);
     }
 }

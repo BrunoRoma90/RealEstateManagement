@@ -1,4 +1,5 @@
 ﻿
+using System.Xml.Linq;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 
@@ -14,67 +15,152 @@ internal class VisitRepository : IVisitRepository
 
     }
 
-    public Visit Add(Visit obj)
+    public Visit Add(Visit visit)
     {
-        throw new NotImplementedException();
+        _db.Visits.Add(visit);
+        return visit;
     }
     public Visit GetById(int id)
     {
-        throw new NotImplementedException();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Id == id)
+            {
+                return visit;
+
+            }
+        }
+        throw new KeyNotFoundException($"Visit with ID {id} was not found.");
     }
     public List<Visit> GetAll()
     {
-        throw new NotImplementedException();
+        var allVisits = new List<Visit>();
+        foreach (var visit in _db.Visits)
+        {
+            allVisits.Add(visit);
+        }
+        return allVisits;
     }
 
-    public Visit Delete(Visit obj)
+    public Visit Delete(Visit visit)
     {
-        throw new NotImplementedException();
+        var allVisits = _db.Visits.ToList();
+        foreach (var existingVisit in allVisits)
+        {
+            if (existingVisit.Id == visit.Id)
+            {
+                _db.Visits.Remove(existingVisit);
+            }
+        }
+        throw new KeyNotFoundException($"Visit was not found.");
     }
 
     public Visit Delete(int id)
     {
-        throw new NotImplementedException();
+        var allVisits = _db.Visits.ToList();
+        foreach (var existingVisit in allVisits)
+        {
+            if (existingVisit.Id == id)
+            {
+                _db.Visits.Remove(existingVisit);
+
+            }
+        }
+        throw new KeyNotFoundException($"Visit with ID {id} was not found.");
     }
 
   
 
 
-    public Visit Update(Visit obj)
+    public Visit Update(Visit visit)
     {
-        throw new NotImplementedException();
+        var allVisits = _db.Visits.ToList();
+        foreach (var existingVisit in allVisits)
+        {
+            if (existingVisit.Id == visit.Id)
+            {
+                existingVisit.UpdateVisit(visit.Property, visit.Client, visit.Agent, visit.VisitDate, visit.Notes);
+                return existingVisit;
+            }
+        }
+        throw new KeyNotFoundException($"Admin was not found.");
     }
 
     public List<Visit> GetAllVisitByAngentId(int angentId)
     {
-        throw new NotImplementedException();
+        var visitsByAgent = new List<Visit>();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Agent.Id == angentId)
+            {
+                visitsByAgent.Add(visit);
+            }
+        }
+        return visitsByAgent;
     }
 
     public List<Visit> GetAllVisitByClientId(int clientId)
     {
-        throw new NotImplementedException();
+        var visitsByClient = new List<Visit>();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Client.Id == clientId)
+            {
+                visitsByClient.Add(visit);
+            }
+        }
+        return visitsByClient;
     }
 
     public List<Visit> GetAllVisitByPropertyId(int propertyId)
     {
-        throw new NotImplementedException();
+        var visitsByProperty = new List<Visit>();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Property.Id == propertyId)
+            {
+                visitsByProperty.Add(visit);
+            }
+        }
+        return visitsByProperty;
     }
 
 
 
-    public Agent GetPorpertyByAgentId(int AngentId)
+    public Visit GetVisitByAgentId(int agentId)
     {
-        throw new NotImplementedException();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Agent.Id == agentId)
+            { 
+                return visit;
+            }
+        }
+        throw new KeyNotFoundException($"Visit with Agent ID {agentId} was not found.");
     }
 
-    public Client GetVisitByClientId(int clientId)
+    public Visit GetVisitByClientId(int clientId)
     {
-        throw new NotImplementedException();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Client.Id == clientId)
+            {
+                return visit;
+            }
+        }
+        throw new KeyNotFoundException($"Visit with Client ID {clientId} was not found.");
     }
 
-    public Property GetVisitByProperty(int propertyId)
+    public Visit GetVisitByProperty(int propertyId)
     {
-        throw new NotImplementedException();
+        foreach (var visit in _db.Visits)
+        {
+            if (visit.Property.Id == propertyId)
+            {
+                return visit;
+            }
+        }
+        throw new KeyNotFoundException($"Visit with Property ID {propertyId} was not found.");
     }
 
 }
