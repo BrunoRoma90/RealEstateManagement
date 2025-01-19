@@ -22,9 +22,9 @@ public class Manager : Employee, IManager
 
     
 
-    public static Manager CreateManager(Manager manager)
+    public static Manager CreateManager(Name name, Account account, Contact contact, Address address, int employeeNumber, int managedNumber, List<Agent> managedAgents)
     {
-        return new Manager(manager.Name, manager.Account, manager.Contact, manager.Address, manager.EmployeeNumber, manager.ManagerNumber, manager.ManagedAgents);
+        return new Manager(name, account, contact, address, employeeNumber, managedNumber, managedAgents);
     }
 
     public void UpdateManager(Manager manager)

@@ -7,10 +7,13 @@ namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;
 internal class AdminRepository : IAdminRepository
 {
     private readonly Database _db;
+    private readonly AgentRepository _agentRepository;
+    
 
-    public AdminRepository(Database database)
+    public AdminRepository(Database database, AgentRepository agentRepository)
     {
         _db = database;
+        _agentRepository = agentRepository;
     }
     public Admin Add(Admin admin)
     {
@@ -28,7 +31,7 @@ internal class AdminRepository : IAdminRepository
                 _db.Admins.Remove(existingAdmin);
             }
         }
-        return null;
+        throw new KeyNotFoundException($"Admin was not found.");
     }
 
     public Admin Delete(int adminId)
@@ -42,7 +45,7 @@ internal class AdminRepository : IAdminRepository
                             
             }
         }
-        return null;
+        throw new KeyNotFoundException($"Admin with ID {adminId} was not found.");
     }
 
     public List<Admin> GetAll()
@@ -62,9 +65,10 @@ internal class AdminRepository : IAdminRepository
             if (admin.Id == id)
             {
                 return admin;
+                
             } 
         }
-        return null;
+        throw new KeyNotFoundException($"Admin with ID {id} was not found.");
     }
 
     public Admin Update(Admin admin)
@@ -78,17 +82,12 @@ internal class AdminRepository : IAdminRepository
                 return existingAdmin;
             }
         }
-        return null;
+        throw new KeyNotFoundException($"Admin was not found.");
     }
 
     public List<Agent> GetAgents()
     {
-        var allAgents = new List<Agent>();
-        foreach (var agent in _db.Agents)
-        {
-            allAgents.Add(agent);
-        }
-        return allAgents;
+        return _agentRepository.GetAll();
 
     }
     public List<Manager> GetManagers()
@@ -108,5 +107,61 @@ internal class AdminRepository : IAdminRepository
             allAdministrativeUsers.Add(administrativeUser);
         }
         return allAdministrativeUsers;
+    }
+
+    public List<Client> GetClients()
+    {
+        var allClients = new List<Client>();
+        foreach (var client in _db.Clients)
+        {
+            allClients.Add(client);
+            
+        }
+        return allClients;
+    }
+
+    
+    
+    public Agent GetAgent(int id)
+    {
+        
+        return _agentRepository.GetById(id);
+    }
+
+    public Manager GetManager(int id)
+    {
+        foreach (var manager in _db.Managers)
+        {
+            if (manager.Id == id)
+            {
+                return manager;
+            }
+        }
+        return null;
+    }
+
+    public AdministrativeUsers GetAdministrativeUser(int id)
+    {
+        foreach (var administrativeUsers in _db.AdministrativeUsers)
+        {
+            if (administrativeUsers.Id == id)
+            {
+                return administrativeUsers;
+            }
+        }
+        return null;
+    }
+
+    public Client GetClient(int id)
+    {
+        
+        foreach (var client in _db.Clients)
+        {
+            if (client.Id == id)
+            {
+                return client;
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Assembly.RealEstateManagement.Domain.Model;
+﻿using Assembly.RealEstateManagement.Domain.Common;
 
-public class Visit
+namespace Assembly.RealEstateManagement.Domain.Model;
+
+public class Visit : AuditableEntity<int>
 {
     public Property Property { get; private set; }
     public Client Client { get; private set; }
@@ -10,12 +12,36 @@ public class Visit
 
     private Visit() 
     {
-        
+        Property = Property.CreateProperty
+            (default,
+            0,
+            0,
+            0,
+            string.Empty,
+            Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty),
+            default,
+            default,
+            new List<Room>(),
+            new List<PropertyImage>());
+        Client = Client.CreateClient
+            (Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
+            Account.Create(string.Empty, string.Empty),
+            Contact.CreateContact(default, string.Empty),
+            false, new List<FavoriteProperties>(), new List<Rating>(), new List<Comment>());
+        Agent = Agent.CreateAgent(0,
+            Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
+            Account.Create(string.Empty, string.Empty),
+            Contact.CreateContact(default, string.Empty),
+            Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty),
+            0, 0, new List<Property>(), new List<Visit>(), new List<Contact>(), 
+            Manager.CreateManager(Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),Account.Create(string.Empty, string.Empty),
+                Contact.CreateContact(default, string.Empty), Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty),
+                0, 0 , new List<Agent>())); 
         VisitDate = DateTime.MinValue;
         Notes = string.Empty;
     }
 
-    private Visit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
+    private Visit(Property property, Client client, Agent agent, DateTime visitDate, string notes) :this()
     {
         ValidateVisit(property, client, agent, visitDate);
         Property = property;

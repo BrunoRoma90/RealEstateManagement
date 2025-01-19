@@ -21,7 +21,7 @@ public class Address : AuditableEntity<int>
         Country = string.Empty;
     }
 
-    private Address(string street, int number, string postalCode, string city, string country)
+    private Address(string street, int number, string postalCode, string city, string country) :this()
     {
         ValidateAddress(street, number, postalCode, city, country);
         Street = street;

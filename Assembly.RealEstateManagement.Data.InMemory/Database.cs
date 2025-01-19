@@ -12,6 +12,8 @@ namespace Assembly.RealEstateManagement.Data.InMemory
         public List<Manager> Managers { get; set; }
         public List<AdministrativeUsers> AdministrativeUsers { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         public List<Client> Clients { get; set; } 
         public Database()
         {
@@ -21,6 +23,7 @@ namespace Assembly.RealEstateManagement.Data.InMemory
             Managers = new List<Manager>();
             Clients = new List<Client>();
             AdministrativeUsers = new List<AdministrativeUsers>();
+            Comments = new List<Comment>();
         }        
     }
 }

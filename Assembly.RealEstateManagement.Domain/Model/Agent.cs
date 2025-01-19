@@ -9,8 +9,9 @@ public class Agent : Employee
     public int AgentNumber { get; private set; }
     public List<Property> ManagedProperties { get; private set; }
     public List<Visit> Visits { get; private set; }
-
     public List<Contact> Contacts { get; private set; }
+
+    public Manager Manager { get; private set; }
 
     private Agent()
     {
@@ -19,12 +20,17 @@ public class Agent : Employee
         ManagedProperties = new List<Property>();
         Visits = new List<Visit>();
         Contacts = new List<Contact>();
+        Manager = Manager.CreateManager(Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
+            Account.Create(string.Empty, string.Empty),
+            Contact.CreateContact(default, string.Empty),
+            Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty), 
+            0,   0, new List<Agent>());
 
     }
 
 
     private Agent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber,
-        List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)
+        List<Property> managedProperties, List<Visit> visits, List<Contact> contacts, Manager manager)
         : base(name, account, contact, address, employeeNumber)
     {
         ValidateAgent(id ,agentNumber, managedProperties, visits, contacts);
@@ -33,13 +39,14 @@ public class Agent : Employee
         ManagedProperties = managedProperties ?? new List<Property>();
         Visits = visits ?? new List<Visit>();
         Contacts = contacts ?? new List<Contact>();
+        Manager = manager;
     }
     
 
     public static Agent CreateAgent(int id, Name name, Account account, Contact contact, Address address, int employeeNumber, int agentNumber,
-        List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)
+        List<Property> managedProperties, List<Visit> visits, List<Contact> contacts, Manager manager)
     {
-        return new Agent(id ,name, account, contact, address, employeeNumber, agentNumber, managedProperties, visits, contacts);
+        return new Agent(id ,name, account, contact, address, employeeNumber, agentNumber, managedProperties, visits, contacts, manager);
     }
 
     public void UpdateAgent(int id, int agentNumber, Name name, Account account, Contact contact, Address address, int employeeNumber, List<Property> managedProperties, List<Visit> visits, List<Contact> contacts)

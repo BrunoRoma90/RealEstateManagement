@@ -46,7 +46,12 @@ namespace Assembly.RealEstateManagement.Data.InMemory.Repositories
 
         public List<Agent> GetAll()
         {
-            return _db.Agents;
+            var allAgent = new List<Agent>();
+            foreach (var agent in _db.Agents)
+            {
+                allAgent.Add(agent);
+            }
+            return allAgent;
         }
 
         public Agent GetById(int id)

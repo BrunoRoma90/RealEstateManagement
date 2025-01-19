@@ -2,11 +2,12 @@
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
-public interface IAdminRepository : IRepository<Admin, int>
+public interface IAdministrativeUsersRepository : IRepository<AdministrativeUsers , int> 
 {
     public List<Agent> GetAgents();
     public List<Manager> GetManagers();
-    public List<AdministrativeUsers> GetAdministrativeUsers();
+
+    public List<Visit> GetVisits();
 
     public List<Client> GetClients();
 
@@ -14,10 +15,6 @@ public interface IAdminRepository : IRepository<Admin, int>
 
     public Manager GetManager(int id);
 
-    public AdministrativeUsers GetAdministrativeUser(int id);
-
     public Client GetClient(int id);
-
-    
 
 }
