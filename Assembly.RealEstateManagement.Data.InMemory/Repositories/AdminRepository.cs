@@ -11,8 +11,8 @@ internal class AdminRepository : IAdminRepository
     private readonly ManagerRepository _managerRepository;
     private readonly AdministrativeUserRepository _administrativeUserRepository;
     private readonly ClientRepository _clientRepository;
-   
-    
+
+
 
     public AdminRepository(Database database, AgentRepository agentRepository, ManagerRepository managerRepository,
         AdministrativeUserRepository administrativeUserRepository, ClientRepository clientRepository)
@@ -23,62 +23,59 @@ internal class AdminRepository : IAdminRepository
         _administrativeUserRepository = administrativeUserRepository;
         _clientRepository = clientRepository;
     }
+
+
     public Admin Add(Admin admin)
     {
-       _db.Admins.Add(admin);
+        _db.Admins.Add(admin);
         return admin;
     }
-
     public Admin Delete(Admin admin)
     {
         var admins = _db.Admins.ToList();
         foreach (var existingAdmin in admins)
-        { 
-            if (existingAdmin.Id == admin.Id) 
-            { 
+        {
+            if (existingAdmin.Id == admin.Id)
+            {
                 _db.Admins.Remove(existingAdmin);
             }
         }
         throw new KeyNotFoundException($"Admin was not found.");
     }
-
     public Admin Delete(int adminId)
     {
         var admins = _db.Admins.ToList();
         foreach (var admin in admins)
-        { 
+        {
             if (admin.Id == adminId)
-            { 
+            {
                 _db.Admins.Remove(admin);
-                            
+
             }
         }
         throw new KeyNotFoundException($"Admin with ID {adminId} was not found.");
     }
-
     public List<Admin> GetAll()
     {
         var allAdmins = new List<Admin>();
         foreach (var admin in _db.Admins)
-        { 
+        {
             allAdmins.Add(admin);
         }
         return allAdmins;
     }
-
     public Admin GetById(int id)
     {
         foreach (var admin in _db.Admins)
-        { 
+        {
             if (admin.Id == id)
             {
                 return admin;
-                
-            } 
+
+            }
         }
         throw new KeyNotFoundException($"Admin with ID {id} was not found.");
     }
-
     public Admin Update(Admin admin)
     {
         var admins = _db.Admins.ToList();
@@ -93,43 +90,121 @@ internal class AdminRepository : IAdminRepository
         throw new KeyNotFoundException($"Admin was not found.");
     }
 
+
+    //For Agents
     public List<Agent> GetAgents()
     {
         return _agentRepository.GetAll();
 
     }
-    public List<Manager> GetManagers()
-    {
-       return _managerRepository.GetAll();
-    }
-    public List<AdministrativeUsers> GetAdministrativeUsers()
-    {
-        return _administrativeUserRepository.GetAll();
-    }
-
-    public List<Client> GetClients()
-    {
-        return _clientRepository.GetAll();
-    }
-    
     public Agent GetAgent(int id)
     {
-        
+
         return _agentRepository.GetById(id);
     }
+    public Agent CreateAgent(Agent agent)
+    {
+        return _agentRepository.Add(agent);
+    }
+    public Agent UpdateAgent(Agent agent)
+    {
+        return _agentRepository.Update(agent);
+    }
+    public Agent DeleteAgent(Agent agent)
+    {
+        return _agentRepository.Delete(agent);
+    }
+    public Agent DeleteAgent(int agentId)
+    {
+        return _agentRepository.Delete(agentId);
+    }
 
+
+
+
+    //For Managers
+    public List<Manager> GetManagers()
+    {
+        return _managerRepository.GetAll();
+    }
     public Manager GetManager(int id)
     {
         return _managerRepository.GetById(id);
     }
+    public Manager CreateManager(Manager manager)
+    {
+        return _managerRepository.Add(manager);
+    }
+    public Manager UpdateManager(Manager manager)
+    {
+        return _managerRepository.Update(manager);
+    }
+    public Manager DeleteManager(Manager manager)
+    {
+        return _managerRepository.Delete(manager);
+    }
+    public Manager DeleteManager(int managerId)
+    {
+        return _managerRepository.Delete(managerId);
+    }
 
+
+    //For AdministrativeUser
+    public List<AdministrativeUsers> GetAdministrativeUsers()
+    {
+        return _administrativeUserRepository.GetAll();
+    }
     public AdministrativeUsers GetAdministrativeUser(int id)
     {
         return _administrativeUserRepository.GetById(id);
     }
+    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers administrativeUser)
+    {
+        return _administrativeUserRepository.Add(administrativeUser);
+    }
 
+    public AdministrativeUsers UpdateAdministrativeUser(AdministrativeUsers administrativeUser)
+    {
+        return _administrativeUserRepository.Update(administrativeUser);
+    }
+    public AdministrativeUsers DeleteAdministrativeUser(AdministrativeUsers administrativeUser)
+    {
+        return _administrativeUserRepository.Delete(administrativeUser);
+    }
+
+    public AdministrativeUsers DeleteAdministrativeUser(int administrativeUserId)
+    {
+        return _administrativeUserRepository.Delete(administrativeUserId);
+    }
+
+    //For Clients
+    public List<Client> GetClients()
+    {
+        return _clientRepository.GetAll();
+    }
     public Client GetClient(int id)
     {
         return _clientRepository.GetById(id);
     }
+    public Client CreateClient(Client client)
+    {
+        return _clientRepository.Add(client);
+    }
+    public Client UpdateClient(Client client)
+    {
+        return _clientRepository.Update(client);
+    }
+
+    public Client DeleteClient(Client client)
+    {
+        return _clientRepository.Delete(client);
+    }
+    public Client DeleteClient(int clientId)
+    {
+        return _clientRepository.Delete(clientId);
+    }
+
+    
 }
+
+   

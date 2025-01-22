@@ -47,13 +47,13 @@ public class FavoriteProperties : AuditableEntity<int>
 
     }
 
-    public static FavoriteProperties CreateComment(Client client,Property property)
+    public static FavoriteProperties CreateFavoriteProperties(Client client,Property property)
     {
         return new FavoriteProperties(client, property);
 
     }
 
-    public void UpdateComment(Client client, Property property)
+    public void UpdateFavoriteProperties(Client client, Property property)
     {
         ValidateFavoriteProperties(client, property);
         Property = property;

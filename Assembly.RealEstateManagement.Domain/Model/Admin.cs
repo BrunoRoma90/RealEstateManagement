@@ -126,7 +126,7 @@ public class Admin : Employee , IAdmin
     public Agent CreateAgent(Agent agent)
     {
         return Agent.CreateAgent(agent.Id, agent.Name, agent.Account, agent.Contact, agent.Address, agent.EmployeeNumber,
-            agent.AgentNumber, agent.ManagedProperties, agent.Visits, agent.Contacts);
+            agent.AgentNumber, agent.ManagedProperties, agent.Visits, agent.Contacts, agent.Manager);
     }
     public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers adminUser)
     {
@@ -135,7 +135,8 @@ public class Admin : Employee , IAdmin
     }
     public Manager CreateManager(Manager manager)
     {
-        return Manager.CreateManager(manager);
+        return Manager.CreateManager(manager.Name, manager.Account, manager.Contact, manager.Address,
+            manager.EmployeeNumber, manager.ManagerNumber, manager.ManagedAgents);
     }
     public Client CreateClient(Client client)
     {

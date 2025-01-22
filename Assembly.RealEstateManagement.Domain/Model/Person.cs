@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
+﻿
 using Assembly.RealEstateManagement.Domain.Common;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
