@@ -13,13 +13,43 @@ internal class AdministrativeUserService : IAdministrativeUserService
         _administrativesUserRepository = administrativesUserRepository;
     }
 
+    public void AddVisit(Visit visit)
+    {
+        _administrativesUserRepository.AddVisit(visit);
+    }
+
+    public void AddVisitToAgent(Visit visit)
+    {
+        _administrativesUserRepository.AddVisitToAgent(visit);
+    }
+
+    public void AddVisitToClient(Visit visit)
+    {
+        _administrativesUserRepository.AddVisitToClient(visit);
+    }
+
+    public List<Visit> GetAllVisitsByAgentId(int agentId)
+    {
+        return _administrativesUserRepository.GetVisitsByAgentId(agentId);
+    }
+
     public List<Visit> GetAllVisitsByClientId(int clientId)
     {
         return _administrativesUserRepository.GetVisitsByClientId(clientId);
     }
 
+    public Visit GetVisitByAgentId(int agentId)
+    {
+        return _administrativesUserRepository.GetVisitByAgentId(agentId);
+    }
+
     public Visit GetVisitByClientId(int clientId)
     {
-        throw new NotImplementedException();
+        return _administrativesUserRepository.GetVisitByClientId(clientId);
+    }
+
+    public Visit UpdateVisit(Visit visit)
+    {
+        return _administrativesUserRepository.UpdateVisit(visit);
     }
 }

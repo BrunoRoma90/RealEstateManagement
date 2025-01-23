@@ -1,6 +1,4 @@
-﻿
-using System.Xml.Linq;
-using Assembly.RealEstateManagement.Domain.Core.Repositories;
+﻿using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 
 namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;
@@ -163,4 +161,14 @@ internal class VisitRepository : IVisitRepository
         throw new KeyNotFoundException($"Visit with Property ID {propertyId} was not found.");
     }
 
+    public void AddVisitToAgent(Visit visit)
+    {
+        _db.Agent.Visits.Add(visit);
+
+    }
+
+    public void AddVisitToClient(Visit visit)
+    {
+        _db.Client.Visits.Add(visit);
+    }
 }

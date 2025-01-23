@@ -5,6 +5,8 @@ namespace Assembly.RealEstateManagement.Data.InMemory
     internal class Database
     {
         public List<Agent> Agents { get; set; }
+
+        public Agent Agent { get; set; }
         public List<Visit> Visits { get; set; }
         public List<Property> Properties { get; set; }
         public List<Admin> Admins { get; set; }
@@ -12,7 +14,7 @@ namespace Assembly.RealEstateManagement.Data.InMemory
         public List<AdministrativeUsers> AdministrativeUsers { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Client> Clients { get; set; } 
-        
+        public Client Client { get; set; }
         public List<Rating> Ratings { get; set; }
         public List<FavoriteProperties> FavoriteProperties { get; set; }
         public Database()

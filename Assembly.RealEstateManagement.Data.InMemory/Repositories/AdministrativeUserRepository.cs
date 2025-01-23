@@ -133,19 +133,38 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
 
     public List<Visit> GetVisitsByClientId(int clientId)
     {
-        var visits = new List<Visit>();
-
-        foreach (var client in _db.Clients)
-        {
-            if (client.Id == clientId)
-            {
-                visits.AddRange(client.Visits);
-                break;
-            }
-        }
-        return visits;
+        return _visitRepository.GetAllVisitByClientId(clientId);
     }
 
+    public List<Visit> GetVisitsByAgentId(int agentId)
+    {
+       return _visitRepository.GetAllVisitByAngentId(agentId);
+    }
 
+    public Visit GetVisitByClientId(int clientId)
+    {
+        return _visitRepository.GetVisitByClientId(clientId);
+    }
+    public Visit UpdateVisit(Visit visit)
+    {
+        return _visitRepository.Update(visit);
+    }
+    public Visit GetVisitByAgentId(int agentId)
+    {
+        return _visitRepository.GetVisitByAgentId(agentId);
+    }
+    public void AddVisit(Visit visit)
+    {
+        _visitRepository.Add(visit);
+    }
 
+    public void AddVisitToAgent(Visit visit)
+    {
+        _visitRepository.AddVisitToAgent(visit);
+    }
+
+    public void AddVisitToClient(Visit visit)
+    {
+        _visitRepository.AddVisitToClient(visit);
+    }
 }

@@ -15,5 +15,9 @@ public interface IVisitRepository : IRepository<Visit, int>
     public List<Visit> GetAllVisitByPropertyId(int propertyId);
     public List<Visit> GetAllVisitByAngentId(int agentId);
 
+    public void AddVisitToAgent(Visit visit);
+
+    public void AddVisitToClient(Visit visit);
+
 
 }

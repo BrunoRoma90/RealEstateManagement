@@ -1,5 +1,6 @@
 ﻿using Assembly.RealEstateManagement.Domain.Common;
 
+
 namespace Assembly.RealEstateManagement.Domain.Model;
 
 public class Visit : AuditableEntity<int>
@@ -10,7 +11,7 @@ public class Visit : AuditableEntity<int>
     public DateTime VisitDate { get; private set; }
     public string Notes { get; private set; }
 
-    private Visit() 
+    private Visit()
     {
         Property = Property.CreateProperty
             (default,
@@ -27,22 +28,23 @@ public class Visit : AuditableEntity<int>
             (Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
             Account.Create(string.Empty, string.Empty),
             Contact.CreateContact(default, string.Empty),
-            false, new List<FavoriteProperties>(), new List<Rating>(), new List<Comment>());
+            false, new List<FavoriteProperties>(), new List<Rating>(), new List<Comment>(), new List<Visit>());
         Agent = Agent.CreateAgent(0,
             Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
             Account.Create(string.Empty, string.Empty),
             Contact.CreateContact(default, string.Empty),
             Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty),
-            0, 0, new List<Property>(), new List<Visit>(), new List<Contact>(), 
-            Manager.CreateManager(Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),Account.Create(string.Empty, string.Empty),
+            0, 0, new List<Property>(), new List<Visit>(), new List<Contact>(),
+            Manager.CreateManager(Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty), Account.Create(string.Empty, string.Empty),
                 Contact.CreateContact(default, string.Empty), Address.CreateAddress(string.Empty, 0, string.Empty, string.Empty, string.Empty),
-                0, 0 , new List<Agent>())); 
+                0, 0, new List<Agent>()));
         VisitDate = DateTime.MinValue;
         Notes = string.Empty;
     }
 
-    private Visit(Property property, Client client, Agent agent, DateTime visitDate, string notes) :this()
+    private Visit(Property property, Client client, Agent agent, DateTime visitDate, string notes) : this()
     {
+        ValidateVisitDate(visitDate);
         ValidateVisit(property, client, agent, visitDate);
         Property = property;
         Client = client;
@@ -57,7 +59,8 @@ public class Visit : AuditableEntity<int>
     }
     public void UpdateVisit(Property property, Client client, Agent agent, DateTime visitDate, string notes)
     {
-        ValidateVisit(property,client, agent, visitDate);
+        ValidateVisitDate(visitDate);
+        ValidateVisit(property, client, agent, visitDate);
         Property = property;
         Client = client;
         Agent = agent;
@@ -66,12 +69,12 @@ public class Visit : AuditableEntity<int>
 
     }
 
-   
+
     private void ValidateVisit(Property property, Client client, Agent agent, DateTime visitDate)
     {
-        if (property == null) 
+        if (property == null)
         {
-            throw new ArgumentNullException(nameof(property) ," Property is required");
+            throw new ArgumentNullException(nameof(property), " Property is required");
         }
         if (client == null)
         {
@@ -82,13 +85,32 @@ public class Visit : AuditableEntity<int>
             throw new ArgumentNullException(nameof(agent), "Agent is required");
         }
 
-        if(visitDate == DateTime.MinValue)
+        if (visitDate == DateTime.MinValue)
         {
             throw new InvalidOperationException("Visit date is required");
         }
     }
 
-  
+
+
+    private void ValidateVisitDate(DateTime visitDate)
+    {
+        foreach (var exitingVisit in Client.Visits)
+        {
+            if (exitingVisit.VisitDate == visitDate)
+            {
+                throw new InvalidOperationException("A visit is already scheduled for this time.");
+            }
+        }
+        foreach (var exitingVisit in Agent.Visits)
+        {
+            if (exitingVisit.VisitDate == visitDate)
+            {
+                throw new InvalidOperationException("A visit is already scheduled for this time.") ;
+            }
+        }
+
+    }
 }
 
 

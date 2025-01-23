@@ -19,4 +19,17 @@ public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser
 
     public List<Visit> GetVisitsByClientId(int clientId);
 
+    public List<Visit> GetVisitsByAgentId(int agentId);
+
+    public Visit GetVisitByClientId(int clientId);
+
+    public Visit GetVisitByAgentId(int agentId);
+    public Visit UpdateVisit(Visit visit);
+
+    public void AddVisit(Visit visit);
+
+    public void AddVisitToAgent(Visit visit);
+    public void AddVisitToClient(Visit visit);
+
+
 }
