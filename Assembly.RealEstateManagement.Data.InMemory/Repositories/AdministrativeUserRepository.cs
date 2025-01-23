@@ -10,13 +10,15 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
     private readonly AgentRepository _agentRepository;
     private readonly ManagerRepository _managerRepository;
     private readonly VisitRepository _visitRepository;
+    private readonly ClientRepository _clientRepository;
     public AdministrativeUserRepository(Database database, AgentRepository agentRepository, ManagerRepository managerRepository,
-        VisitRepository visitRepository)
+        VisitRepository visitRepository, ClientRepository clientRepository)
     {
         _db = database;
         _agentRepository = agentRepository;
         _managerRepository = managerRepository;
         _visitRepository = visitRepository;
+        _clientRepository = clientRepository;
 
     }
 
@@ -105,12 +107,12 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
 
     public Client GetClient(int id)
     {
-        throw new NotImplementedException();
+        return _clientRepository.GetById(id);
     }
 
     public List<Client> GetClients()
     {
-        throw new NotImplementedException();
+        return _clientRepository.GetAll();
     }
 
     public Manager GetManager(int id)
@@ -128,6 +130,22 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
         return _visitRepository.GetAll();
     }
 
-   
+
+    public List<Visit> GetVisitsByClientId(int clientId)
+    {
+        var visits = new List<Visit>();
+
+        foreach (var client in _db.Clients)
+        {
+            if (client.Id == clientId)
+            {
+                visits.AddRange(client.Visits);
+                break;
+            }
+        }
+        return visits;
+    }
+
+
 
 }

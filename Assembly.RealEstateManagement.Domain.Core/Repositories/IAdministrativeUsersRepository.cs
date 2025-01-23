@@ -17,4 +17,6 @@ public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser
 
     public Client GetClient(int id);
 
+    public List<Visit> GetVisitsByClientId(int clientId);
+
 }

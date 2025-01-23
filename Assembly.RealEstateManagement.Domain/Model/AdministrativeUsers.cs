@@ -54,7 +54,7 @@ public class AdministrativeUsers : Employee
     }
 
     var newClient = Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered,
-        client.FavoriteProperties, client.Ratings, client.Comments);
+        client.FavoriteProperties, client.Ratings, client.Comments, client.Visits);
     Clients.Add(newClient);
     }
 
@@ -107,7 +107,7 @@ public class AdministrativeUsers : Employee
             throw new ArgumentNullException(nameof(client), "client is required.");
         }
         client.UpdateClient(client.Name, client.Account, client.Contact, client.IsRegistered,
-        client.FavoriteProperties, client.Ratings, client.Comments);
+        client.FavoriteProperties, client.Ratings, client.Comments, client.Visits);
 
     }
 
