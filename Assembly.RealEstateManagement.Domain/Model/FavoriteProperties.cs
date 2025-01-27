@@ -13,7 +13,7 @@ public class FavoriteProperties : AuditableEntity<int>
         Client = Client.CreateClient(Name.CreateName(string.Empty, Array.Empty<string>(), string.Empty),
             Account.Create(string.Empty, string.Empty),
             Contact.CreateContact(default, string.Empty),
-            false, new List<FavoriteProperties>(), new List<Rating>(), new List<Comment>());
+            false, new List<FavoriteProperties>(), new List<Rating>(), new List<Comment>(), new List<Visit>());
         Property = Property.CreateProperty(default,
             0,
             0,

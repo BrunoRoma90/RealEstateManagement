@@ -31,5 +31,9 @@ public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser
     public void AddVisitToAgent(Visit visit);
     public void AddVisitToClient(Visit visit);
 
+    public void AddNotes(int visitId, string notes);
+
+    public Client CreateClient(Client client);
+
 
 }

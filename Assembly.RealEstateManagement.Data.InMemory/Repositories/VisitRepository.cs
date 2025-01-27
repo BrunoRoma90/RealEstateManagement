@@ -171,4 +171,17 @@ internal class VisitRepository : IVisitRepository
     {
         _db.Client.Visits.Add(visit);
     }
+
+    public void AddNotes(int visitId, string notes)
+    {
+        var visit = GetById(visitId);
+        if (visit == null)
+        {
+            throw new KeyNotFoundException($"Visit with ID {visitId} was not found.");
+        }
+
+        visit.AddNotes(notes);
+     
+
+    }
 }

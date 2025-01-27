@@ -19,5 +19,7 @@ public interface IVisitRepository : IRepository<Visit, int>
 
     public void AddVisitToClient(Visit visit);
 
+    public void AddNotes(int visitId, string notes);
+
 
 }

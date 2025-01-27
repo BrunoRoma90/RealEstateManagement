@@ -4,13 +4,18 @@ using Assembly.RealEstateManagement.Domain.Core.Repositories;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 
-internal class AdministrativeUserService : IAdministrativeUserService
+public class AdministrativeUserService : IAdministrativeUserService
 {
     private IAdministrativeUsersRepository _administrativesUserRepository;
 
     public AdministrativeUserService(IAdministrativeUsersRepository administrativesUserRepository)
     {
         _administrativesUserRepository = administrativesUserRepository;
+    }
+
+    public void AddNotes(int visitId, string notes)
+    {
+        _administrativesUserRepository.AddNotes(visitId, notes);
     }
 
     public void AddVisit(Visit visit)
@@ -26,6 +31,16 @@ internal class AdministrativeUserService : IAdministrativeUserService
     public void AddVisitToClient(Visit visit)
     {
         _administrativesUserRepository.AddVisitToClient(visit);
+    }
+
+    public Client CreateClient(Client client)
+    {
+        return _administrativesUserRepository.CreateClient(client);
+    }
+
+    public List<Client> GetAllClients()
+    {
+        return _administrativesUserRepository.GetClients();
     }
 
     public List<Visit> GetAllVisitsByAgentId(int agentId)
@@ -52,4 +67,5 @@ internal class AdministrativeUserService : IAdministrativeUserService
     {
         return _administrativesUserRepository.UpdateVisit(visit);
     }
+
 }

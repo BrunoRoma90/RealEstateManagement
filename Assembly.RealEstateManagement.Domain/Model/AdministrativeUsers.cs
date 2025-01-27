@@ -46,31 +46,31 @@ public class AdministrativeUsers : Employee
         Employees = employees;
     }
 
-    public void CreateClient(Client client)
-{
-    if (client == null)
-    {
-        throw new ArgumentNullException("All client information is required.");
-    }
+//    public void CreateClient(Client client)
+//{
+//    if (client == null)
+//    {
+//        throw new ArgumentNullException("All client information is required.");
+//    }
 
-    var newClient = Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered,
-        client.FavoriteProperties, client.Ratings, client.Comments, client.Visits);
-    Clients.Add(newClient);
-    }
+//    var newClient = Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered,
+//        client.FavoriteProperties, client.Ratings, client.Comments, client.Visits);
+//    Clients.Add(newClient);
+//    }
 
-    public void DeleteClient(Client client)
-    {
-        if (client == null)
-        {
-            throw new ArgumentNullException(nameof(client), "Client cannot be null.");
-        }
-        if (!Clients.Contains(client))
-        {
-            throw new InvalidOperationException("Client is not in the list of managed clients.");
-        }
+    //public void DeleteClient(Client client)
+    //{
+    //    if (client == null)
+    //    {
+    //        throw new ArgumentNullException(nameof(client), "Client cannot be null.");
+    //    }
+    //    if (!Clients.Contains(client))
+    //    {
+    //        throw new InvalidOperationException("Client is not in the list of managed clients.");
+    //    }
 
-        Clients.Remove(client);
-    }
+    //    Clients.Remove(client);
+    //}
 
     public Client GetClientProfile(int clientId)
     {

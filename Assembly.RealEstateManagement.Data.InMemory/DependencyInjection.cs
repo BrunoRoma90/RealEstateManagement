@@ -11,8 +11,11 @@ namespace Assembly.RealEstateManagement.Data.InMemory
         public static IServiceCollection AddDataInMemoryServices(this IServiceCollection services)
         {
             services.AddSingleton<Database>();
+            services.AddScoped<IAdministrativeUsersRepository, AdministrativeUserRepository>();
             services.AddScoped<IAgentRepository, AgentRepository>();
-            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IManagerRepository, ManagerRepository>();
+            services.AddScoped<IVisitRepository, VisitRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
             return services;
         }
     }

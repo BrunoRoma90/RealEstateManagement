@@ -1,4 +1,5 @@
-﻿using Assembly.RealEstateManagement.Services.Interfaces;
+﻿using Assembly.RealEstateManagement.Domain.Core.Repositories;
+using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,7 +9,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IAgentService, AgentService>();
+       
+        services.AddScoped<IAdministrativeUserService, AdministrativeUserService>();
         return services;
     }
 }

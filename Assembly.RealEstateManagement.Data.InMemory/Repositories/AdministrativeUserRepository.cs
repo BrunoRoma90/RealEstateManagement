@@ -7,12 +7,12 @@ namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;
 internal class AdministrativeUserRepository : IAdministrativeUsersRepository
 {
     private readonly  Database _db;
-    private readonly AgentRepository _agentRepository;
-    private readonly ManagerRepository _managerRepository;
-    private readonly VisitRepository _visitRepository;
-    private readonly ClientRepository _clientRepository;
-    public AdministrativeUserRepository(Database database, AgentRepository agentRepository, ManagerRepository managerRepository,
-        VisitRepository visitRepository, ClientRepository clientRepository)
+    private readonly IAgentRepository _agentRepository;
+    private readonly IManagerRepository _managerRepository;
+    private readonly IVisitRepository _visitRepository;
+    private readonly IClientRepository _clientRepository;
+    public AdministrativeUserRepository(Database database, IAgentRepository agentRepository, IManagerRepository managerRepository,
+        IVisitRepository visitRepository, IClientRepository clientRepository)
     {
         _db = database;
         _agentRepository = agentRepository;
@@ -138,7 +138,7 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
 
     public List<Visit> GetVisitsByAgentId(int agentId)
     {
-       return _visitRepository.GetAllVisitByAngentId(agentId);
+        return _visitRepository.GetAllVisitByAngentId(agentId);
     }
 
     public Visit GetVisitByClientId(int clientId)
@@ -166,5 +166,15 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
     public void AddVisitToClient(Visit visit)
     {
         _visitRepository.AddVisitToClient(visit);
+    }
+
+    public void AddNotes(int visitId, string notes)
+    {
+        _visitRepository.AddNotes(visitId, notes);
+    }
+
+    public Client CreateClient(Client client)
+    {
+        return _clientRepository.Add(client);
     }
 }

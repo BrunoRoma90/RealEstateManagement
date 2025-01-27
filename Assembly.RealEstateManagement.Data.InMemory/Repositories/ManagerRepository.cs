@@ -7,10 +7,10 @@ namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;
 internal class ManagerRepository : IManagerRepository
 {
     private readonly Database _db;
-    private readonly AgentRepository _agentRepository;
+    private readonly IAgentRepository _agentRepository;
 
 
-    public ManagerRepository(Database database, AgentRepository agentRepository)
+    public ManagerRepository(Database database, IAgentRepository agentRepository)
     {
         _db = database;
         _agentRepository = agentRepository;

@@ -7,15 +7,15 @@ namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;
 internal class AdminRepository : IAdminRepository
 {
     private readonly Database _db;
-    private readonly AgentRepository _agentRepository;
-    private readonly ManagerRepository _managerRepository;
-    private readonly AdministrativeUserRepository _administrativeUserRepository;
-    private readonly ClientRepository _clientRepository;
+    private readonly IAgentRepository _agentRepository;
+    private readonly IManagerRepository _managerRepository;
+    private readonly IAdministrativeUsersRepository _administrativeUserRepository;
+    private readonly IClientRepository _clientRepository;
 
 
 
-    public AdminRepository(Database database, AgentRepository agentRepository, ManagerRepository managerRepository,
-        AdministrativeUserRepository administrativeUserRepository, ClientRepository clientRepository)
+    public AdminRepository(Database database, IAgentRepository agentRepository, IManagerRepository managerRepository,
+        IAdministrativeUsersRepository administrativeUserRepository, IClientRepository clientRepository)
     {
         _db = database;
         _agentRepository = agentRepository;

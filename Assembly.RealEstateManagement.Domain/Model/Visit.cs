@@ -69,6 +69,12 @@ public class Visit : AuditableEntity<int>
 
     }
 
+    public void AddNotes(string notes)
+    {
+        ValidateNotes(notes);
+        Notes = notes;
+    }
+
 
     private void ValidateVisit(Property property, Client client, Agent agent, DateTime visitDate)
     {
@@ -111,6 +117,25 @@ public class Visit : AuditableEntity<int>
         }
 
     }
+
+
+    private void ValidateNotes(string notes)
+    {
+        if (string.IsNullOrWhiteSpace(notes))
+        {
+            throw new ArgumentException("Notes cannot be null or empty.", nameof(notes));
+        }
+
+        const int maxLength = 1000;
+        if (notes.Length > maxLength)
+        {
+            throw new ArgumentException($"Notes cannot be longer than {maxLength} characters.", nameof(notes));
+        }
+
+       
+    }
 }
+
+
 
 

@@ -1,5 +1,5 @@
 ﻿
-using Assembly.RealEstateManagement.ConsoleApp.UserInterface;
+using Assembly.RealEstateManagement.ConsoleApp.UserInterface.BackOffce;
 using Assembly.RealEstateManagement.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,15 +19,16 @@ Console.WriteLine("Hello, World!");
 
 var services = new ServiceCollection();
 
+
 services.AddServices();
-services.AddSingleton<Start>();
+services.AddSingleton<AdministativeUserPanel>();
 
 using var serviceProvider = services.BuildServiceProvider();
 
-var start = serviceProvider.GetService<Start>();
+var adminUserPanel = serviceProvider.GetService<AdministativeUserPanel>();
 
-start.Create();
-start.GetAll();
 
-start.AddVisit(1);
-start.GetMyVisits(1);
+adminUserPanel.Run();
+
+
+

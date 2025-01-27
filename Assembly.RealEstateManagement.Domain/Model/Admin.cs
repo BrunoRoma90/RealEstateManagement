@@ -140,7 +140,7 @@ public class Admin : Employee , IAdmin
     }
     public Client CreateClient(Client client)
     {
-        return Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties, client.Ratings, client.Comments);
+        return Client.CreateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties, client.Ratings, client.Comments, client.Visits);
     }
 
     //Update All
@@ -160,7 +160,7 @@ public class Admin : Employee , IAdmin
     }
     public void UpdateClient(Client client)
     {
-        client.UpdateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties, client.Ratings, client.Comments);
+        client.UpdateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties, client.Ratings, client.Comments, client.Visits);
     }
 
 }   

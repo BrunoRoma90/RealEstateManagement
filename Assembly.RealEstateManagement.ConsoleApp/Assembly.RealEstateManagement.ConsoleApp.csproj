@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Assembly.RealEstateManagement.Services\Assembly.RealEstateManagement.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserInterface\FrontOffice\" />
+  </ItemGroup>
+
 </Project>

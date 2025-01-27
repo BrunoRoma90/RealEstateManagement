@@ -2,8 +2,10 @@
 
 namespace Assembly.RealEstateManagement.Services.Interfaces;
 
-internal interface IAdministrativeUserService
+public interface IAdministrativeUserService
 {
+
+
     public Visit GetVisitByClientId(int clientId);
 
     public List<Visit> GetAllVisitsByClientId(int clientId);
@@ -20,5 +22,11 @@ internal interface IAdministrativeUserService
 
     public void AddVisitToClient(Visit visit);
 
-    
+    public void AddNotes(int visitId, string notes);
+
+    public Client CreateClient(Client client);
+
+    public List<Client> GetAllClients();
+
+
 }

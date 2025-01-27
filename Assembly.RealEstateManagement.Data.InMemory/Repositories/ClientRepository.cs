@@ -1,6 +1,4 @@
-﻿
-
-using Assembly.RealEstateManagement.Domain.Core.Repositories;
+﻿using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 
 namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;
@@ -80,7 +78,7 @@ internal class ClientRepository : IClientRepository
             if (existingClient.Id == client.Id)
             {
                 existingClient.UpdateClient(client.Name, client.Account, client.Contact, client.IsRegistered, client.FavoriteProperties,
-                    client.Ratings, client.Comments);
+                    client.Ratings, client.Comments, client.Visits);
                 return existingClient;
             }
         }
