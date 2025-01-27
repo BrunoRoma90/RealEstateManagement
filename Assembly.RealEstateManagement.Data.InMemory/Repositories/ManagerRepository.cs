@@ -83,6 +83,8 @@ internal class ManagerRepository : IManagerRepository
         throw new KeyNotFoundException($"Manager with ID {id} was not found.");
     }
 
+
+
     public Agent GetAgent(int id)
     {
         return _agentRepository.GetById(id);
@@ -95,15 +97,7 @@ internal class ManagerRepository : IManagerRepository
 
     public List<Agent> GetAgentsByManagerId(int managerId)
     {
-        var agentsByManager = new List<Agent>();
-        foreach (var agent in _db.Agents)
-        {
-            if (agent.Manager.Id == managerId)
-            {
-                agentsByManager.Add(agent);
-            }
-        }
-        return agentsByManager;
+        return _agentRepository.GetAgentsByManagerId(managerId);
     }
 
    

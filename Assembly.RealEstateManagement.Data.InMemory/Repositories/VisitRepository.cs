@@ -1,4 +1,5 @@
-﻿using Assembly.RealEstateManagement.Domain.Core.Repositories;
+﻿using System.Runtime.InteropServices;
+using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 
 namespace Assembly.RealEstateManagement.Data.InMemory.Repositories;

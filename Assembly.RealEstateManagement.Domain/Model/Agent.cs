@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-using Assembly.RealEstateManagement.Domain.Enums;
-using Assembly.RealEstateManagement.Domain.Interfaces;
-
+﻿
 namespace Assembly.RealEstateManagement.Domain.Model;
 
 public class Agent : Employee
@@ -201,33 +198,60 @@ public class Agent : Employee
 
     }
 
-    public void MarkAvailabilityProperty(Property property, Availability availability)
+
+    public void DeleteVisitToMyList(Visit visit)
     {
-        if (property == null)
+        if (visit == null)
         {
-            throw new ArgumentNullException(nameof(property), "Property cannot be null.");
+            throw new ArgumentNullException(nameof(visit), "Property cannot be null.");
         }
-        bool existingProperty = false;
-        foreach (var managedProperty in ManagedProperties)
+
+        bool existingVisit = false;
+        foreach (var myVisit in Visits)
         {
-            if (managedProperty.Id == property.Id)
+            if (myVisit.Id == visit.Id)
             {
-                managedProperty.UpdateAvailability(availability);
-                existingProperty = true;
+                Visits.Remove(myVisit);
+                existingVisit = true;
                 break;
             }
         }
-        if (!existingProperty)
+
+        if (!existingVisit)
         {
-            {
-                throw new InvalidOperationException("Property cannot be updated because it is not managed by this agent.");
-            }
+            throw new InvalidOperationException("existingVisit cannot be deleted because it is not this agent.");
         }
 
     }
 
- 
-    
+    public void DeleteContactToMyList(Contact contact)
+    {
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact cannot be null.");
+        }
+
+        bool existingContact = false;
+        foreach (var listContact in Contacts)
+        {
+            if (listContact.Id == contact.Id)
+            {
+                Contacts.Remove(listContact);
+                existingContact = true;
+                break;
+            }
+        }
+
+        if (!existingContact)
+        {
+            throw new InvalidOperationException("Property cannot be deleted because it is not managed by this agent.");
+        }
+    }
+
+
+
+
+
 
 
 
