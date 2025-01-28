@@ -16,6 +16,8 @@ namespace Assembly.RealEstateManagement.Data.InMemory
             services.AddScoped<IManagerRepository, ManagerRepository>();
             services.AddScoped<IVisitRepository, VisitRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IPropertyRepository, PropertyRepository>();
+
             return services;
         }
     }
