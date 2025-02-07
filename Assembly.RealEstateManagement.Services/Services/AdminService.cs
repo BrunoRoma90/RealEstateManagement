@@ -33,27 +33,27 @@ public class AdminService : IAdminService
     }
 
     //For AdministrativeUsers
-    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers administrativeUser)
+    public AdministrativeUser CreateAdministrativeUser(AdministrativeUser administrativeUser)
     {
         return _adminRepository.CreateAdministrativeUser(administrativeUser);
     }
-    public List<AdministrativeUsers> GetAdministrativeUsers()
+    public List<AdministrativeUser> GetAdministrativeUsers()
     {
         return _adminRepository.GetAdministrativeUsers();
     }
-    public AdministrativeUsers GetAdministrativeUser(int administrativeUserId)
+    public AdministrativeUser GetAdministrativeUser(int administrativeUserId)
     {
         return _adminRepository.GetAdministrativeUser(administrativeUserId);
     }
-    public AdministrativeUsers UpdateAdministrativeUser(AdministrativeUsers administrativeUser)
+    public AdministrativeUser UpdateAdministrativeUser(AdministrativeUser administrativeUser)
     {
         return _adminRepository.UpdateAdministrativeUser(administrativeUser);
     }
-    public AdministrativeUsers DeleteAdministrativeUser(AdministrativeUsers administrativeUser)
+    public AdministrativeUser DeleteAdministrativeUser(AdministrativeUser administrativeUser)
     {
         return _adminRepository.DeleteAdministrativeUser(administrativeUser);
     }
-    public AdministrativeUsers DeleteAdministrativeUser(int administrativeUserId)
+    public AdministrativeUser DeleteAdministrativeUser(int administrativeUserId)
     {
         return _adminRepository.DeleteAdministrativeUser(administrativeUserId);
     }

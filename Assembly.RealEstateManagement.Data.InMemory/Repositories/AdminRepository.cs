@@ -150,29 +150,29 @@ internal class AdminRepository : IAdminRepository
 
 
     //For AdministrativeUser
-    public List<AdministrativeUsers> GetAdministrativeUsers()
+    public List<AdministrativeUser> GetAdministrativeUsers()
     {
         return _administrativeUserRepository.GetAll();
     }
-    public AdministrativeUsers GetAdministrativeUser(int id)
+    public AdministrativeUser GetAdministrativeUser(int id)
     {
         return _administrativeUserRepository.GetById(id);
     }
-    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers administrativeUser)
+    public AdministrativeUser CreateAdministrativeUser(AdministrativeUser administrativeUser)
     {
         return _administrativeUserRepository.Add(administrativeUser);
     }
 
-    public AdministrativeUsers UpdateAdministrativeUser(AdministrativeUsers administrativeUser)
+    public AdministrativeUser UpdateAdministrativeUser(AdministrativeUser administrativeUser)
     {
         return _administrativeUserRepository.Update(administrativeUser);
     }
-    public AdministrativeUsers DeleteAdministrativeUser(AdministrativeUsers administrativeUser)
+    public AdministrativeUser DeleteAdministrativeUser(AdministrativeUser administrativeUser)
     {
         return _administrativeUserRepository.Delete(administrativeUser);
     }
 
-    public AdministrativeUsers DeleteAdministrativeUser(int administrativeUserId)
+    public AdministrativeUser DeleteAdministrativeUser(int administrativeUserId)
     {
         return _administrativeUserRepository.Delete(administrativeUserId);
     }

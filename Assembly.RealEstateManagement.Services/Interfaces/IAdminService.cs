@@ -13,15 +13,15 @@ public interface IAdminService
     
     
     
-    List<AdministrativeUsers> GetAdministrativeUsers();
-    public AdministrativeUsers GetAdministrativeUser(int administrativeUserId);
-    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers administrativeUser);
+    List<AdministrativeUser> GetAdministrativeUsers();
+    public AdministrativeUser GetAdministrativeUser(int administrativeUserId);
+    public AdministrativeUser CreateAdministrativeUser(AdministrativeUser administrativeUser);
 
-    public AdministrativeUsers UpdateAdministrativeUser(AdministrativeUsers administrativeUser);
+    public AdministrativeUser UpdateAdministrativeUser(AdministrativeUser administrativeUser);
 
-    public AdministrativeUsers DeleteAdministrativeUser(AdministrativeUsers administrativeUser);
+    public AdministrativeUser DeleteAdministrativeUser(AdministrativeUser administrativeUser);
     
-    public AdministrativeUsers DeleteAdministrativeUser(int administrativeUserId);
+    public AdministrativeUser DeleteAdministrativeUser(int administrativeUserId);
 
 
 

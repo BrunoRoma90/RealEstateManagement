@@ -2,7 +2,7 @@
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
-public interface IAdministrativeUsersRepository : IRepository<AdministrativeUsers , int> 
+public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser , int> 
 {
     public List<Agent> GetAgents();
     public List<Manager> GetManagers();

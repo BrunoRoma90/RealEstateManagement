@@ -22,15 +22,15 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
 
     }
 
-    public AdministrativeUsers Add(AdministrativeUsers administrativeUser)
+    public AdministrativeUser Add(AdministrativeUser administrativeUser)
     {
         _db.AdministrativeUsers.Add(administrativeUser);
         return administrativeUser;
     }
 
-    public List<AdministrativeUsers> GetAll()
+    public List<AdministrativeUser> GetAll()
     {
-        var allAdministrativeUsers = new List<AdministrativeUsers>();
+        var allAdministrativeUsers = new List<AdministrativeUser>();
         foreach (var administrativeUser in _db.AdministrativeUsers)
         {
             allAdministrativeUsers.Add(administrativeUser);
@@ -38,7 +38,7 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
         return allAdministrativeUsers;
     }
 
-    public AdministrativeUsers GetById(int id)
+    public AdministrativeUser GetById(int id)
     {
         foreach (var administrativeUser in _db.AdministrativeUsers)
         {
@@ -51,7 +51,7 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
         throw new KeyNotFoundException($"Admin with ID {id} was not found.");
     }
 
-    public AdministrativeUsers Delete(AdministrativeUsers administrativeUser)
+    public AdministrativeUser Delete(AdministrativeUser administrativeUser)
     {
         var administrativeUsers = _db.AdministrativeUsers.ToList();
         foreach (var existingAdministrativeUser in administrativeUsers)
@@ -64,7 +64,7 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
         throw new KeyNotFoundException($"Administrative was not found.");
     }
 
-    public AdministrativeUsers Delete(int id)
+    public AdministrativeUser Delete(int id)
     {
         var administrativeUsers = _db.AdministrativeUsers.ToList();
         foreach (var administrativeUser in administrativeUsers)
@@ -78,7 +78,7 @@ internal class AdministrativeUserRepository : IAdministrativeUsersRepository
         throw new KeyNotFoundException($"Admin with ID {id} was not found.");
     }
 
-    public AdministrativeUsers Update(AdministrativeUsers administrativeUser)
+    public AdministrativeUser Update(AdministrativeUser administrativeUser)
     {
         var administrativeUsers = _db.AdministrativeUsers.ToList();
         foreach (var existingAdmin in administrativeUsers)

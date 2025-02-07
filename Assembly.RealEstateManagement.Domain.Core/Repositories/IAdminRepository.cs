@@ -14,13 +14,13 @@ public interface IAdminRepository : IRepository<Admin, int>
 
 
     //For Administrative Users
-    public List<AdministrativeUsers> GetAdministrativeUsers();
-    public AdministrativeUsers GetAdministrativeUser(int id);
-    public AdministrativeUsers CreateAdministrativeUser(AdministrativeUsers administrativeUser);
+    public List<AdministrativeUser> GetAdministrativeUsers();
+    public AdministrativeUser GetAdministrativeUser(int id);
+    public AdministrativeUser CreateAdministrativeUser(AdministrativeUser administrativeUser);
 
-    public AdministrativeUsers UpdateAdministrativeUser(AdministrativeUsers administrativeUser);
-    public AdministrativeUsers DeleteAdministrativeUser(AdministrativeUsers administrativeUser);
-    public AdministrativeUsers DeleteAdministrativeUser(int administrativeUserId);
+    public AdministrativeUser UpdateAdministrativeUser(AdministrativeUser administrativeUser);
+    public AdministrativeUser DeleteAdministrativeUser(AdministrativeUser administrativeUser);
+    public AdministrativeUser DeleteAdministrativeUser(int administrativeUserId);
 
 
     //For Agents
