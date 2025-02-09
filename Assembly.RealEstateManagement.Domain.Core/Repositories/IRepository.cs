@@ -7,7 +7,7 @@ public interface IRepository<TEntity, TId> where TEntity : IEntity<TId>
 {
     List<TEntity> GetAll();
 
-    TEntity GetById(TId id);
+    TEntity? GetById(TId id);
 
     TEntity Add(TEntity obj);
 
@@ -15,5 +15,5 @@ public interface IRepository<TEntity, TId> where TEntity : IEntity<TId>
 
     TEntity Delete(TEntity obj);
 
-    TEntity Delete(TId id);
+    TEntity? Delete(TId id);
 }

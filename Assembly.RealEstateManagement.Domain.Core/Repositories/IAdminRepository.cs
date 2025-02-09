@@ -2,7 +2,7 @@
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
-public interface IAdminRepository : IRepository<Admin, int>
+public interface IAdminRepository 
 {
     
     public List<Manager> GetManagers();

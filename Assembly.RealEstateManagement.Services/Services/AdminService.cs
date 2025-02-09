@@ -14,23 +14,23 @@ public class AdminService : IAdminService
         _adminRepository = adminRepository;
     }
 
-    public Admin CreateAdmin(Admin admin)
-    {
-        return _adminRepository.Add(admin);
-    }
-    public Admin UpdateAdmin(Admin admin)
-    {
-        return _adminRepository.Update(admin);
-    }
-    public void DeleteAdmin(int adminId)
-    {
-        var admin = _adminRepository.Delete(adminId);
+    //public Admin CreateAdmin(Admin admin)
+    //{
+    //    return _adminRepository.Add(admin);
+    //}
+    //public Admin UpdateAdmin(Admin admin)
+    //{
+    //    return _adminRepository.Update(admin);
+    //}
+    //public void DeleteAdmin(int adminId)
+    //{
+    //    var admin = _adminRepository.Delete(adminId);
 
-    }
-    public void DeleteAdmin(Admin admin)
-    {
-        _adminRepository.Delete(admin);
-    }
+    //}
+    //public void DeleteAdmin(Admin admin)
+    //{
+    //    _adminRepository.Delete(admin);
+    //}
 
     //For AdministrativeUsers
     public AdministrativeUser CreateAdministrativeUser(AdministrativeUser administrativeUser)

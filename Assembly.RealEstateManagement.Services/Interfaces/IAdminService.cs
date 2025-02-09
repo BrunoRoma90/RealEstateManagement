@@ -5,10 +5,10 @@ namespace Assembly.RealEstateManagement.Services.Interfaces;
 
 public interface IAdminService
 {
-    public Admin CreateAdmin(Admin admin);
-    public Admin UpdateAdmin(Admin admin);
-    public void DeleteAdmin(Admin admin);
-    public void DeleteAdmin(int adminId);
+    //public Admin CreateAdmin(Admin admin);
+    //public Admin UpdateAdmin(Admin admin);
+    //public void DeleteAdmin(Admin admin);
+    //public void DeleteAdmin(int adminId);
     
     
     

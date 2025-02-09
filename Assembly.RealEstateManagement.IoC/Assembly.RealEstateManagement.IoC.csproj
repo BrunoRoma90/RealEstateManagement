@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Assembly.RealEstateManagement.Data.InMemory\Assembly.RealEstateManagement.Data.InMemory.csproj" />
+    <ProjectReference Include="..\Assembly.RealEstateManagement.Data\Assembly.RealEstateManagement.Data.csproj" />
     <ProjectReference Include="..\Assembly.RealEstateManagement.Services\Assembly.RealEstateManagement.Services.csproj" />
   </ItemGroup>
 

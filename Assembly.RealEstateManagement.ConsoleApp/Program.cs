@@ -20,7 +20,7 @@ Console.WriteLine("Hello, World!");
 var services = new ServiceCollection();
 
 
-services.AddServices();
+//services.AddServices();
 services.AddSingleton<AdministativeUserPanel>();
 
 using var serviceProvider = services.BuildServiceProvider();

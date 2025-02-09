@@ -61,26 +61,26 @@ public class AgentService : IAgentService
 
     public void MarkAvailabilityProperty(Property property, Availability availability, Agent agent)
     {
-        if (property == null)
-        {
-            throw new ArgumentNullException(nameof(property), "Property cannot be null.");
-        }
-        bool existingProperty = false;
-        foreach (var managedProperty in agent.ManagedProperties)
-        {
-            if (managedProperty.Id == property.Id)
-            {
-                managedProperty.UpdateAvailability(availability);
-                existingProperty = true;
-                break;
-            }
-        }
-        if (!existingProperty)
-        {
-            {
-                throw new InvalidOperationException("Property cannot be updated because it is not managed by this agent.");
-            }
-        }
+        //if (property == null)
+        //{
+        //    throw new ArgumentNullException(nameof(property), "Property cannot be null.");
+        //}
+        //bool existingProperty = false;
+        //foreach (var managedProperty in agent.ManagedProperties)
+        //{
+        //    if (managedProperty.Id == property.Id)
+        //    {
+        //        managedProperty.UpdateAvailability(availability);
+        //        existingProperty = true;
+        //        break;
+        //    }
+        //}
+        //if (!existingProperty)
+        //{
+        //    {
+        //        throw new InvalidOperationException("Property cannot be updated because it is not managed by this agent.");
+        //    }
+        //}
 
     }
 
