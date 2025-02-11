@@ -11,4 +11,9 @@ internal class AgentPersonalContactRepository : Repository<AgentPersonalContact,
 
     }
 
+    public List<AgentPersonalContact> GetMyPersonalContacts(int agentId)
+    {
+        return DbSet.Where(apc => apc.Agent.Id == agentId).ToList();
+    }
+
 }

@@ -20,7 +20,6 @@ public interface IAgentRepository : IRepository<Agent, int>
     List<Property> GetPropertiesByAgentId(int agentId);
     List<Visit> GetVisitsByAgentId(int agentId);
 
-    public List<Contact> GetMyContacts(int agentId);
     public List<Agent> GetAgentsByManagerId(int managerId);
 
 

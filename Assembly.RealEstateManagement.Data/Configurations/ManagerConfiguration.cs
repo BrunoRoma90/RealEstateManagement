@@ -17,5 +17,6 @@ internal class ManagerConfiguration : IEntityTypeConfiguration<Manager>
         });
         builder
        .Ignore(m => m.ManagedAgents); // Ignora a propriedade na modelagem do banco de dados
+        
     }
 }

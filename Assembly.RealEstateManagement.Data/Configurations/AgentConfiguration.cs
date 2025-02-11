@@ -15,7 +15,7 @@ internal class AgentConfiguration : IEntityTypeConfiguration<Agent>
             u.Property(x => x.MiddleNames).HasColumnName("MiddleNames");
             u.Property(x => x.LastName).HasColumnName("LastName");
         });
-        builder.Ignore(a  => a.Name.FullName);
+       
         builder.HasOne(e => e.Manager).WithMany().HasForeignKey("ManagerId").
             OnDelete(DeleteBehavior.NoAction); // Sem delete em cascata
 

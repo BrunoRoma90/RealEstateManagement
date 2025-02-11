@@ -48,13 +48,10 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
 
     public List<Agent> GetAgentsByManagerId(int managerId)
     {
-        throw new NotImplementedException();
+        return DbSet.Where(a => a.Manager.Id == managerId).ToList();
     }
 
-    public List<Contact> GetMyContacts(int agentId)
-    {
-        throw new NotImplementedException();
-    }
+   
 
     public List<Property> GetPropertiesByAgentId(int agentId)
     {

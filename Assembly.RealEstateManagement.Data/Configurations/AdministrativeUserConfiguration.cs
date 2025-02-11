@@ -14,5 +14,6 @@ internal class AdministrativeUserConfiguration : IEntityTypeConfiguration<Admini
             u.Property(x => x.MiddleNames).HasColumnName("MiddleNames");
             u.Property(x => x.LastName).HasColumnName("LastName");
         });
+        
     }
 }
