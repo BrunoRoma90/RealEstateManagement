@@ -17,6 +17,21 @@ public static class DependencyInjection
             options.UseSqlServer(cs);
         });
         services.AddScoped<IAgentRepository,AgentRepository>();
+        services.AddScoped<IAgentPersonalContactRepository, AgentPersonalContactRepository>();
+        services.AddScoped<IAgentAllContactRepository, AgentAllContactRepository>();
+        services.AddScoped<IManagerRepository, ManagerRepository>();
+        services.AddScoped<IManagerPersonalContactRepository, ManagerPersonalContactRepository>();
+        services.AddScoped<IManagerAllContactRepository, ManagerAllContactRepository>();
+        services.AddScoped<IAdministrativeUsersRepository, AdministrativeUserRepository>();
+        services.AddScoped<IAdministrativeUserPersonalContactRepository, AdministrativeUserPersonalContactRepository>();
+        services.AddScoped<IAdministrativeUserAllContactRepository, AdministrativeUserAllContactRepository>();
+        services.AddScoped<IVisitRepository, VisitRepository>();
+        services.AddScoped<IPropertyRepository, PropertyRepository>();
+        services.AddScoped<IClientRepository , ClientRepository>();
+        
+
+
+
         return services;
     }
 }

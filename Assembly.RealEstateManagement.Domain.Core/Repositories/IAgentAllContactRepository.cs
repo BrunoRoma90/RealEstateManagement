@@ -2,8 +2,7 @@
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
-public interface IClientRepository : IRepository<Client, int>
+public interface IAgentAllContactRepository : IRepository<AgentAllContact, int> 
 {
-    public Client Login(string username, string password);
 
 }

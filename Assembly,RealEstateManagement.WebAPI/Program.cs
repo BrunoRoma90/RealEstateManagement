@@ -3,7 +3,7 @@ using Assembly.RealEstateManagement.IoC;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var config = builder.Configuration; //DependencyInjection
+var config = builder.Configuration; 
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
