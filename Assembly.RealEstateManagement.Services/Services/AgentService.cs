@@ -98,10 +98,10 @@ public class AgentService : IAgentService
         _agentRepository.RemoveContactFromMyList(agentId, contact);
     }
 
-    public List<Contact> GetMyContacts(int agentId)
-    {
-        return _agentRepository.GetMyContacts(agentId);
-    }
+    //public List<Contact> GetMyContacts(int agentId)
+    //{
+    //    return _agentRepository.GetMyContacts(agentId);
+    //}
 
 
     public void AddPropertyToAgent(int agentId, Property property)

@@ -13,7 +13,7 @@ public interface IAgentService
     public void RemoveVisitToMyList(int agentId, Visit visit);
     List<Visit> GetAllVisits(int agentId);
 
-    public List<Contact> GetMyContacts(int agentId);
+    //public List<Contact> GetMyContacts(int agentId);
 
     public void AddNotes(int visitId, string notes);
 
