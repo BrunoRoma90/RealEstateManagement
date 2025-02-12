@@ -8,9 +8,12 @@ public class Comment : AuditableEntity<int>
     public string Text { get; private set; }
     public Property Property { get; private set; }
 
-    private Comment()
-    {
+    private Comment() { }
 
+    private Comment(string text, Property property):this()
+    {
+        Text = text;
+        Property = property;
     }
 }
 

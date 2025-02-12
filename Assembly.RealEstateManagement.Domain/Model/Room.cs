@@ -10,4 +10,10 @@ public class Room : AuditableEntity<int>
     public double Size { get; private set; }
 
     private Room() { }
+
+    private Room(RoomType roomType, double size):this()
+    {
+        RoomType = roomType;
+        Size = size;
+    }
 }

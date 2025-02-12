@@ -10,4 +10,11 @@ public class ManagerAllContact : AuditableEntity<int>
     public Manager Manager { get; private set; }
 
     private ManagerAllContact() { }
+
+    private ManagerAllContact(Name name, Contact contact, Manager manager):this()
+    {
+        Name = name;
+        Contact = contact;
+        Manager = manager;
+    }
 }

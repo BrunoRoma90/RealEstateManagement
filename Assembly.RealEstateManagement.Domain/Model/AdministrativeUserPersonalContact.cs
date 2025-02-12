@@ -9,8 +9,13 @@ public class AdministrativeUserPersonalContact : AuditableEntity<int>
     public AdministrativeUser AdministrativeUser { get; private set; }
 
     private AdministrativeUserPersonalContact()
-    {
+    {}
 
+
+    private AdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser):this()
+    {
+        Contact = contact;
+        AdministrativeUser = administrativeUser;
     }
 }
 

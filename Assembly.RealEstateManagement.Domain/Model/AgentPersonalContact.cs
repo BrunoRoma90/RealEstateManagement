@@ -9,9 +9,12 @@ public class AgentPersonalContact : AuditableEntity<int>
 
     public Agent Agent { get; private set; }
 
-    public AgentPersonalContact()
-    {
+    private AgentPersonalContact() { }
 
+    private AgentPersonalContact(Contact contact, Agent agent):this()
+    {
+        Contact = contact;
+        Agent = agent;
     }
 }
 

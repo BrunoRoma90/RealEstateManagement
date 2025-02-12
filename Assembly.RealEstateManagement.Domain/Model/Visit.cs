@@ -12,6 +12,15 @@ public class Visit : AuditableEntity<int>
     public string Notes { get; private set; }
 
     public Visit() { }
+
+    public Visit(Client client, Property property, Agent agent, DateTime visitDate, string notes):this()
+    {
+        Client = client;
+        Property = property;
+        Agent = agent;
+        VisitDate = visitDate;
+        Notes = notes;
+    }
 }
 
 

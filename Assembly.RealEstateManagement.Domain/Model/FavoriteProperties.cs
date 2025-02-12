@@ -7,6 +7,11 @@ public class FavoriteProperties : AuditableEntity<int>
 {
     public Property Property { get; private set; }
     
-    private FavoriteProperties() { }    
+    private FavoriteProperties() { } 
+    
+    private FavoriteProperties(Property property):this()
+    {
+        Property = property;
+    }
 
 }

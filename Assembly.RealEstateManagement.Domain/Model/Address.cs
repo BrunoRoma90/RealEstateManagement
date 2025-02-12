@@ -13,5 +13,29 @@ public class Address : AuditableEntity<int>
 
     private Address()
     { }
+
+    private Address(int id,string street, int number, string postalCode, string city, string country):this()
+    {
+        Id = id;
+        Street = street;
+        Number = number;
+        PostalCode = postalCode;
+        City = city;
+        Country = country;
+    }
+
+    private Address(string street, int number, string postalCode, string city, string country):this()
+    {
+        Street = street;
+        Number = number;
+        PostalCode = postalCode;
+        City = city;
+        Country = country;
+    }
+
+    public static Address Create(string street, int number, string postalCode, string city, string country)
+    {
+        return new Address(street,number, postalCode,city,country);
+    }
 }
 

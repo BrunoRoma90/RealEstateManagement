@@ -10,8 +10,11 @@ public class PropertyImage : AuditableEntity<int>
     public string ImageUrl { get; private set; }
     public string Description { get; private set; }
 
-    private PropertyImage()
-    {
+    private PropertyImage() { }
 
+    private PropertyImage(string imageUrl, string description):this()
+    {
+        ImageUrl = imageUrl;
+        Description = description;
     }
 }

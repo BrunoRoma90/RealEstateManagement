@@ -18,8 +18,29 @@ public class Property : AuditableEntity<int>
     public List<Room> Rooms { get; private set; }
     public List<PropertyImage> PropertyImages { get; private set; }
 
-    private Property()
-    {
+    private Property() { }
 
+    private Property(Agent agent,
+        PropertyType propertyType,
+        decimal price,
+        decimal priceBySquareMeter,
+        decimal sizeBySquareMeters,
+        string description,
+        Address address,
+        TransactionType transactionType,
+        Availability availability,
+        List<Room> rooms, List<PropertyImage> propertyImages):this()
+    {
+        Agent = agent;
+        PropertyType = propertyType;
+        Price = price;
+        PriceBySquareMeter = priceBySquareMeter;
+        SizeBySquareMeters = sizeBySquareMeters;
+        Description = description;
+        Address = address;
+        TransactionType = transactionType;
+        Availability = availability;
+        Rooms = rooms;
+        PropertyImages = propertyImages;
     }
 }

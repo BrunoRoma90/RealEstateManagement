@@ -10,6 +10,13 @@ public class AdministrativeUserAllContact : AuditableEntity<int>
     public AdministrativeUser AdministrativeUser { get; private set; }
 
     private AdministrativeUserAllContact() { }
+
+    private AdministrativeUserAllContact(Name name, Contact contact, AdministrativeUser administrativeUser):this()
+    {
+        Name = name;
+        Contact = contact;
+        AdministrativeUser = administrativeUser;
+    }
 }
 
 

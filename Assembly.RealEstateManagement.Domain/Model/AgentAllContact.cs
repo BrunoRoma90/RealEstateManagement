@@ -10,7 +10,14 @@ public class AgentAllContact : AuditableEntity<int>
 
     public Agent Agent { get; private set; }
 
-    public AgentAllContact() { }
+    private AgentAllContact() { }
+
+    private AgentAllContact(Name name, Contact contact, Agent agent):this()
+    {
+        Name = name;
+        Contact = contact;
+        Agent = agent;
+    }
 }
 
 

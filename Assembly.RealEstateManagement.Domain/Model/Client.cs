@@ -15,6 +15,20 @@ public class Client : AuditableEntity<int>
 
     private Client() { }
 
+    private Client(int id, Name name, Account account, Address address, bool isRegistered,
+        List<FavoriteProperties> favoriteProperties,
+        List<Rating> ratings,
+        List<Comment> comments)
+    {
+        Id = id;
+        Name = name;
+        Account = account;
+        Address = address;
+        IsRegistered = isRegistered;
+        FavoriteProperties = favoriteProperties;
+        Ratings = ratings;
+        Comments = comments;
+    }
 }
 
 
