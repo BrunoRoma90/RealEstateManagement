@@ -15,5 +15,19 @@ public class Room : AuditableEntity<int>
     {
         RoomType = roomType;
         Size = size;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
+    }
+
+    private void ValidateRoom(RoomType roomType, double size)
+    {
+        if (!Enum.IsDefined(typeof(RoomType), roomType))
+        {
+            throw new ArgumentException("Room type.");
+        }
+        if (size <= 0)
+        {
+            throw new ArgumentException(nameof(size), "Size must be greater than zero.");
+        }
     }
 }

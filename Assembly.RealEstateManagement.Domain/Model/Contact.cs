@@ -21,6 +21,10 @@ public class Contact
         Value = value;
     }
 
+    public static Contact Create(ContactType contactType, string value)
+    {
+       return new Contact(contactType, value);
+    }
 
     private void ValidateContact(ContactType contactType, string value)
     {

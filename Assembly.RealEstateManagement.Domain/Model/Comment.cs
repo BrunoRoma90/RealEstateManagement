@@ -16,6 +16,8 @@ public class Comment : AuditableEntity<int>
         ValidateComment(text, property);
         Text = text;
         Property = property;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private void ValidateComment(string text, Property property)

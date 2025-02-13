@@ -22,6 +22,8 @@ public class Address : AuditableEntity<int>
         PostalCode = postalCode;
         City = city;
         Country = country;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private Address(string street, int number, string postalCode, string city, string country):this()

@@ -26,6 +26,8 @@ public class Manager : Employee
         ManagerPersonalContact = managerPersonalContact;
         ManagerAllContacts = managerAllContacts;
         ManagedAgents = managedAgents;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private void ValidateManager(int id, int managerNumber, int employeeNumber,

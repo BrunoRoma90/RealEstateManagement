@@ -16,6 +16,8 @@ public class AgentPersonalContact : AuditableEntity<int>
         ValidateAgentPersonalContact(contact, agent);
         Contact = contact;
         Agent = agent;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
     private void ValidateAgentPersonalContact(Contact contact, Agent agent)
     {

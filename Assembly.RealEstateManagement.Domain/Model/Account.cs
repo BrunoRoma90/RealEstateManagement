@@ -15,6 +15,8 @@ public class Account : AuditableEntity<int>
         Id = id;
         Email = email;
         Password = password;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private Account(string email, string password): this()

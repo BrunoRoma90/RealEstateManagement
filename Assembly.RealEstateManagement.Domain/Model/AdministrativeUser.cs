@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Numerics;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
@@ -24,7 +25,42 @@ public class AdministrativeUser : Employee
         AdministrativeUsersPersonalContact = administrativeUsersPersonalContact;
         AdministrativeUsersAllContact = administrativeUsersAllContact;
         IsAdmin = isAdmin;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
+
+    private AdministrativeUser(Name name, Account account, Address address, int employeeNumber, int administrativeNumber,
+        List<AdministrativeUserAllContact> administrativeUserAllContacts,
+        List<AdministrativeUserPersonalContact> administrativeUserPersonalContacts, bool isAdmin)
+    {
+        ValidateAdministrativeUsers(administrativeNumber, administrativeNumber, administrativeUserPersonalContacts, administrativeUserAllContacts);
+        Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
+        Account = Account.Create(account.Email, account.Email);
+        Address = Address.Create(address.Street, address.Number, address.PostalCode, address.City, address.Country);
+        EmployeeNumber = employeeNumber;
+        AdministrativeNumber = administrativeNumber;
+        AdministrativeUsersAllContact = new List<AdministrativeUserAllContact>();
+        foreach (var contact in administrativeUserAllContacts)
+        {
+            AdministrativeUsersAllContact.Add(AdministrativeUserAllContact.Create(contact.Name, contact.Contact, this));
+        }
+        AdministrativeUsersPersonalContact = new List<AdministrativeUserPersonalContact>();
+        foreach (var contact in administrativeUserPersonalContacts)
+        {
+            AdministrativeUsersPersonalContact.Add(AdministrativeUserPersonalContact.Create(contact.Contact, this));
+        }
+        IsAdmin = isAdmin;
+    }
+
+    public static AdministrativeUser Create(Name name, Account account, Address address, int employeeNumber, int administrativeNumber,
+       List<AdministrativeUserAllContact> administrativeUserAllContacts,
+       List<AdministrativeUserPersonalContact> userPersonalContacts) 
+    {
+        return new AdministrativeUser(name, account, address, employeeNumber, administrativeNumber, administrativeUserAllContacts,
+            userPersonalContacts, false );
+    }
+
+
 
     private void ValidateAdministrativeUsers(int administrativeNumber, int employeeNumber,
         List<AdministrativeUserPersonalContact> administrativeUsersPersonalContact,

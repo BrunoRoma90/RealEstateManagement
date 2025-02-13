@@ -14,6 +14,8 @@ public class FavoriteProperties : AuditableEntity<int>
     {
         ValidateFavorieProperties(property);
         Property = property;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private void ValidateFavorieProperties(Property property)

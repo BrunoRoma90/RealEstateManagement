@@ -43,6 +43,8 @@ public class Property : AuditableEntity<int>
         Availability = availability;
         Rooms = rooms;
         PropertyImages = propertyImages;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
 

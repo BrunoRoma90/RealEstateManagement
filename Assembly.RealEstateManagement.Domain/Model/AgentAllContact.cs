@@ -18,6 +18,8 @@ public class AgentAllContact : AuditableEntity<int>
         Name = name;
         Contact = contact;
         Agent = agent;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private void ValidateAgentAllContact(Name name, Contact contact, Agent agent)

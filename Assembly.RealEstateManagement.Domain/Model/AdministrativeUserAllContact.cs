@@ -14,12 +14,30 @@ public class AdministrativeUserAllContact : AuditableEntity<int>
 
     private AdministrativeUserAllContact() { }
 
-    private AdministrativeUserAllContact(Name name, Contact contact, AdministrativeUser administrativeUser) : this()
+    private AdministrativeUserAllContact(int id,Name name, Contact contact, AdministrativeUser administrativeUser) : this()
     {
         ValidateAdministrativeUserAllContact(name, contact, administrativeUser);
+        Id = id;
         Name = name;
         Contact = contact;
         AdministrativeUser = administrativeUser;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
+    }
+
+    private AdministrativeUserAllContact(Name name, Contact contact, AdministrativeUser administrativeUser) 
+    {
+        Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
+        Contact = Contact.Create(contact.ContactType, contact.Value);
+        AdministrativeUser = AdministrativeUser.Create(administrativeUser.Name, administrativeUser.Account,
+           administrativeUser.Address, administrativeUser.EmployeeNumber, administrativeUser.AdministrativeNumber,
+           administrativeUser.AdministrativeUsersAllContact, administrativeUser.AdministrativeUsersPersonalContact
+           );
+    }
+
+    public static AdministrativeUserAllContact Create(Name name, Contact contact, AdministrativeUser administrativeUser)
+    {
+        return new AdministrativeUserAllContact(name, contact, administrativeUser);
     }
     private void ValidateAdministrativeUserAllContact(Name name, Contact contact, AdministrativeUser administrativeUser)
     {

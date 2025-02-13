@@ -11,19 +11,10 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-
-
-    "RealEstateManagementPortatil": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5067",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Portatil"
-      }
     }
+
+
+    
 
 
 

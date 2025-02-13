@@ -30,6 +30,8 @@ public class Client : AuditableEntity<int>
         FavoriteProperties = favoriteProperties;
         Ratings = ratings;
         Comments = comments;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
 

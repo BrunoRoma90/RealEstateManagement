@@ -27,6 +27,8 @@ public class Agent : Employee
         ManagedProperty = managedProperty;
         AgentAllContact = agentAllContact;
         Manager = manager;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     

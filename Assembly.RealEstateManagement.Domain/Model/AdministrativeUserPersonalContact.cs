@@ -12,12 +12,29 @@ public class AdministrativeUserPersonalContact : AuditableEntity<int>
     {}
 
 
-    private AdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser):this()
+    private AdministrativeUserPersonalContact(int id, Contact contact, AdministrativeUser administrativeUser):this()
     {
         ValidateAdministrativeUserPersonalContact(contact, administrativeUser);
         Contact = contact;
         AdministrativeUser = administrativeUser;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
+
+    private AdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser) : this()
+    {
+        Contact = Contact.Create(contact.ContactType, contact.Value);
+        AdministrativeUser = AdministrativeUser.Create(administrativeUser.Name, administrativeUser.Account,
+           administrativeUser.Address, administrativeUser.EmployeeNumber, administrativeUser.AdministrativeNumber,
+           administrativeUser.AdministrativeUsersAllContact, administrativeUser.AdministrativeUsersPersonalContact);
+    }
+
+    public static AdministrativeUserPersonalContact Create(Contact contact, AdministrativeUser administrativeUser)
+    {
+        return new AdministrativeUserPersonalContact(contact,administrativeUser);
+    }
+
+
 
     private void ValidateAdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser)
     {

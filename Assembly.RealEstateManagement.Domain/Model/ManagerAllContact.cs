@@ -17,6 +17,8 @@ public class ManagerAllContact : AuditableEntity<int>
         Name = name;
         Contact = contact;
         Manager = manager;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private void ValidateManagerAllContact(Name name, Contact contact, Manager manager)

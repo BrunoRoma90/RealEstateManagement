@@ -12,8 +12,11 @@ public class Rating : AuditableEntity<int>
 
     private Rating(double value, Property property):this()
     {
+        ValidateRating(value , property);
         Value = value;
         Property = property;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
 
     private void ValidateRating(double value, Property property)

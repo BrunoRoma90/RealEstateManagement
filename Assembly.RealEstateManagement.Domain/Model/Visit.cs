@@ -20,7 +20,11 @@ public class Visit : AuditableEntity<int>
         Agent = agent;
         VisitDate = visitDate;
         Notes = notes;
+        Created = DateTime.Now;
+        Updated = DateTime.Now;
     }
+
+
 }
 
 
