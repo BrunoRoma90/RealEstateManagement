@@ -16,6 +16,19 @@ public class Rating : AuditableEntity<int>
         Property = property;
     }
 
+    private void ValidateRating(double value, Property property)
+    {
+        if (value <= 0)
+        {
+            throw new ArgumentException(nameof(value), "Value must be greater than zero.");
+        }
+        if (property == null)
+        {
+            throw new ArgumentNullException(nameof(property), "Property is required.");
+        }
+
+    }
+
 
 }
 

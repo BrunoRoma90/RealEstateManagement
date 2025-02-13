@@ -6,11 +6,11 @@ namespace Assembly.RealEstateManagement.Domain.Model;
 public abstract class Employee : AuditableEntity<int>
 {
 
-    public int EmployeeNumber { get; private set; }
-    public Name Name { get; private set; }
-    public Account Account { get; private set; }
+    public int EmployeeNumber { get; protected set; }
+    public Name Name { get; protected set; }
+    public Account Account { get; protected set; }
 
-    public Address Address { get; private set; }
+    public Address Address { get; protected set; }
 
 
     protected Employee()

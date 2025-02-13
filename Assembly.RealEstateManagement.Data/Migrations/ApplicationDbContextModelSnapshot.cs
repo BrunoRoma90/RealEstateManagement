@@ -122,6 +122,9 @@ namespace Assembly.RealEstateManagement.Data.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
+                    b.Property<int>("EmployeeNumber")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
@@ -221,6 +224,9 @@ namespace Assembly.RealEstateManagement.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeNumber")
                         .HasColumnType("int");
 
                     b.Property<int>("ManagerId")
@@ -433,6 +439,9 @@ namespace Assembly.RealEstateManagement.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeNumber")
                         .HasColumnType("int");
 
                     b.Property<int>("ManagerNumber")

@@ -13,8 +13,26 @@ public class ManagerAllContact : AuditableEntity<int>
 
     private ManagerAllContact(Name name, Contact contact, Manager manager):this()
     {
+        ValidateManagerAllContact(name, contact, manager);
         Name = name;
         Contact = contact;
         Manager = manager;
+    }
+
+    private void ValidateManagerAllContact(Name name, Contact contact, Manager manager)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name), "Name is required.");
+        }
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+        if (manager == null)
+        {
+            throw new ArgumentNullException(nameof(manager), "Manager is required.");
+        }
+
     }
 }

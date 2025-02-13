@@ -25,7 +25,7 @@ public class Contact
     private void ValidateContact(ContactType contactType, string value)
     {
         if(!Enum.IsDefined(typeof(ContactType), contactType))
-    {
+        {
             throw new ArgumentException("Invalid contact type.");
         }
 

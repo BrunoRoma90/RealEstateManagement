@@ -29,6 +29,8 @@ public class Agent : Employee
         Manager = manager;
     }
 
+    
+
     private void ValidateAgent(int id, int agentNumber,int employeeNumber, List<AgentPersonalContact> agentPersonalContact,
         List<Property> managedProperty, List<AgentAllContact> agentAllContact, Manager manager)
     {
