@@ -13,9 +13,23 @@ public class AgentPersonalContact : AuditableEntity<int>
 
     private AgentPersonalContact(Contact contact, Agent agent):this()
     {
+        ValidateAgentPersonalContact(contact, agent);
         Contact = contact;
         Agent = agent;
     }
+    private void ValidateAgentPersonalContact(Contact contact, Agent agent)
+    {
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent), "Agent is required.");
+        }
+
+    }
+
 }
 
 

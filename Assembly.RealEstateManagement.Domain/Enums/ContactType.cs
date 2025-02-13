@@ -4,6 +4,7 @@ public enum ContactType
 {
     Phone,
     Email,
-    Mobile
+    Mobile,
+    SocialMedia
 }
 

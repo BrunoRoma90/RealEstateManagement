@@ -14,9 +14,27 @@ public class AgentAllContact : AuditableEntity<int>
 
     private AgentAllContact(Name name, Contact contact, Agent agent):this()
     {
+        ValidateAgentAllContact(name, contact, agent);
         Name = name;
         Contact = contact;
         Agent = agent;
+    }
+
+    private void ValidateAgentAllContact(Name name, Contact contact, Agent agent)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name), "Name is required.");
+        }
+        if (contact == null)
+        {
+            throw new ArgumentNullException(nameof(contact), "Contact is required.");
+        }
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent), "Agent is required.");
+        }
+
     }
 }
 

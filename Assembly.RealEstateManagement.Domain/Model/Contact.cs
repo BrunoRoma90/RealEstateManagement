@@ -16,10 +16,50 @@ public class Contact
 
     private Contact(ContactType contactType, string value) : this()
     {
+        ValidateContact(contactType, value);
         ContactType = contactType;
         Value = value;
     }
 
+
+    private void ValidateContact(ContactType contactType, string value)
+    {
+        if(!Enum.IsDefined(typeof(ContactType), contactType))
+    {
+            throw new ArgumentException("Invalid contact type.");
+        }
+
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new ArgumentNullException(nameof(value), "Value is required.");
+        }
+
+        switch (contactType)
+        {
+            case ContactType.Email:
+                if (!value.Contains("@") || !value.Contains("."))
+                {
+                    throw new ArgumentException("Invalid email format.");
+                }
+                break;
+
+            case ContactType.Phone:
+            case ContactType.Mobile:
+                if (!value.All(char.IsDigit) || value.Length < 9)
+                {
+                    throw new ArgumentException("Invalid phone or mobile number.");
+                }
+                break;
+
+            case ContactType.SocialMedia:
+                if (value.Length < 3)
+                {
+                    throw new ArgumentException("Social media username is too short.");
+                }
+                break;
+        }
+
+    }
 
 }
 

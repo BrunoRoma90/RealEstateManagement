@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Assembly.RealEstateManagement.Domain.Common;
+using Assembly.RealEstateManagement.Domain.Interfaces;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
@@ -12,8 +13,22 @@ public class Comment : AuditableEntity<int>
 
     private Comment(string text, Property property):this()
     {
+        ValidateComment(text, property);
         Text = text;
         Property = property;
+    }
+
+    private void ValidateComment(string text, Property property)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            throw new ArgumentNullException("Text is required.");
+        }
+        if (property == null)
+        {
+            throw new ArgumentNullException(nameof(property), "Property is required.");
+        }
+
     }
 }
 
