@@ -20,7 +20,7 @@ public class Agent : Employee
         List<AgentAllContact> agentAllContact,
         Manager manager) :base(employeeNumber, name, account, address)
     {
-        ValidateAgent(id, agentNumber, employeeNumber, agentPersonalContact, managedProperty, agentAllContact, manager);
+        ValidateAgent( agentNumber, employeeNumber, agentPersonalContact, managedProperty, agentAllContact, manager);
         Id = id;
         AgentNumber = agentNumber;
         AgentPersonalContact = agentPersonalContact;
@@ -31,15 +31,27 @@ public class Agent : Employee
         Updated = DateTime.Now;
     }
 
-    
+    private Agent(Name name, Account account, Address address, int agentNumber, int employeeNumber , List<AgentPersonalContact> agentPersonalContact,
+        List<Property> managedProperty, List<AgentAllContact> agentAllContact, Manager manager)
+        :base(employeeNumber , name, account, address)
+    {
+        ValidateAgent(agentNumber, employeeNumber, agentPersonalContact,managedProperty, agentAllContact, manager);
+        AgentNumber = agentNumber;
+        AgentPersonalContact = agentPersonalContact;
+        ManagedProperty = managedProperty;
+        AgentAllContact = agentAllContact;
+        Manager = manager;
+    }
 
-    private void ValidateAgent(int id, int agentNumber,int employeeNumber, List<AgentPersonalContact> agentPersonalContact,
+     public static Agent Create(Name name, Account account, Address address, int agentNumber, int employeeNumber, List<AgentPersonalContact> agentPersonalContacts,
+       List<Property> managedProperties, List<AgentAllContact> agentAllContacts, Manager manager)
+     {
+        return new Agent(name, account, address,employeeNumber, employeeNumber, agentPersonalContacts, managedProperties, agentAllContacts, manager);
+     }
+    private void ValidateAgent(int agentNumber,int employeeNumber, List<AgentPersonalContact> agentPersonalContact,
         List<Property> managedProperty, List<AgentAllContact> agentAllContact, Manager manager)
     {
-        if (id <= 0)
-        {
-            throw new ArgumentException(nameof(id), "Id must be greater than zero.");
-        }
+    
         if (employeeNumber <= 0)
         {
             throw new ArgumentException(nameof(employeeNumber), "Employee Number must be greater than zero.");

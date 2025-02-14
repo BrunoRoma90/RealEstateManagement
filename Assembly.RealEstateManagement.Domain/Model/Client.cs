@@ -21,7 +21,7 @@ public class Client : AuditableEntity<int>
         List<Rating> ratings,
         List<Comment> comments)
     {
-        ValidateClient(id, name, account, address, favoriteProperties, ratings, comments);
+        ValidateClient(name, account, address, favoriteProperties, ratings, comments);
         Id = id;
         Name = name;
         Account = account;
@@ -34,14 +34,27 @@ public class Client : AuditableEntity<int>
         Updated = DateTime.Now;
     }
 
+    private Client(Name name, Account account, Address address, bool isRegistered,
+        List<FavoriteProperties> favoriteProperties,
+        List<Rating> ratings,
+        List<Comment> comments)
+    {
+        ValidateClient(name, account, address, favoriteProperties, ratings, comments);
+        Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
+        Account = Account.Create(account.Email, account.Password);
+        Address = Address.Create(address.Street, address.Number, address.PostalCode, address.City, address.Country);
+        IsRegistered = isRegistered;
+        FavoriteProperties = favoriteProperties;
+        Ratings = ratings;
+        Comments = comments;
+    
+    }
 
-    private void ValidateClient(int  id, Name name, Account account, Address address,
+
+    private void ValidateClient(Name name, Account account, Address address,
         List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)
     {
-        if (id <= 0)
-        {
-            throw new ArgumentException(nameof(id), "Id must be greater than zero.");
-        }
+        
         if (name == null)
         {
             throw new ArgumentException(nameof(name), "Name is required.");
