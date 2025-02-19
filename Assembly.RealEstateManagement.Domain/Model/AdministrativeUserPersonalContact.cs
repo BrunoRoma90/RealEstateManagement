@@ -34,6 +34,21 @@ public class AdministrativeUserPersonalContact : AuditableEntity<int>
         return new AdministrativeUserPersonalContact(contact,administrativeUser);
     }
 
+    public static AdministrativeUserPersonalContact Update(Contact newContact, AdministrativeUser newAdministrativeUser)
+    {
+        return new AdministrativeUserPersonalContact(newContact,newAdministrativeUser);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(AdministrativeUserPersonalContact administrativeUserPersonalContact)
+    {
+        administrativeUserPersonalContact.IsDeleted = false;
+    }
+
 
 
     private void ValidateAdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser)

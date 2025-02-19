@@ -12,12 +12,41 @@ public class PropertyImage : AuditableEntity<int>
 
     private PropertyImage() { }
 
-    private PropertyImage(string imageUrl, string description) :this()
+    private PropertyImage(int id ,string imageUrl, string description) :this()
     {
+        ValidatePropertyImage(imageUrl, description);
         ImageUrl = imageUrl;
         Description = description;
         Created = DateTime.Now;
         Updated = DateTime.Now;
+    }
+
+    private PropertyImage(string imageUrl, string description) : this()
+    {
+        ValidatePropertyImage(imageUrl, description);
+        ImageUrl = imageUrl;
+        Description = description;
+      
+    }
+
+    public static PropertyImage Create(string imageUrl, string description)
+    {
+        return new PropertyImage(imageUrl, description);
+    }
+
+    public static PropertyImage Update(string newImageUrl, string newDescription)
+    {
+        return new PropertyImage(newImageUrl, newDescription);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(PropertyImage propertyImage)
+    {
+        propertyImage.IsDeleted = false;
     }
 
     private void ValidatePropertyImage(string imageUrl, string description)

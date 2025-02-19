@@ -62,6 +62,25 @@ public class AdministrativeUser : Employee
 
 
 
+    public static AdministrativeUser Update(Name newName, Account newAccount, Address newAddress, int newEmployeeNumber, int newAdministrativeNumber,
+       List<AdministrativeUserAllContact> newAdministrativeUserAllContacts,
+       List<AdministrativeUserPersonalContact> newUserPersonalContacts)
+    {
+        return new AdministrativeUser(newName, newAccount, newAddress, newEmployeeNumber, newAdministrativeNumber, newAdministrativeUserAllContacts,
+            newUserPersonalContacts, false);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(AdministrativeUser administrativeUser)
+    {
+        administrativeUser.IsDeleted = false;
+    }
+
+
     private void ValidateAdministrativeUsers(int administrativeNumber, int employeeNumber,
         List<AdministrativeUserPersonalContact> administrativeUsersPersonalContact,
         List<AdministrativeUserAllContact> administrativeUsersAllContact)

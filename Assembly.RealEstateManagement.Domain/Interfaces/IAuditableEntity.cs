@@ -2,7 +2,7 @@
 
 namespace Assembly.RealEstateManagement.Domain.Interfaces;
 
-public interface IAuditableEntity<TUserId>
+public interface IAuditableEntity<TUserId> 
 {
     public DateTime Created { get; set; }
 

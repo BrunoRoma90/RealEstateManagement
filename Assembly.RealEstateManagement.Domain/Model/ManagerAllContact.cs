@@ -11,7 +11,7 @@ public class ManagerAllContact : AuditableEntity<int>
 
     private ManagerAllContact() { }
 
-    private ManagerAllContact(Name name, Contact contact, Manager manager):this()
+    private ManagerAllContact(int id,Name name, Contact contact, Manager manager):this()
     {
         ValidateManagerAllContact(name, contact, manager);
         Name = name;
@@ -21,6 +21,36 @@ public class ManagerAllContact : AuditableEntity<int>
         Updated = DateTime.Now;
     }
 
+    private ManagerAllContact(Name name, Contact contact, Manager manager)
+    {
+        ValidateManagerAllContact(name, contact, manager);
+        Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
+        Contact = Contact.Create(contact.ContactType, contact.Value);
+        Manager = Manager.Create(manager.EmployeeNumber, manager.Name, manager.Account,
+           manager.Address, manager.ManagerNumber,
+           manager.ManagerAllContacts, manager.ManagerPersonalContact, manager.ManagedAgents
+           );
+    }
+
+    public static ManagerAllContact Create(Name name, Contact contact, Manager manager)
+    {
+        return new ManagerAllContact(name, contact, manager);
+    }
+
+    public static ManagerAllContact Update(Name newName, Contact newContact, Manager newManager)
+    {
+        return new ManagerAllContact(newName, newContact, newManager);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(ManagerAllContact managerAllContact)
+    {
+        managerAllContact.IsDeleted = false;
+    }
     private void ValidateManagerAllContact(Name name, Contact contact, Manager manager)
     {
         if (name == null)

@@ -38,6 +38,22 @@ public class AgentAllContact : AuditableEntity<int>
         return new AgentAllContact(name, contact, agent);
     }
 
+    public static AgentAllContact Update(Name newName, Contact newContact, Agent newAgent)
+    {
+        return new AgentAllContact(newName, newContact, newAgent);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(AgentAllContact agentAllContact)
+    {
+        agentAllContact.IsDeleted = false;
+    }
+
+
     private void ValidateAgentAllContact(Name name, Contact contact, Agent agent)
     {
         if (name == null)

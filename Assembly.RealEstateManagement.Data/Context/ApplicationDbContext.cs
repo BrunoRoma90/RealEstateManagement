@@ -30,6 +30,11 @@ public class ApplicationDbContext : DbContext
     {
 
     }
+
+    public ApplicationDbContext()
+    {
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);

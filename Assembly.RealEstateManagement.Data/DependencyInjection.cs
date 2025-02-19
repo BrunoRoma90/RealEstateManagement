@@ -28,7 +28,8 @@ public static class DependencyInjection
         services.AddScoped<IVisitRepository, VisitRepository>();
         services.AddScoped<IPropertyRepository, PropertyRepository>();
         services.AddScoped<IClientRepository , ClientRepository>();
-        
+        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IAddressRepository, AddressRepository>();
 
 
 

@@ -33,6 +33,36 @@ public class Account : AuditableEntity<int>
     }
 
 
+    public void UpdateEmailAndPassword(string newEmail, string newPassword)
+    {
+        UpdateEmail(newEmail);
+        UpdatePasswordl(newPassword);
+        Email = newEmail;
+        Password = newPassword;
+
+    }
+    private void UpdateEmail(string newEmail)
+    {
+        ValidateEmail(newEmail);
+        Email = newEmail;
+    }
+    private void UpdatePasswordl(string newPassword)
+    {
+        ValidatePassword(newPassword);
+        Password = newPassword;
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Account account)
+    {
+        account.IsDeleted = false;
+    }
+
+
     private void ValidateEmail(string email)
     {
         if (string.IsNullOrEmpty(email))

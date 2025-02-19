@@ -39,13 +39,10 @@ public class Name
         return new Name(firstName, middleNames, lastName);
 
     }
-    public void UpdateName(string firstName, string[] middleNames, string lastName)
+    public static Name UpdateName(string firstName, string[] middleNames, string lastName)
     {
-        ValidateName(firstName, lastName);
-        ValidateMiddleNames(middleNames);
-        FirstName = firstName;
-        LastName = lastName;
-        MiddleNames = middleNames ?? Array.Empty<string>();
+        
+        return new Name(firstName, middleNames, lastName);
     }
 
 

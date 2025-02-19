@@ -11,15 +11,43 @@ public class Comment : AuditableEntity<int>
 
     private Comment() { }
 
-    private Comment(string text, Property property):this()
+    private Comment(int id,string text, Property property):this()
     {
         ValidateComment(text, property);
+        Id = id;
         Text = text;
         Property = property;
         Created = DateTime.Now;
         Updated = DateTime.Now;
     }
 
+    private Comment(string text, Property property):this()
+    {
+        ValidateComment(text, property);
+        Text = text;
+        Property = property;
+
+    }
+
+    public static Comment Create(string text, Property property)
+    {
+        return new Comment(text, property);
+    }
+
+    public static Comment Update(string newText, Property newProperty)
+    {
+        return new Comment(newText, newProperty);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Comment comment)
+    {
+        comment.IsDeleted = false;
+    }
     private void ValidateComment(string text, Property property)
     {
         if (string.IsNullOrEmpty(text))

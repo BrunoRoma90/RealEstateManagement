@@ -50,6 +50,27 @@ public class Client : AuditableEntity<int>
     
     }
 
+    public static Client Create(Name name, Account account, Address address, List<FavoriteProperties> favoriteProperties,
+        List<Rating> ratings, List<Comment> comments)
+    {
+        return new Client(name, account, address, false, favoriteProperties, ratings, comments);
+    }
+
+    public static Client Update(Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
+    List<Rating> newRatings, List<Comment> newComments)
+    {
+        return new Client(newName, newAccount, newAddress, false, newFavoriteProperties, newRatings, newComments);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Client client)
+    {
+        client.IsDeleted = false;
+    }
 
     private void ValidateClient(Name name, Account account, Address address,
         List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)

@@ -1,6 +1,4 @@
-﻿using Assembly.RealEstateManagement.Domain.Interfaces;
-
-namespace Assembly.RealEstateManagement.Domain.Model;
+﻿namespace Assembly.RealEstateManagement.Domain.Model;
 
 public class Manager : Employee
 {
@@ -14,13 +12,13 @@ public class Manager : Employee
 
     public Manager() { }
 
-    public Manager(int id, int employeeNumber, Name name, Account account, Address address,
+    private Manager(int id, int employeeNumber, Name name, Account account, Address address,
         int managerNumber,
         List<ManagerPersonalContact> managerPersonalContact,
         List<ManagerAllContact> managerAllContacts,
         List<Agent> managedAgents):base(employeeNumber, name, account, address)
     {
-        ValidateManager(id, managerNumber, employeeNumber, managerPersonalContact, managerAllContacts);
+        ValidateManager(managerNumber, employeeNumber, managerPersonalContact, managerAllContacts);
         Id = id;
         ManagerNumber = managerNumber;
         ManagerPersonalContact = managerPersonalContact;
@@ -30,14 +28,52 @@ public class Manager : Employee
         Updated = DateTime.Now;
     }
 
-    private void ValidateManager(int id, int managerNumber, int employeeNumber,
+    private Manager(int employeeNumber, Name name, Account account, Address address,
+       int managerNumber,
+       List<ManagerPersonalContact> managerPersonalContact,
+       List<ManagerAllContact> managerAllContacts,
+       List<Agent> managedAgents) : base(employeeNumber, name, account, address)
+    {
+        ValidateManager(managerNumber, employeeNumber, managerPersonalContact, managerAllContacts);
+        Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
+        Account = Account.Create(account.Email, account.Password);
+        Address = Address.Create(address.Street, address.Number, address.PostalCode, address.City, address.Country);
+        EmployeeNumber = employeeNumber;
+        ManagerNumber = managerNumber;
+        ManagerPersonalContact = managerPersonalContact;
+        ManagerAllContacts = managerAllContacts;
+        ManagedAgents = managedAgents;
+     
+    }
+
+
+    public static Manager Create(int emplyeeNumber, Name name, Account account, Address address, int managerNumber,
+        List<ManagerAllContact> managerAllContacts, List<ManagerPersonalContact> managerPersonalContacts, List<Agent> managedAgents)
+    {
+        return new Manager(emplyeeNumber, name, account, address, managerNumber, managerPersonalContacts, managerAllContacts, managedAgents);
+    }
+    public static Manager Update(int newEmplyeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
+       List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
+    {
+
+        return new Manager(newEmplyeeNumber, newName, newAccount, newAddress, newManagerNumber, newManagerPersonalContacts, newManagerAllContacts, newManagedAgents);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Manager manager)
+    {
+        manager.IsDeleted = false;
+    }
+
+    private void ValidateManager(int managerNumber, int employeeNumber,
         List<ManagerPersonalContact> managerPersonalContact,
         List<ManagerAllContact> managerAllContact)
     {
-        if (id <= 0)
-        {
-            throw new ArgumentException(nameof(id), "Id must be greater than zero.");
-        }
+     
         if (employeeNumber <= 0)
         {
             throw new ArgumentException(nameof(employeeNumber), "Employee Number must be greater than zero.");
@@ -46,13 +82,13 @@ public class Manager : Employee
         {
             throw new ArgumentException(nameof(managerNumber), "Manager number must be greater than zero.");
         }
-        if (managerPersonalContact == null || managerPersonalContact.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(managerPersonalContact), "Personal Contact list is required.");
-        }
-        if (managerAllContact == null || managerAllContact.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(managerAllContact), "Manager all contact list is required.");
-        }
+        //if (managerPersonalContact == null || managerPersonalContact.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(managerPersonalContact), "Personal Contact list is required.");
+        //}
+        //if (managerAllContact == null || managerAllContact.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(managerAllContact), "Manager all contact list is required.");
+        //}
     }
 }

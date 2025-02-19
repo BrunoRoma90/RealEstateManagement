@@ -11,13 +11,45 @@ public class Room : AuditableEntity<int>
 
     private Room() { }
 
-    private Room(RoomType roomType, double size):this()
+    private Room(int id,RoomType roomType, double size):this()
     {
+        ValidateRoom(roomType, size);
+        Id = id;
         RoomType = roomType;
         Size = size;
         Created = DateTime.Now;
         Updated = DateTime.Now;
     }
+
+    private Room(RoomType roomType, double size) : this()
+    {
+        ValidateRoom(roomType, size);
+        RoomType = roomType;
+        Size = size;
+        
+    }
+
+    public static Room Create(RoomType roomType, double size)
+    {
+        return new Room(roomType, size);
+    }
+
+    public static Room Update(RoomType newRoomType, double newSize)
+    {
+        return new Room(newRoomType, newSize);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Room room)
+    {
+        room.IsDeleted = false;
+    }
+
+
 
     private void ValidateRoom(RoomType roomType, double size)
     {

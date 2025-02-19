@@ -41,6 +41,24 @@ public class Address : AuditableEntity<int>
         return new Address(street,number, postalCode,city,country);
     }
 
+    public static Address UpdateAddress(string newStreet, int newNumber, string newPostalCode, string newCity, string newCountry)
+    {
+        
+        return new Address(newStreet, newNumber, newPostalCode, newCity, newCountry);
+
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Address address)
+    {
+        address.IsDeleted = false;
+    }
+
+
 
     private void ValidateAddress(string street, int number, string postalCode, string city, string country)
     {

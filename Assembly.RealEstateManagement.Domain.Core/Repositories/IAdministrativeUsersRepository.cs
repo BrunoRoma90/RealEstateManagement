@@ -4,36 +4,44 @@ namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
 public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser , int> 
 {
-    public List<Agent> GetAgents();
-    public List<Manager> GetManagers();
 
-    public List<Visit> GetVisits();
+    public Account? GetManagerAccount(int administrativeUserId);
+    public Address? GetManagerAddress(int administrativeUserId);
+    public AdministrativeUser? GetAdministrativeUserByAdministrativeUserNumber(int administrativeUserNumber);
 
-    public List<Client> GetClients();
+    public AdministrativeUser? GetAdministrativeUserByEmployeeNumber(int employeeNumber);
 
-    public Agent GetAgent(int id);
+    #region
+    //public List<Agent> GetAgents();
+    //public List<Manager> GetManagers();
 
-    public Manager GetManager(int id);
+    //public List<Visit> GetVisits();
 
-    public Client GetClient(int id);
+    //public List<Client> GetClients();
 
-    public List<Visit> GetVisitsByClientId(int clientId);
+    //public Agent GetAgent(int id);
 
-    public List<Visit> GetVisitsByAgentId(int agentId);
+    //public Manager GetManager(int id);
 
-    public Visit GetVisitByClientId(int clientId);
+    //public Client GetClient(int id);
 
-    public Visit GetVisitByAgentId(int agentId);
-    public Visit UpdateVisit(Visit visit);
+    //public List<Visit> GetVisitsByClientId(int clientId);
 
-    public void AddVisit(Visit visit);
+    //public List<Visit> GetVisitsByAgentId(int agentId);
 
-    public void AddVisitToAgent(Visit visit);
-    public void AddVisitToClient(Visit visit);
+    //public Visit GetVisitByClientId(int clientId);
 
-    public void AddNotes(int visitId, string notes);
+    //public Visit GetVisitByAgentId(int agentId);
+    //public Visit UpdateVisit(Visit visit);
 
-    public Client CreateClient(Client client);
+    //public void AddVisit(Visit visit);
 
+    //public void AddVisitToAgent(Visit visit);
+    //public void AddVisitToClient(Visit visit);
+
+    //public void AddNotes(int visitId, string notes);
+
+    //public Client CreateClient(Client client);
+    #endregion
 
 }

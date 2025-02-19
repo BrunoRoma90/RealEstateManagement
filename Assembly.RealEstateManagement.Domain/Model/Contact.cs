@@ -26,6 +26,14 @@ public class Contact
        return new Contact(contactType, value);
     }
 
+    public static Contact Update(ContactType newContactType, string newValue)
+    {
+        return new Contact(newContactType, newValue);
+    }
+
+  
+
+
     private void ValidateContact(ContactType contactType, string value)
     {
         if(!Enum.IsDefined(typeof(ContactType), contactType))

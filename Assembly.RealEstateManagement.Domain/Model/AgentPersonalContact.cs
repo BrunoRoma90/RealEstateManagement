@@ -35,6 +35,21 @@ public class AgentPersonalContact : AuditableEntity<int>
         return new AgentPersonalContact(contact, agent);
     }
 
+    public static AgentPersonalContact Update(Contact newContact, Agent newAgent)
+    {
+        return new AgentPersonalContact(newContact, newAgent);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(AgentPersonalContact agentPersonalContact)
+    {
+        agentPersonalContact.IsDeleted = false;
+    }
+
     private void ValidateAgentPersonalContact(Contact contact, Agent agent)
     {
         if (contact == null)

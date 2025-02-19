@@ -1,6 +1,8 @@
-﻿using Assembly.RealEstateManagement.Data.Context;
+﻿using System.Linq;
+using Assembly.RealEstateManagement.Data.Context;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assembly.RealEstateManagement.Data.Repositories;
 
@@ -10,6 +12,8 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
     {
 
     }
+
+
 
     public void AddContactToMyList(int angentId, Contact contact)
     {
@@ -46,12 +50,38 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
         throw new NotImplementedException();
     }
 
+    public Account? GetAgentAccount(int agentId)
+    {
+        var agent = DbSet.Include(a => a.Account).FirstOrDefault(a => a.Id == agentId);
+        return agent?.Account;
+    }
+
+    public Address? GetAgentAddress(int agentId)
+    {
+        var agent = DbSet.Include(a => a.Address).FirstOrDefault(a => a.Id == agentId);
+        return agent?.Address;
+    }
+
+    public Agent? GetAgentByAgentNumber(int agentNumber)
+    {
+        return DbSet.FirstOrDefault(a => a.AgentNumber == agentNumber);
+    }
+    public Agent? GetAgentByEmployeeNumber(int employeeNumber)
+    {
+        return DbSet.FirstOrDefault(a => a.EmployeeNumber == employeeNumber);
+    }
     public List<Agent> GetAgentsByManagerId(int managerId)
     {
         return DbSet.Where(a => a.Manager.Id == managerId).ToList();
     }
 
-   
+    public Manager? GetManagerByAgentId(int agentId)
+    {
+        return DbSet.Where(a => a.Id == agentId)
+                    .Select(a => a.Manager)
+                    .FirstOrDefault();
+    }
+
 
     public List<Property> GetPropertiesByAgentId(int agentId)
     {

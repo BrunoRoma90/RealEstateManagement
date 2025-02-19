@@ -21,7 +21,7 @@ public class Property : AuditableEntity<int>
 
     private Property() { }
 
-    private Property(Agent agent,
+    private Property(int id,Agent agent,
         PropertyType propertyType,
         decimal price,
         decimal priceBySquareMeter,
@@ -32,6 +32,7 @@ public class Property : AuditableEntity<int>
         Availability availability,
         List<Room> rooms, List<PropertyImage> propertyImages):this()
     {
+        Id = id;
         Agent = agent;
         PropertyType = propertyType;
         Price = price;
@@ -45,6 +46,58 @@ public class Property : AuditableEntity<int>
         PropertyImages = propertyImages;
         Created = DateTime.Now;
         Updated = DateTime.Now;
+    }
+
+
+    private Property( Agent agent,
+        PropertyType propertyType,
+        decimal price,
+        decimal priceBySquareMeter,
+        decimal sizeBySquareMeters,
+        string description,
+        Address address,
+        TransactionType transactionType,
+        Availability availability,
+        List<Room> rooms, List<PropertyImage> propertyImages) : this()
+    {
+        ValidateProperty(agent, propertyType, price, priceBySquareMeter, sizeBySquareMeters, description, address, transactionType, availability, rooms, propertyImages);
+        Agent = Agent.Create(agent.Name, agent.Account, agent.Address, agent.AgentNumber, agent.EmployeeNumber, agent.AgentPersonalContact,
+            agent.ManagedProperty, agent.AgentAllContact, agent.Manager);
+        PropertyType = propertyType;
+        Price = price;
+        PriceBySquareMeter = priceBySquareMeter;
+        SizeBySquareMeters = sizeBySquareMeters;
+        Description = description;
+        Address = Address.Create(address.Street, address.Number, address.PostalCode, address.City, address.Country);
+        TransactionType = transactionType;
+        Availability = availability;
+        Rooms = rooms;
+        PropertyImages = propertyImages;
+     
+    }
+
+    public static Property Create(Agent agent, PropertyType propertyType,decimal price,decimal priceBySquareMeter,decimal sizeBySquareMeters,
+        string description,Address address,TransactionType transactionType,Availability availability,List<Room> rooms, List<PropertyImage> propertyImages)
+    {
+        return new Property(agent, propertyType, price, priceBySquareMeter, sizeBySquareMeters, description,
+            address, transactionType, availability, rooms, propertyImages);
+    }
+
+    public static Property Update(Agent newAgent, PropertyType newPropertyType, decimal newPrice, decimal newPriceBySquareMeter, decimal newSizeBySquareMeters,
+        string newDescription, Address newAddress, TransactionType newTransactionType, Availability newAvailability, List<Room> newRooms, List<PropertyImage> newPropertyImages)
+    {
+        return new Property(newAgent, newPropertyType, newPrice, newPriceBySquareMeter, newSizeBySquareMeters, newDescription,
+            newAddress, newTransactionType, newAvailability, newRooms, newPropertyImages);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Property property)
+    {
+        property.IsDeleted = false;
     }
 
 

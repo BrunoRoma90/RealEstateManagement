@@ -46,8 +46,29 @@ public class Agent : Employee
      public static Agent Create(Name name, Account account, Address address, int agentNumber, int employeeNumber, List<AgentPersonalContact> agentPersonalContacts,
        List<Property> managedProperties, List<AgentAllContact> agentAllContacts, Manager manager)
      {
-        return new Agent(name, account, address,employeeNumber, employeeNumber, agentPersonalContacts, managedProperties, agentAllContacts, manager);
+        return new Agent(name, account, address, agentNumber, employeeNumber, agentPersonalContacts, managedProperties, agentAllContacts, manager);
      }
+
+    public static Agent Update(Name newName, Account newAccount, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
+       List<Property> newManagedProperties, List<AgentAllContact> newAgentAllContacts, Manager newManager)
+    {
+        return new Agent(newName, newAccount, newAddress, newAgentNumber, newEmployeeNumber, newAgentPersonalContacts, newManagedProperties, newAgentAllContacts, newManager);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
+    public static void Restore(Agent agent)
+    {
+        agent.IsDeleted = false;
+    }
+
+    public void UpdateName(Name name)
+    {
+        Name = name;
+    }
     private void ValidateAgent(int agentNumber,int employeeNumber, List<AgentPersonalContact> agentPersonalContact,
         List<Property> managedProperty, List<AgentAllContact> agentAllContact, Manager manager)
     {
@@ -60,18 +81,18 @@ public class Agent : Employee
         {
             throw new ArgumentException(nameof(agentNumber), "Agent number must be greater than zero.");
         }
-        if (agentPersonalContact == null || agentPersonalContact.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(agentPersonalContact), "Personal Contact list is required.");
-        }
-        if (managedProperty == null || managedProperty.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(managedProperty), "Managed Property list is required.");
-        }
-        if (manager == null)
-        {
-            throw new ArgumentNullException(nameof(manager), "Manager is required.");
-        }
+        //if (agentPersonalContact == null || agentPersonalContact.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(agentPersonalContact), "Personal Contact list is required.");
+        //}
+        //if (managedProperty == null || managedProperty.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(managedProperty), "Managed Property list is required.");
+        //}
+        //if (manager == null)
+        //{
+        //    throw new ArgumentNullException(nameof(manager), "Manager is required.");
+        //}
     }
 }
 
