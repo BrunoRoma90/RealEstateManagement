@@ -13,54 +13,75 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
 
     }
 
+    #region
+
+    //public void AddContactToMyList(int angentId, Contact contact)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void AddNotes(int visitId, string notes)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void AddPropertyToMyList(int agentId, Property property)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void AddVisitToMyList(int agentId, Visit visit)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public Property CreateProperty(Property property)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void DeleteProperty(int propertyId)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void DeleteProperty(Property property)
+    //{
+    //    throw new NotImplementedException();
+    //}
+    //public Property GetPropertyById(int propertyId)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public List<Visit> GetVisitsByAgentId(int agentId)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void RemoveContactFromMyList(int angentId, Contact contact)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void RemovePropertyFromAgent(int agentId, Property property)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void RemoveVisitToMyList(int agentId, Visit visit)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public Property UpdateProperty(Property property)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
 
-    public void AddContactToMyList(int angentId, Contact contact)
-    {
-        throw new NotImplementedException();
-    }
 
-    public void AddNotes(int visitId, string notes)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddPropertyToMyList(int agentId, Property property)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddVisitToMyList(int agentId, Visit visit)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Property CreateProperty(Property property)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteProperty(int propertyId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteProperty(Property property)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Account? GetAgentAccount(int agentId)
-    {
-        var agent = DbSet.Include(a => a.Account).FirstOrDefault(a => a.Id == agentId);
-        return agent?.Account;
-    }
-
-    public Address? GetAgentAddress(int agentId)
-    {
-        var agent = DbSet.Include(a => a.Address).FirstOrDefault(a => a.Id == agentId);
-        return agent?.Address;
-    }
+    #endregion
 
     public Agent? GetAgentByAgentNumber(int agentNumber)
     {
@@ -82,39 +103,18 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
                     .FirstOrDefault();
     }
 
-
-    public List<Property> GetPropertiesByAgentId(int agentId)
+    public Account? GetAgentAccount(int agentId)
     {
-        throw new NotImplementedException();
+        var agent = DbSet.Include(a => a.Account).FirstOrDefault(a => a.Id == agentId);
+        return agent?.Account;
     }
 
-    public Property GetPropertyById(int propertyId)
+    public Address? GetAgentAddress(int agentId)
     {
-        throw new NotImplementedException();
+        var agent = DbSet.Include(a => a.Address).FirstOrDefault(a => a.Id == agentId);
+        return agent?.Address;
     }
 
-    public List<Visit> GetVisitsByAgentId(int agentId)
-    {
-        throw new NotImplementedException();
-    }
 
-    public void RemoveContactFromMyList(int angentId, Contact contact)
-    {
-        throw new NotImplementedException();
-    }
 
-    public void RemovePropertyFromAgent(int agentId, Property property)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void RemoveVisitToMyList(int agentId, Visit visit)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Property UpdateProperty(Property property)
-    {
-        throw new NotImplementedException();
-    }
 }

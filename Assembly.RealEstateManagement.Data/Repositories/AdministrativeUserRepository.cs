@@ -17,13 +17,13 @@ internal class AdministrativeUserRepository : Repository<AdministrativeUser, int
         return DbSet.FirstOrDefault(au => au.AdministrativeNumber == administrativeUserNumber);
     }
 
-    public Account? GetManagerAccount(int administrativeUserId)
+    public Account? GetAdministrativeUserAccount(int administrativeUserId)
     {
         var administrativeUser = DbSet.Include(au => au.Account).FirstOrDefault(au => au.Id == administrativeUserId);
         return administrativeUser?.Account;
     }
 
-    public Address? GetManagerAddress(int administrativeUserId)
+    public Address? GetAdministrativeUserAddress(int administrativeUserId)
     {
         var administrativeUser = DbSet.Include(au => au.Address).FirstOrDefault(au => au.Id == administrativeUserId);
         return administrativeUser?.Address;

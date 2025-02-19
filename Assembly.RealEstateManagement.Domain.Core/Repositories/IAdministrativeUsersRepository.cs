@@ -5,8 +5,8 @@ namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser , int> 
 {
 
-    public Account? GetManagerAccount(int administrativeUserId);
-    public Address? GetManagerAddress(int administrativeUserId);
+    public Account? GetAdministrativeUserAccount(int administrativeUserId);
+    public Address? GetAdministrativeUserAddress(int administrativeUserId);
     public AdministrativeUser? GetAdministrativeUserByAdministrativeUserNumber(int administrativeUserNumber);
 
     public AdministrativeUser? GetAdministrativeUserByEmployeeNumber(int employeeNumber);
