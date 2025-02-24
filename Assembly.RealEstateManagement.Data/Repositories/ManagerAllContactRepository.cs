@@ -10,4 +10,9 @@ internal class ManagerAllContactRepository : Repository<ManagerAllContact, int>,
     {
 
     }
+
+    public List<ManagerAllContact> GetManagerContacts(int managerId)
+    {
+        return DbSet.Where(mac => mac.Manager.Id == managerId).ToList();
+    }
 }

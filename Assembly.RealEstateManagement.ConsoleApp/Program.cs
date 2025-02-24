@@ -26,8 +26,7 @@ using var serviceProvider = services.BuildServiceProvider();
 // 🔹 Obter o repositório e inserir um Agent
 var managerRepository = serviceProvider.GetRequiredService<IManagerRepository>();
 var agentRepository = serviceProvider.GetRequiredService<IAgentRepository>();
-var accountRepository = serviceProvider.GetRequiredService<IAccountRepository>();
-var addressRepository = serviceProvider.GetRequiredService<IAddressRepository>();
+
 
 
 //Console.Write("Input First Name: ");

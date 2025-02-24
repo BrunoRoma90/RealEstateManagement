@@ -26,7 +26,7 @@ internal class ManagerRepository : Repository<Manager, int>, IManagerRepository
 
     public Manager? GetManagerByEmployeeNumber(int employeeNumber)
     {
-        return DbSet.FirstOrDefault(a => a.EmployeeNumber == employeeNumber);
+        return DbSet.FirstOrDefault(m => m.EmployeeNumber == employeeNumber);
     }
 
     public Manager? GetManagerByManagerNumber(int managerNumber)

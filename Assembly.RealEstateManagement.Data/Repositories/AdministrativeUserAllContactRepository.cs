@@ -11,5 +11,8 @@ internal class AdministrativeUserAllContactRepository : Repository<Administrativ
 
     }
 
-   
+    public List<AdministrativeUserAllContact> GetAdministrativeUserContacts(int administrativeUserId)
+    {
+        return DbSet.Where(auac => auac.AdministrativeUser.Id == administrativeUserId).ToList();
+    }
 }

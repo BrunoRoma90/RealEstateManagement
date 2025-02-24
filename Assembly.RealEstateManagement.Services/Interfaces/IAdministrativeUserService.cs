@@ -6,27 +6,27 @@ public interface IAdministrativeUserService
 {
 
 
-    public Visit GetVisitByClientId(int clientId);
+    //public Visit GetVisitByClientId(int clientId);
 
-    public List<Visit> GetAllVisitsByClientId(int clientId);
+    //public List<Visit> GetAllVisitsByClientId(int clientId);
 
-    public List<Visit> GetAllVisitsByAgentId(int agentId);
+    //public List<Visit> GetAllVisitsByAgentId(int agentId);
 
-    public Visit GetVisitByAgentId(int agentId);
+    //public Visit GetVisitByAgentId(int agentId);
 
-    public Visit UpdateVisit(Visit visit);
+    //public Visit UpdateVisit(Visit visit);
 
-    public void AddVisit(Visit visit);
+    //public void AddVisit(Visit visit);
 
-    public void AddVisitToAgent(Visit visit);
+    //public void AddVisitToAgent(Visit visit);
 
-    public void AddVisitToClient(Visit visit);
+    //public void AddVisitToClient(Visit visit);
 
-    public void AddNotes(int visitId, string notes);
+    //public void AddNotes(int visitId, string notes);
 
-    public Client CreateClient(Client client);
+    //public Client CreateClient(Client client);
 
-    public List<Client> GetAllClients();
+    //public List<Client> GetAllClients();
 
 
 }

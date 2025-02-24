@@ -1,8 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Data.Context;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Logging;
+
 
 namespace Assembly.RealEstateManagement.Data.Repositories;
 

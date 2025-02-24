@@ -10,4 +10,9 @@ internal class ManagerPersonalContactRepository : Repository<ManagerPersonalCont
     {
 
     }
+
+    public List<ManagerPersonalContact> GetMyPersonalContacts(int managerId)
+    {
+        return DbSet.Where(mpc => mpc.Manager.Id == managerId).ToList();
+    }
 }

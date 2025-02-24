@@ -2,6 +2,7 @@
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 
+
 namespace Assembly.RealEstateManagement.Data.Repositories;
 
 internal class AdministrativeUserPersonalContactRepository : Repository<AdministrativeUserPersonalContact, int>, IAdministrativeUserPersonalContactRepository
@@ -11,5 +12,8 @@ internal class AdministrativeUserPersonalContactRepository : Repository<Administ
 
     }
 
-   
+    public List<AdministrativeUserPersonalContact> GetMyPersonalContacts(int administrativeUserId)
+    {
+        return DbSet.Where(aupc => aupc.AdministrativeUser.Id == administrativeUserId).ToList();
+    }
 }
