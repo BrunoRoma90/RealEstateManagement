@@ -10,7 +10,7 @@ public class Manager : Employee
 
     public List<Agent> ManagedAgents { get; private set; }
 
-    public Manager() { }
+    private Manager() { }
 
     private Manager(int id, int employeeNumber, Name name, Account account, Address address,
         int managerNumber,
@@ -24,8 +24,7 @@ public class Manager : Employee
         ManagerPersonalContact = managerPersonalContact;
         ManagerAllContacts = managerAllContacts;
         ManagedAgents = managedAgents;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private Manager(int employeeNumber, Name name, Account account, Address address,

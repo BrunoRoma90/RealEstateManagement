@@ -1,4 +1,5 @@
 using Assembly.RealEstateManagement.IoC;
+using Assembly_RealEstateManagement.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.EnsureDatabaseMigration();
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
