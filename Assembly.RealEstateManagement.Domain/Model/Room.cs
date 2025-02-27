@@ -17,8 +17,7 @@ public class Room : AuditableEntity<int>
         Id = id;
         RoomType = roomType;
         Size = size;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private Room(RoomType roomType, double size) : this()

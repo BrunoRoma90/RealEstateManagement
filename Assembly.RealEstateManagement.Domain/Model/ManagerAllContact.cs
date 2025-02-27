@@ -17,8 +17,7 @@ public class ManagerAllContact : AuditableEntity<int>
         Name = name;
         Contact = contact;
         Manager = manager;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private ManagerAllContact(Name name, Contact contact, Manager manager)
@@ -42,10 +41,6 @@ public class ManagerAllContact : AuditableEntity<int>
         return new ManagerAllContact(newName, newContact, newManager);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
 
     public static void Restore(ManagerAllContact managerAllContact)
     {

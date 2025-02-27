@@ -5,6 +5,11 @@ namespace Assembly.RealEstateManagement.Services.Interfaces;
 public interface IManagerService
 {
 
+    List<Manager> GetManagers();
+
+    public Manager GetManagerById(int id);
+    Manager Add(Manager manager);
+
     //public Agent GetAgent(int id);
 
 

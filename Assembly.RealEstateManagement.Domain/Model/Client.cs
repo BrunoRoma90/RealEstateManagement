@@ -30,8 +30,7 @@ public class Client : AuditableEntity<int>
         FavoriteProperties = favoriteProperties;
         Ratings = ratings;
         Comments = comments;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private Client(Name name, Account account, Address address, bool isRegistered,
@@ -62,10 +61,6 @@ public class Client : AuditableEntity<int>
         return new Client(newName, newAccount, newAddress, false, newFavoriteProperties, newRatings, newComments);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
 
     public static void Restore(Client client)
     {

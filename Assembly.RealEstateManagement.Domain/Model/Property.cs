@@ -44,8 +44,7 @@ public class Property : AuditableEntity<int>
         Availability = availability;
         Rooms = rooms;
         PropertyImages = propertyImages;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
 
@@ -88,11 +87,6 @@ public class Property : AuditableEntity<int>
     {
         return new Property(newAgent, newPropertyType, newPrice, newPriceBySquareMeter, newSizeBySquareMeters, newDescription,
             newAddress, newTransactionType, newAvailability, newRooms, newPropertyImages);
-    }
-
-    public void Delete()
-    {
-        IsDeleted = true;
     }
 
     public static void Restore(Property property)

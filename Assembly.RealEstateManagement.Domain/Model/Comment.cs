@@ -17,8 +17,7 @@ public class Comment : AuditableEntity<int>
         Id = id;
         Text = text;
         Property = property;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private Comment(string text, Property property):this()
@@ -39,10 +38,7 @@ public class Comment : AuditableEntity<int>
         return new Comment(newText, newProperty);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(Comment comment)
     {

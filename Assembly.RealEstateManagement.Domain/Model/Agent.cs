@@ -27,8 +27,8 @@ public class Agent : Employee
         ManagedProperty = managedProperty;
         AgentAllContact = agentAllContact;
         Manager = manager;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
+        
     }
 
     private Agent(Name name, Account account, Address address, int agentNumber, int employeeNumber , List<AgentPersonalContact> agentPersonalContact,
@@ -55,10 +55,7 @@ public class Agent : Employee
         return new Agent(newName, newAccount, newAddress, newAgentNumber, newEmployeeNumber, newAgentPersonalContacts, newManagedProperties, newAgentAllContacts, newManager);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(Agent agent)
     {

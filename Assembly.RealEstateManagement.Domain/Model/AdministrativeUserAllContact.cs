@@ -21,8 +21,7 @@ public class AdministrativeUserAllContact : AuditableEntity<int>
         Name = name;
         Contact = contact;
         AdministrativeUser = administrativeUser;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private AdministrativeUserAllContact(Name name, Contact contact, AdministrativeUser administrativeUser) 
@@ -46,10 +45,7 @@ public class AdministrativeUserAllContact : AuditableEntity<int>
     }
 
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(AdministrativeUserAllContact administrativeUserAllContact)
     {

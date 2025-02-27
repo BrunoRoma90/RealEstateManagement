@@ -12,6 +12,26 @@ public class ManagerService : IManagerService
     {
         _managerRepository = managerRepository;
     }
+
+    public Manager Add(Manager manager)
+    {
+        return _managerRepository.Add(manager);
+    }
+
+    public Manager GetManagerById(int id)
+    {
+        var manager = _managerRepository.GetById(id);
+        if (manager == null)
+        {
+            throw new KeyNotFoundException($"Manager with ID {id} not found.");
+        }
+        return manager;
+    }
+
+    public List<Manager> GetManagers()
+    {
+        return _managerRepository.GetAll();
+    }
     //public Agent GetAgent(int id)
     //{
     //    return _managerRepository.GetAgent(id);
@@ -40,13 +60,13 @@ public class ManagerService : IManagerService
 
     //public List<Visit> GetAgentCalendar(int agentId)
     //{
-        
+
     //    return _managerRepository.GetAgentCalendar(agentId);
     //}
 
     //public void CreateAppointment(int agentId, Visit visit)
     //{
-        
+
     //    _managerRepository.CreateAppointment(agentId, visit);
     //}
 

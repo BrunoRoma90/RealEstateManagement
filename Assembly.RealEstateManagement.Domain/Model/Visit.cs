@@ -21,8 +21,7 @@ public class Visit : AuditableEntity<int>
         Agent = agent;
         VisitDate = visitDate;
         Notes = notes;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private Visit(Client client, Property property, Agent agent, DateTime visitDate, string notes) : this()
@@ -47,10 +46,7 @@ public class Visit : AuditableEntity<int>
         return new Visit(newClient, newProperty, newAgent, newVisitDate, newNotes);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(Visit visit)
     {

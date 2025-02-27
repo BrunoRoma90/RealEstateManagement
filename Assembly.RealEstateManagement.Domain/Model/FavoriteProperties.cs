@@ -14,8 +14,7 @@ public class FavoriteProperties : AuditableEntity<int>
     {
         ValidateFavorieProperties(property);
         Property = property;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private FavoriteProperties(Property property):this()
@@ -33,10 +32,7 @@ public class FavoriteProperties : AuditableEntity<int>
         return new FavoriteProperties(newProperty);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(FavoriteProperties favoriteProperties)
     {

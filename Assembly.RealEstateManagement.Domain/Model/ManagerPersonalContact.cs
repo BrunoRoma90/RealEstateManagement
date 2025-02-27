@@ -16,8 +16,7 @@ public class ManagerPersonalContact : AuditableEntity<int>
         ValidateManagerPersonalContact(contact,manager);
         Contact = contact;
         Manager = manager;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
 
@@ -41,10 +40,7 @@ public class ManagerPersonalContact : AuditableEntity<int>
         return new ManagerPersonalContact(newContact, newManager);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+ 
 
     public static void Restore(ManagerPersonalContact managerPersonalContact)
     {

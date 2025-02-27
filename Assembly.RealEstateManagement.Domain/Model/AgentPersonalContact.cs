@@ -17,8 +17,7 @@ public class AgentPersonalContact : AuditableEntity<int>
         Id = id;
         Contact = contact;
         Agent = agent;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private AgentPersonalContact(Contact contact, Agent agent) : this()
@@ -40,10 +39,6 @@ public class AgentPersonalContact : AuditableEntity<int>
         return new AgentPersonalContact(newContact, newAgent);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
 
     public static void Restore(AgentPersonalContact agentPersonalContact)
     {

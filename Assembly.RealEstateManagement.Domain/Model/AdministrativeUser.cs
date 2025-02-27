@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Numerics;
+﻿
 
 namespace Assembly.RealEstateManagement.Domain.Model;
 
@@ -25,8 +24,7 @@ public class AdministrativeUser : Employee
         AdministrativeUsersPersonalContact = administrativeUsersPersonalContact;
         AdministrativeUsersAllContact = administrativeUsersAllContact;
         IsAdmin = isAdmin;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private AdministrativeUser(Name name, Account account, Address address, int employeeNumber, int administrativeNumber,
@@ -70,10 +68,7 @@ public class AdministrativeUser : Employee
             newUserPersonalContacts, false);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+   
 
     public static void Restore(AdministrativeUser administrativeUser)
     {

@@ -17,8 +17,7 @@ public class PropertyImage : AuditableEntity<int>
         ValidatePropertyImage(imageUrl, description);
         ImageUrl = imageUrl;
         Description = description;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private PropertyImage(string imageUrl, string description) : this()

@@ -1,4 +1,6 @@
-﻿using Assembly.RealEstateManagement.Domain.Model;
+﻿using Assembly.RealEstateManagement.Domain.Interfaces;
+using System.Linq.Expressions;
+using Assembly.RealEstateManagement.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Assembly.RealEstateManagement.Data.Context;
@@ -44,5 +46,24 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+
+
+        // Filter Soft Deleted entities on calling DbSet
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+
+                var filter = Expression.Lambda(
+                    Expression.Equal(
+                        Expression.Property(parameter, nameof(ISoftDelete.IsDeleted)),
+                        Expression.Constant(false)
+                        ),
+                    parameter);
+
+                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(filter);
+            }
+        }
     }
 }

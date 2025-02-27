@@ -17,8 +17,7 @@ public class AdministrativeUserPersonalContact : AuditableEntity<int>
         ValidateAdministrativeUserPersonalContact(contact, administrativeUser);
         Contact = contact;
         AdministrativeUser = administrativeUser;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private AdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser) : this()
@@ -39,10 +38,6 @@ public class AdministrativeUserPersonalContact : AuditableEntity<int>
         return new AdministrativeUserPersonalContact(newContact,newAdministrativeUser);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
 
     public static void Restore(AdministrativeUserPersonalContact administrativeUserPersonalContact)
     {

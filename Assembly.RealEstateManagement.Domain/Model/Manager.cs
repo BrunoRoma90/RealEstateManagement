@@ -59,10 +59,7 @@ public class Manager : Employee
         return new Manager(newEmplyeeNumber, newName, newAccount, newAddress, newManagerNumber, newManagerPersonalContacts, newManagerAllContacts, newManagedAgents);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(Manager manager)
     {

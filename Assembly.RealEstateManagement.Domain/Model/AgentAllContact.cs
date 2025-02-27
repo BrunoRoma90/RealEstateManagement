@@ -19,8 +19,7 @@ public class AgentAllContact : AuditableEntity<int>
         Name = name;
         Contact = contact;
         Agent = agent;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private AgentAllContact(Name name, Contact contact, Agent agent)
@@ -43,10 +42,6 @@ public class AgentAllContact : AuditableEntity<int>
         return new AgentAllContact(newName, newContact, newAgent);
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
 
     public static void Restore(AgentAllContact agentAllContact)
     {

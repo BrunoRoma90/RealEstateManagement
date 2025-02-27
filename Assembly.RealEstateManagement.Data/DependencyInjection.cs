@@ -1,4 +1,5 @@
 ﻿using Assembly.RealEstateManagement.Data.Context;
+using Assembly.RealEstateManagement.Data.Interceptors;
 using Assembly.RealEstateManagement.Data.Repositories;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,9 @@ public static class DependencyInjection
         {
             var cs = config.GetConnectionString("RealEstateManagementCS");
             options.UseSqlServer(cs);
+            
+            options.AddInterceptors(new AuditInterceptor());
+            options.AddInterceptors(new SoftDeleteInterceptor());
         });
         services.AddScoped<IAgentRepository,AgentRepository>();
         services.AddScoped<IAgentPersonalContactRepository, AgentPersonalContactRepository>();

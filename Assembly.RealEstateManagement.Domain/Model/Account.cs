@@ -15,8 +15,7 @@ public class Account : AuditableEntity<int>
         Id = id;
         Email = email;
         Password = password;
-        Created = DateTime.Now;
-        Updated = DateTime.Now;
+
     }
 
     private Account(string email, string password): this()
@@ -52,10 +51,7 @@ public class Account : AuditableEntity<int>
         Password = newPassword;
     }
 
-    public void Delete()
-    {
-        IsDeleted = true;
-    }
+
 
     public static void Restore(Account account)
     {

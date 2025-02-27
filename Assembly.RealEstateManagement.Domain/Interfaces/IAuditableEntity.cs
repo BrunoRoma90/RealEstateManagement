@@ -4,11 +4,15 @@ namespace Assembly.RealEstateManagement.Domain.Interfaces;
 
 public interface IAuditableEntity<TUserId> 
 {
-    public DateTime Created { get; set; }
+    public DateTime Created { get; }
 
-    public TUserId CreatedBy { get; set; }
+    public TUserId CreatedBy { get;}
 
-    public DateTime Updated { get; set; }
+    public DateTime Updated { get; }
 
-    public TUserId UpdatedBy { get; set ; }
+    public TUserId UpdatedBy { get; }
+
+    void Create(DateTime created);
+
+    void Update(DateTime updated);
 }
