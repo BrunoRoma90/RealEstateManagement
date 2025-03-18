@@ -1,5 +1,6 @@
 ﻿using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
 
-    public class ManagerController : ControllerBase
+    public class ManagerController : BaseController
     {
         private readonly IManagerService _managerService;
 
@@ -18,39 +19,33 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ManagerDto> Get()
+        public IEnumerable<ManagerDto> Get()
         {
-            return Ok(_managerService.GetManagers());
+            return _managerService.GetManagers();
         }
 
-      
+        [HttpPost]
 
-    }
+        public ActionResult<ManagerDto> Add(CreateManagerDto manager) 
+        {
+            return Ok(_managerService.Add(manager));
+        }
+
+        [HttpPut]
+
+        public ActionResult<ManagerDto> Update(CreateManagerDto manager)
+        {
+            return BadRequest();
+        }
+
+        [HttpDelete]
+
+        public ActionResult<ManagerDto> Delete(CreateManagerDto manager)
+        {
+            return Ok();
+        }
 
 
-
-    public class ManagerDto 
-    {
-        public int EmployeeNumber { get; set; }
-        public int ManagerNumber { get; set; }
-        public Name Name { get; set; }
-       
-        public AddressDto Address { get; set; }
-
-     
-
-       
-    }
-
-
-   
-    public class AddressDto
-    {
-        public string Street { get; private set; }
-        public int Number { get; private set; }
-        public string PostalCode { get; private set; }
-        public string City { get; private set; }
-        public string Country { get; private set; }
     }
 
 

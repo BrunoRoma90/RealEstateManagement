@@ -1,14 +1,15 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos;
 
 namespace Assembly.RealEstateManagement.Services.Interfaces;
 
 public interface IManagerService
 {
 
-    List<Manager> GetManagers();
+    IEnumerable<ManagerDto> GetManagers();
 
     public Manager GetManagerById(int id);
-    Manager Add(Manager manager);
+    ManagerDto Add(CreateManagerDto manager);
 
     //public Agent GetAgent(int id);
 

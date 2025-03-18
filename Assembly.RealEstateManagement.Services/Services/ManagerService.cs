@@ -1,26 +1,63 @@
-﻿using Assembly.RealEstateManagement.Domain.Core.Repositories;
+﻿using Assembly.RealEstateManagement.Domain.Core;
+using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos;
 using Assembly.RealEstateManagement.Services.Interfaces;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 
 public class ManagerService : IManagerService
 {
-    private readonly IManagerRepository _managerRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ManagerService(IManagerRepository managerRepository)
+    public ManagerService(IUnitOfWork unitOfWork)
     {
-        _managerRepository = managerRepository;
+        _unitOfWork = unitOfWork;
     }
 
-    public Manager Add(Manager manager)
+    public ManagerDto Add(CreateManagerDto manager)
     {
-        return _managerRepository.Add(manager);
+        _unitOfWork.BeginTransaction();
+
+        Manager managerToAdd = Manager.Create(
+        manager.EmployeeNumber,
+        Name.Create(manager.FirstName, manager.MiddleNames, manager.LastName),
+        Account.Create(manager.Email, manager.Password),
+        Address.Create(manager.Street, manager.Number, manager.PostalCode, manager.City, manager.Country),
+        manager.ManagerNumber,
+        new List<ManagerAllContact>(),
+        new List<ManagerPersonalContact>(),
+        new List<Agent>()
+         );
+
+        Manager addedManager;
+        using (_unitOfWork) 
+        {
+            addedManager = _unitOfWork.ManagerRepository.Add(managerToAdd);
+            _unitOfWork.Commit();
+
+        }
+
+        var managerDto = new ManagerDto
+        {
+
+            EmployeeNumber = addedManager.EmployeeNumber,
+            ManagerNumber = addedManager.ManagerNumber,
+            FirstName = addedManager.Name.FirstName,
+            LastName = addedManager.Name.LastName,
+            Email = addedManager.Account.Email
+
+
+        };
+
+
+
+        return managerDto;
     }
 
     public Manager GetManagerById(int id)
     {
-        var manager = _managerRepository.GetById(id);
+        var manager = _unitOfWork.ManagerRepository.GetById(id);
         if (manager == null)
         {
             throw new KeyNotFoundException($"Manager with ID {id} not found.");
@@ -28,9 +65,24 @@ public class ManagerService : IManagerService
         return manager;
     }
 
-    public List<Manager> GetManagers()
+    public IEnumerable<ManagerDto> GetManagers()
     {
-        return _managerRepository.GetAll();
+        var managers = new List<Manager>();
+
+        managers = _unitOfWork.ManagerRepository.GetAllManagersWithAccount();
+        managers = _unitOfWork.ManagerRepository.GetAllManagersWithAddress();
+
+        return managers.Select(x => new ManagerDto 
+        {
+            
+            EmployeeNumber = x.EmployeeNumber,
+            ManagerNumber = x.ManagerNumber,
+            FirstName = x.Name.FirstName,
+            LastName = x.Name.LastName, 
+            Email = x.Account.Email
+            
+
+        }).ToList();
     }
     //public Agent GetAgent(int id)
     //{

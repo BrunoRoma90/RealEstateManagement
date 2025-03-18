@@ -40,6 +40,16 @@ internal class ManagerRepository : Repository<Manager, int>, IManagerRepository
         return manager?.ManagedAgents ?? new List<Agent>();
     }
 
+    public List<Manager> GetAllManagersWithAccount()
+    {
+        return DbSet.Include(x => x.Account).ToList();
+    }
+
+    public List<Manager> GetAllManagersWithAddress()
+    {
+        return DbSet.Include(x => x.Address).ToList();
+    }
+
     #region 
     //public void AddAgent(int managerId, Agent agent)
     //{

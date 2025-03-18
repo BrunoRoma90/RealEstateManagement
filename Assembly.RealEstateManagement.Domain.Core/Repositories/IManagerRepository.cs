@@ -6,6 +6,8 @@ namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
 public interface IManagerRepository : IRepository<Manager, int>
 {
+    public List<Manager> GetAllManagersWithAccount();
+    public List<Manager> GetAllManagersWithAddress();
 
     public Account? GetManagerAccount(int managerId);
     public Address? GetManagerAddress(int managerId);
