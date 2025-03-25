@@ -2,7 +2,6 @@
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Assembly.RealEstateManagement.Data.Repositories;
 
@@ -23,6 +22,7 @@ internal class ManagerRepository : Repository<Manager, int>, IManagerRepository
         var manager = DbSet.Include(m => m.Address).FirstOrDefault(m => m.Id == managerId);
         return manager?.Address;
     }
+
 
     public Manager? GetManagerByEmployeeNumber(int employeeNumber)
     {

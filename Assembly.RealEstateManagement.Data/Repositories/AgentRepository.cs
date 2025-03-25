@@ -115,6 +115,24 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
         return agent?.Address;
     }
 
+    public List<Agent> GetAllAgentsWithAccount()
+    {
+        return DbSet.Include(x => x.Account).ToList();
+    }
+
+    public List<Agent> GetAllAgentsWithAddress()
+    {
+        return DbSet.Include(x => x.Address).ToList();
+    }
+
+    public List<Agent> GetAllAgentsWithManager()
+    {
+        return DbSet.Include(x => x.Manager)
+            .ThenInclude(m => m.Account)
+            .Include(m => m.Manager.Address)
+            .ToList();
+    }
+
 
 
 }

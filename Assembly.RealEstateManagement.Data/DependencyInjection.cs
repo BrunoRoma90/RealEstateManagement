@@ -1,6 +1,8 @@
 ﻿using Assembly.RealEstateManagement.Data.Context;
 using Assembly.RealEstateManagement.Data.Interceptors;
 using Assembly.RealEstateManagement.Data.Repositories;
+using Assembly.RealEstateManagement.Data.UOW;
+using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +36,7 @@ public static class DependencyInjection
         services.AddScoped<IClientRepository , ClientRepository>();
         
 
-
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

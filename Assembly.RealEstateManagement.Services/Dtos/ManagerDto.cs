@@ -4,6 +4,7 @@ namespace Assembly.RealEstateManagement.Services.Dtos;
 
 public class ManagerDto
 {    
+    public int Id { get; set; } 
     public int EmployeeNumber { get; set; }
     public int ManagerNumber { get; set; }
     public string FirstName { get; set; }

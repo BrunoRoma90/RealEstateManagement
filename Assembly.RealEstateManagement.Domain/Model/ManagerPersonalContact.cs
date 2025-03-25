@@ -24,10 +24,8 @@ public class ManagerPersonalContact : AuditableEntity<int>
     {
         ValidateManagerPersonalContact(contact, manager);
         Contact = Contact.Create(contact.ContactType, contact.Value);
-        Manager = Manager.Create(manager.EmployeeNumber, manager.Name, manager.Account,
-         manager.Address, manager.ManagerNumber,
-         manager.ManagerAllContacts, manager.ManagerPersonalContact, manager.ManagedAgents
-         ); ;
+        Manager = manager;
+        
     }
 
     public static ManagerPersonalContact Create(Contact contact, Manager manager)

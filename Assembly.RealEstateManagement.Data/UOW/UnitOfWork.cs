@@ -1,4 +1,5 @@
 ﻿using Assembly.RealEstateManagement.Data.Context;
+using Assembly.RealEstateManagement.Data.Repositories;
 using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -11,11 +12,30 @@ internal class UnitOfWork : IUnitOfWork
     private IDbContextTransaction _dbContextTransaction;
 
     public IManagerRepository ManagerRepository { get; set; }
+    public IAgentRepository AgentRepository { get; set; }
 
-    public UnitOfWork(ApplicationDbContext context, IManagerRepository managerRepository) 
+    public IAdministrativeUsersRepository AdministrativeUsersRepository { get; set; }
+
+    public IManagerPersonalContactRepository ManagerPersonalContactRepository { get; set; }
+    public IAgentPersonalContactRepository AgentPersonalContactRepository { get; set; }
+    public IAdministrativeUserPersonalContactRepository AdministrativeUserPersonalContactRepository { get; set; }
+
+
+
+    public UnitOfWork(ApplicationDbContext context, IManagerRepository managerRepository,
+        IAgentRepository agentRepository,
+        IAdministrativeUsersRepository administrativeUsersRepository,
+        IManagerPersonalContactRepository managerPersonalContactRepository,
+        IAgentPersonalContactRepository agentPersonalContactRepository,
+        IAdministrativeUserPersonalContactRepository administrativeUserPersonalContactRepository) 
     {
         _context = context;
         ManagerRepository = managerRepository;
+        AgentRepository = agentRepository;
+        AdministrativeUsersRepository = administrativeUsersRepository;
+        ManagerPersonalContactRepository = managerPersonalContactRepository;
+        AgentPersonalContactRepository = agentPersonalContactRepository;
+        AdministrativeUserPersonalContactRepository = administrativeUserPersonalContactRepository;
     }
 
     public void BeginTransaction()

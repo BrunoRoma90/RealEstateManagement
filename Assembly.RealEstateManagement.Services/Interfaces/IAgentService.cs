@@ -1,13 +1,14 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos;
 
 namespace Assembly.RealEstateManagement.Services.Interfaces;
 
 public interface IAgentService
 {
-    List<Agent> GetAgents();
+    IEnumerable<AgentDto> GetAgents();
 
     public Agent GetAgentById(int id);
-    Agent Add(Agent agent);
+    AgentDto Add(CreateAgentDto agent);
 
     //public void AddVisitToMyList(int agentId, Visit visit);
     //public void RemoveVisitToMyList(int agentId, Visit visit);

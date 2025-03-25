@@ -34,6 +34,16 @@ internal class AdministrativeUserRepository : Repository<AdministrativeUser, int
         return DbSet.FirstOrDefault(au => au.EmployeeNumber == employeeNumber);
     }
 
+    public List<AdministrativeUser> GetAllAdministrativeUserWithAccount()
+    {
+        return DbSet.Include(x => x.Account).ToList();
+    }
+
+    public List<AdministrativeUser> GetAllAdministrativeUserWithAddress()
+    {
+        return DbSet.Include(x => x.Address).ToList();
+    }
+
 
     #region
     //public AdministrativeUser Add(AdministrativeUser obj)

@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IAgentService, AgentService>();
         services.AddScoped<IManagerService, ManagerService>();
         services.AddScoped<IAdministrativeUserService, AdministrativeUserService>();
+        services.AddScoped<IManagerPersonalContactsServices, ManagerPersonalContactsServices>();
         return services;
     }
 }

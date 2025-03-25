@@ -16,7 +16,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Extensions
             {
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
-                context.Database.EnsureDeleted();
+                //context.Database.EnsureDeleted();
                 context.Database.Migrate();
                 SeedData(context);
             }

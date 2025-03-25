@@ -1,9 +1,15 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos;
 
 namespace Assembly.RealEstateManagement.Services.Interfaces;
 
 public interface IAdministrativeUserService
 {
+
+    IEnumerable<AdministrativeUserDto> GetAdministrativeUsers();
+
+    public AdministrativeUser GetAdministrativeUserById(int id);
+    AdministrativeUserDto Add(CreateAdministrativeUserDto administrativeUser);
 
 
     //public Visit GetVisitByClientId(int clientId);

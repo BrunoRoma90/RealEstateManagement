@@ -1,23 +1,99 @@
 ﻿
+using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos;
 using Assembly.RealEstateManagement.Services.Interfaces;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 
 public class AgentService : IAgentService
 {
-    private IAgentRepository _agentRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AgentService(IAgentRepository agentRepository)
+    public AgentService(IUnitOfWork unitOfWork)
     {
-        _agentRepository = agentRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public AgentDto Add(CreateAgentDto agent)
+    {
+        _unitOfWork.BeginTransaction();
+
+        var manager = _unitOfWork.ManagerRepository.GetById(agent.Manager.Id);
+        if (manager == null)
+        {
+            throw new Exception("Manager not found.");
+        }
+
+        Agent agentToAdd = Agent.Create(
+        Name.Create(agent.FirstName, agent.MiddleNames, agent.LastName),
+        Account.Create(agent.Email, agent.Password),
+        Address.Create(agent.Address.Street, agent.Address.Number, agent.Address.PostalCode, agent.Address.City, agent.Address.Country),
+        agent.AgentNumber,
+        agent.EmployeeNumber,
+        new List<AgentPersonalContact>(),
+        new List<Property>(),
+        new List<AgentAllContact>(),
+        manager        
+        );
+
+        Agent addedAgent;
+        using (_unitOfWork)
+        {
+            addedAgent = _unitOfWork.AgentRepository.Add(agentToAdd);
+            _unitOfWork.Commit();
+
+        }
+
+        var agentDto = new AgentDto
+        {
+
+            EmployeeNumber = addedAgent.EmployeeNumber,
+            AgentNumber = addedAgent.AgentNumber,
+            FirstName = addedAgent.Name.FirstName,
+            LastName = addedAgent.Name.LastName,
+            Email = addedAgent.Account.Email,
+            Address = new AddressDto
+            {
+                Street = addedAgent.Address.Street,
+                Number = addedAgent.Address.Number,
+                PostalCode = addedAgent.Address.PostalCode,
+                City = addedAgent.Address.City,
+                Country = addedAgent.Address.Country,
+
+            },
+            Manager = new ManagerDto
+            {
+                EmployeeNumber = addedAgent.Manager.EmployeeNumber,
+                ManagerNumber = addedAgent.Manager.ManagerNumber,
+                FirstName = addedAgent.Manager.Name.FirstName,
+                LastName = addedAgent.Manager.Name.LastName,
+                //Email = addedAgent.Manager.Account.Email,
+                //Address = new AddressDto
+                //{
+                //    Street = addedAgent.Manager.Address.Street,
+                //    Number = addedAgent.Manager.Address.Number,
+                //    PostalCode = addedAgent.Manager.Address.PostalCode,
+                //    City = addedAgent.Manager.Address.City,
+                //    Country = addedAgent.Manager.Address.Country
+                //}
+
+            }
+
+
+
+        };
+
+
+
+        return agentDto;
     }
 
     public Agent GetAgentById(int id)
     {
-        var agent = _agentRepository.GetById(id);
+        var agent = _unitOfWork.AgentRepository.GetById(id);
         if (agent == null)
         {
             throw new KeyNotFoundException($"Agent with ID {id} not found.");
@@ -25,16 +101,53 @@ public class AgentService : IAgentService
         return agent;
     }
 
-    public List<Agent> GetAgents()
+    public IEnumerable<AgentDto> GetAgents()
     {
-        return _agentRepository.GetAll();
+        var agents = new List<Agent>();
+
+        agents = _unitOfWork.AgentRepository.GetAllAgentsWithAccount();
+        agents = _unitOfWork.AgentRepository.GetAllAgentsWithAddress();
+        agents = _unitOfWork.AgentRepository.GetAllAgentsWithManager();
+
+
+        return agents.Select(x => new AgentDto
+        {
+
+            EmployeeNumber = x.EmployeeNumber,
+            AgentNumber = x.AgentNumber,
+            FirstName = x.Name.FirstName,
+            LastName = x.Name.LastName,
+            Email = x.Account.Email,
+            Address = new AddressDto
+            {
+                Street = x.Address.Street,
+                Number = x.Address.Number,
+                PostalCode = x.Address.PostalCode,
+                City = x.Address.City,
+                Country = x.Address.Country,
+            },
+            Manager = new ManagerDto
+            {
+                EmployeeNumber = x.Manager.EmployeeNumber,
+                ManagerNumber = x.Manager.ManagerNumber,
+                FirstName = x.Manager.Name.FirstName,
+                LastName = x.Manager.Name.LastName,
+                Email = x.Manager.Account.Email,
+                Address = new AddressDto
+                {
+                    Street = x.Manager.Address.Street,
+                    Number = x.Manager.Address.Number,
+                    PostalCode = x.Manager.Address.PostalCode,
+                    City = x.Manager.Address.City,
+                    Country = x.Manager.Address.Country
+                }
+
+            }
+
+        }).ToList();
     }
 
-    public Agent Add(Agent agent) 
-    {
-        return _agentRepository.Add(agent);
 
-    }
 
     //public void AddVisitToMyList(int agentId, Visit visit)
     //{
@@ -55,7 +168,7 @@ public class AgentService : IAgentService
     //        throw new ArgumentException("Agent ID must be greater than zero.", nameof(agentId));
     //    }
 
-        
+
     //    return _agentRepository.GetVisitsByAgentId(agentId);
     //}
 
@@ -106,7 +219,7 @@ public class AgentService : IAgentService
 
     //public void AddPropertyToAgent(int agentId, Property property)
     //{
-        
+
     //    _agentRepository.AddPropertyToMyList(agentId, property);
     //}
 
@@ -115,5 +228,5 @@ public class AgentService : IAgentService
     //    _agentRepository.RemovePropertyFromAgent(agentId, property);
     //}
 
-  
+
 }

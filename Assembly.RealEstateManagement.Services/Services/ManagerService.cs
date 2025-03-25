@@ -23,7 +23,7 @@ public class ManagerService : IManagerService
         manager.EmployeeNumber,
         Name.Create(manager.FirstName, manager.MiddleNames, manager.LastName),
         Account.Create(manager.Email, manager.Password),
-        Address.Create(manager.Street, manager.Number, manager.PostalCode, manager.City, manager.Country),
+        Address.Create(manager.Address.Street, manager.Address.Number, manager.Address.PostalCode, manager.Address.City, manager.Address.Country),
         manager.ManagerNumber,
         new List<ManagerAllContact>(),
         new List<ManagerPersonalContact>(),
@@ -45,7 +45,16 @@ public class ManagerService : IManagerService
             ManagerNumber = addedManager.ManagerNumber,
             FirstName = addedManager.Name.FirstName,
             LastName = addedManager.Name.LastName,
-            Email = addedManager.Account.Email
+            Email = addedManager.Account.Email,
+            Address = new AddressDto
+            {
+                Street = addedManager.Address.Street,
+                Number = addedManager.Address.Number,
+                PostalCode = addedManager.Address.PostalCode,
+                City = addedManager.Address.City,
+                Country = addedManager.Address.Country,
+
+            }
 
 
         };
@@ -79,8 +88,15 @@ public class ManagerService : IManagerService
             ManagerNumber = x.ManagerNumber,
             FirstName = x.Name.FirstName,
             LastName = x.Name.LastName, 
-            Email = x.Account.Email
-            
+            Email = x.Account.Email,
+            Address = new AddressDto 
+            {
+                Street = x.Address.Street,
+                Number = x.Address.Number,
+                PostalCode = x.Address.PostalCode,
+                City = x.Address.City,
+                Country= x.Address.Country,
+            }
 
         }).ToList();
     }

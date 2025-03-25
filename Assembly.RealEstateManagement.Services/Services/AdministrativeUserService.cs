@@ -1,16 +1,103 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
+using Assembly.RealEstateManagement.Domain.Core;
+using Assembly.RealEstateManagement.Services.Dtos;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 
 public class AdministrativeUserService : IAdministrativeUserService
 {
-    private IAdministrativeUsersRepository _administrativesUserRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AdministrativeUserService(IAdministrativeUsersRepository administrativesUserRepository)
+    public AdministrativeUserService(IUnitOfWork unitOfWork)
     {
-        _administrativesUserRepository = administrativesUserRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public AdministrativeUserDto Add(CreateAdministrativeUserDto administrativeUser)
+    {
+        _unitOfWork.BeginTransaction();
+
+        AdministrativeUser administrativeUserToAdd = AdministrativeUser.Create(
+        Name.Create(administrativeUser.FirstName, administrativeUser.MiddleNames, administrativeUser.LastName),
+        Account.Create(administrativeUser.Email, administrativeUser.Password),
+        Address.Create(administrativeUser.Address.Street, administrativeUser.Address.Number, administrativeUser.Address.PostalCode, administrativeUser.Address.City, administrativeUser.Address.Country),
+        administrativeUser.EmployeeNumber,
+        administrativeUser.AdministrativeNumber,
+        new List<AdministrativeUserAllContact>(),
+        new List<AdministrativeUserPersonalContact>()
+         );
+
+        AdministrativeUser addedAdministrativeUser;
+        using (_unitOfWork)
+        {
+            addedAdministrativeUser = _unitOfWork.AdministrativeUsersRepository.Add(administrativeUserToAdd);
+            _unitOfWork.Commit();
+
+        }
+
+        var administrativeUserDto = new AdministrativeUserDto
+        {
+
+            EmployeeNumber = addedAdministrativeUser.EmployeeNumber,
+            AdministrativeNumber = addedAdministrativeUser.AdministrativeNumber,
+            FirstName = addedAdministrativeUser.Name.FirstName,
+            LastName = addedAdministrativeUser.Name.LastName,
+            Email = addedAdministrativeUser.Account.Email,
+            Address = new AddressDto
+            {
+                Street = addedAdministrativeUser.Address.Street,
+                Number = addedAdministrativeUser.Address.Number,
+                PostalCode = addedAdministrativeUser.Address.PostalCode,
+                City = addedAdministrativeUser.Address.City,
+                Country = addedAdministrativeUser.Address.Country,
+
+            }
+
+
+        };
+
+
+
+        return administrativeUserDto;
+    }
+
+    public AdministrativeUser GetAdministrativeUserById(int id)
+    {
+        var administrativeUser = _unitOfWork.AdministrativeUsersRepository.GetById(id);
+        if (administrativeUser == null)
+        {
+            throw new KeyNotFoundException($"Manager with ID {id} not found.");
+        }
+        return administrativeUser;
+    }
+
+    public IEnumerable<AdministrativeUserDto> GetAdministrativeUsers()
+    {
+        var administrativeUsers = new List<AdministrativeUser>();
+
+        administrativeUsers = _unitOfWork.AdministrativeUsersRepository.GetAllAdministrativeUserWithAccount();
+        administrativeUsers = _unitOfWork.AdministrativeUsersRepository.GetAllAdministrativeUserWithAddress();
+
+        return administrativeUsers.Select(x => new AdministrativeUserDto
+        {
+
+            EmployeeNumber = x.EmployeeNumber,
+            AdministrativeNumber = x.AdministrativeNumber,
+            FirstName = x.Name.FirstName,
+            LastName = x.Name.LastName,
+            Email = x.Account.Email,
+            Address = new AddressDto
+            {
+                Street = x.Address.Street,
+                Number = x.Address.Number,
+                PostalCode = x.Address.PostalCode,
+                City = x.Address.City,
+                Country = x.Address.Country,
+            }
+
+        }).ToList();
     }
 
     //public void AddNotes(int visitId, string notes)

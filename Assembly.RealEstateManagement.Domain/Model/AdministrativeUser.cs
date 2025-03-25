@@ -88,14 +88,14 @@ public class AdministrativeUser : Employee
         {
             throw new ArgumentException(nameof(employeeNumber), "Employee number must be greater than zero.");
         }
-        if (administrativeUsersPersonalContact == null || administrativeUsersPersonalContact.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(administrativeUsersPersonalContact), "Personal Contacts list is required.");
-        }
-        if (administrativeUsersAllContact == null || administrativeUsersAllContact.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(administrativeUsersAllContact), "All contacts list is required.");
-        }
+        //if (administrativeUsersPersonalContact == null || administrativeUsersPersonalContact.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(administrativeUsersPersonalContact), "Personal Contacts list is required.");
+        //}
+        //if (administrativeUsersAllContact == null || administrativeUsersAllContact.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(administrativeUsersAllContact), "All contacts list is required.");
+        //}
     }
 }
 

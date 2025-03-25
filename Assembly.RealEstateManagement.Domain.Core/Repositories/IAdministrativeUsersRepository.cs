@@ -1,4 +1,5 @@
-﻿using Assembly.RealEstateManagement.Domain.Model;
+﻿using System.Collections.Generic;
+using Assembly.RealEstateManagement.Domain.Model;
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
@@ -10,6 +11,11 @@ public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser
     public AdministrativeUser? GetAdministrativeUserByAdministrativeUserNumber(int administrativeUserNumber);
 
     public AdministrativeUser? GetAdministrativeUserByEmployeeNumber(int employeeNumber);
+
+    public List<AdministrativeUser> GetAllAdministrativeUserWithAccount();
+
+    public List<AdministrativeUser> GetAllAdministrativeUserWithAddress();
+   
 
     #region
     //public List<Agent> GetAgents();

@@ -1,4 +1,5 @@
-﻿using Assembly.RealEstateManagement.Domain.Model;
+﻿using System.Collections.Generic;
+using Assembly.RealEstateManagement.Domain.Model;
 
 namespace Assembly.RealEstateManagement.Domain.Core.Repositories;
 
@@ -11,6 +12,14 @@ public interface IAgentRepository : IRepository<Agent, int>
     public Address? GetAgentAddress(int agentId);
     public List<Agent> GetAgentsByManagerId(int managerId);
     public Agent? GetAgentByEmployeeNumber(int employeeNumber);
+
+    public List<Agent> GetAllAgentsWithAccount();
+
+
+    public List<Agent> GetAllAgentsWithAddress();
+
+    public List<Agent> GetAllAgentsWithManager();
+
 
     #region
     //public Property GetPropertyById(int propertyId);

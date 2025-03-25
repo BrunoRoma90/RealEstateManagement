@@ -5,6 +5,13 @@ namespace Assembly.RealEstateManagement.Domain.Core;
 public interface IUnitOfWork : IDisposable
 {
     public IManagerRepository ManagerRepository { get; }
+    public IAgentRepository AgentRepository { get; }
+
+    public IAdministrativeUsersRepository AdministrativeUsersRepository { get; }
+
+    public IManagerPersonalContactRepository ManagerPersonalContactRepository { get; }
+    public IAgentPersonalContactRepository AgentPersonalContactRepository { get; }
+    public IAdministrativeUserPersonalContactRepository AdministrativeUserPersonalContactRepository { get; }
 
     void BeginTransaction();
     public bool Commit();

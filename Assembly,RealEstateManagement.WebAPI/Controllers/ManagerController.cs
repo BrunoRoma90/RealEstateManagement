@@ -1,6 +1,4 @@
-﻿using Assembly.RealEstateManagement.Domain.Enums;
-using Assembly.RealEstateManagement.Domain.Model;
-using Assembly.RealEstateManagement.Services.Dtos;
+﻿using Assembly.RealEstateManagement.Services.Dtos;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
