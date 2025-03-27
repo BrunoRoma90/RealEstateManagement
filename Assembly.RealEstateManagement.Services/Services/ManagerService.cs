@@ -1,6 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos.Common;
 using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 

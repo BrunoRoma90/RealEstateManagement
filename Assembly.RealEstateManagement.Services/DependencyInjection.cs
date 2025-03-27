@@ -16,7 +16,9 @@ public static class DependencyInjection
         services.AddScoped<IManagerPersonalContactsServices, ManagerPersonalContactsServices>();
         services.AddScoped<IAgentPersonalContactsServices, AgentPersonalContactsServices>();
         services.AddScoped<IAdministrativeUsersPersonalContactsServices, AdministrativeUsersPersonalContactsServices>();
-
+        services.AddScoped<IManagerAllContactsServices, ManagerAllContactsServices>();
+        services.AddScoped<IAgentAllContactsServices, AgentAllContactServices>();
+        services.AddScoped<IAdministrativeUsersAllContactsServices, AdministrativeUserAllContactsServices>();
         return services;
     }
 }

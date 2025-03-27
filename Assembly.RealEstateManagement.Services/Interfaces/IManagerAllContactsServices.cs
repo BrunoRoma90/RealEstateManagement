@@ -6,6 +6,6 @@ public interface IManagerAllContactsServices
 {
     IEnumerable<ManagerAllContactsDto> GetManagerAllContacts();
 
-    public List<ManagerAllContactsDto> GetContactsByManagerId(int managerId);
+    public List<ManagerAllContactsDto> GetAllContactsByManagerId(int managerId);
     ManagerAllContactsDto Add(CreateManagerAllContactsDto managerAllContacts);
 }

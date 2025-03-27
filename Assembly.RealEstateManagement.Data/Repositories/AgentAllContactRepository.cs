@@ -17,4 +17,12 @@ internal class AgentAllContactRepository : Repository<AgentAllContact, int>, IAg
         return DbSet.Where(a => a.Agent.Id == agentId).ToList();
     }
 
+    public List<AgentAllContact> GetAllAgentAllContactWithAgent()
+    {
+        return DbSet.Include(x => x.Agent)
+            .ThenInclude(m => m.Account)
+            .Include(m => m.Agent.Address)
+            .ToList();
+    }
+
 }

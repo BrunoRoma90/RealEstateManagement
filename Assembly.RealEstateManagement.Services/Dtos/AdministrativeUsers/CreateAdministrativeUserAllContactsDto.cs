@@ -10,5 +10,5 @@ public class CreateAdministrativeUserAllContactsDto
     public string ContactType { get; set; }
     public string Value { get; set; }
 
-    public AdministrativeUsersAllContactsDto AdministrativeUsersAllContacts { get; set; }
+    public AdministrativeUserDto AdministrativeUser{ get; set; }
 }

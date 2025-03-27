@@ -3,6 +3,7 @@ using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
+using Assembly.RealEstateManagement.Services.Dtos.Common;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 

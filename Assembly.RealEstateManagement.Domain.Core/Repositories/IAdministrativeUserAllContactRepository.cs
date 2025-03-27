@@ -8,6 +8,6 @@ public interface IAdministrativeUserAllContactRepository : IRepository<Administr
 
     public List<AdministrativeUserAllContact> GetAdministrativeUserContacts(int administrativeUserId);
 
+    public List<AdministrativeUserAllContact> GetAllAdministrativeUserAllContactWithAdministrativeUser();
 
-   
 }

@@ -89,13 +89,15 @@ public class ManagerAllContactsServices : IManagerAllContactsServices
         }).ToList();
     }
 
-    public List<ManagerPersonalContactDto> GetContactsByManagerId(int managerId)
+    public List<ManagerAllContactsDto> GetAllContactsByManagerId(int managerId)
     {
-        var contacts = _unitOfWork.ManagerPersonalContactRepository.GetMyPersonalContacts(managerId);
+        var contacts = _unitOfWork.ManagerAllContactRepository.GetManagerContacts(managerId);
 
-        return contacts.Select(contact => new ManagerPersonalContactDto
+        return contacts.Select(contact => new ManagerAllContactsDto
         {
-
+            FirstName = contact.Name.FirstName,
+            MiddleNames = contact.Name.MiddleNames,
+            LastName = contact.Name.LastName,
             ContactType = contact.Contact.ContactType.ToString(),
             Value = contact.Contact.Value
         }).ToList();
