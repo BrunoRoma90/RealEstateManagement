@@ -23,9 +23,7 @@ public class AdministrativeUserPersonalContact : AuditableEntity<int>
     private AdministrativeUserPersonalContact(Contact contact, AdministrativeUser administrativeUser) : this()
     {
         Contact = Contact.Create(contact.ContactType, contact.Value);
-        AdministrativeUser = AdministrativeUser.Create(administrativeUser.Name, administrativeUser.Account,
-           administrativeUser.Address, administrativeUser.EmployeeNumber, administrativeUser.AdministrativeNumber,
-           administrativeUser.AdministrativeUsersAllContact, administrativeUser.AdministrativeUsersPersonalContact);
+        AdministrativeUser = administrativeUser;
     }
 
     public static AdministrativeUserPersonalContact Create(Contact contact, AdministrativeUser administrativeUser)

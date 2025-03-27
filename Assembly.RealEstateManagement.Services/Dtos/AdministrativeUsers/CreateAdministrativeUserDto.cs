@@ -1,15 +1,18 @@
-﻿namespace Assembly.RealEstateManagement.Services.Dtos;
+﻿using Assembly.RealEstateManagement.Services.Dtos.Common;
 
-public class CreateAgentDto
+namespace Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
+
+public class CreateAdministrativeUserDto
 {
     public int EmployeeNumber { get; set; }
-    public int AgentNumber { get; set; }
+    public int AdministrativeNumber { get; set; }
     public string FirstName { get; set; }
     public string[] MiddleNames { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public ManagerDto Manager { get; set; }
     public AddressDto Address { get; set; }
+
+    public bool IsAdmin { get; set; }
 }

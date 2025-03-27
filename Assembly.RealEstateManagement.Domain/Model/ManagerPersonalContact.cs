@@ -11,7 +11,7 @@ public class ManagerPersonalContact : AuditableEntity<int>
 
     public ManagerPersonalContact() { }
 
-    public ManagerPersonalContact(int id,Contact contact, Manager manager) : this()
+    private ManagerPersonalContact(int id,Contact contact, Manager manager) : this()
     {
         ValidateManagerPersonalContact(contact,manager);
         Contact = contact;

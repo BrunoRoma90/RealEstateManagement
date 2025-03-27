@@ -1,7 +1,10 @@
-﻿namespace Assembly.RealEstateManagement.Services.Dtos;
+﻿using Assembly.RealEstateManagement.Services.Dtos.Common;
+
+namespace Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 
 public class AdministrativeUserDto
 {
+    public int Id { get; set; }
     public int EmployeeNumber { get; set; }
     public int AdministrativeNumber { get; set; }
     public string FirstName { get; set; }

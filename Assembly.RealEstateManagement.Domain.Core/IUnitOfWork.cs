@@ -13,6 +13,10 @@ public interface IUnitOfWork : IDisposable
     public IAgentPersonalContactRepository AgentPersonalContactRepository { get; }
     public IAdministrativeUserPersonalContactRepository AdministrativeUserPersonalContactRepository { get; }
 
+    public IManagerAllContactRepository ManagerAllContactRepository { get; }
+    public IAgentAllContactRepository AgentAllContactRepository { get; }
+    public IAdministrativeUserAllContactRepository AdministrativeUserAllContactRepository { get; }
+
     void BeginTransaction();
     public bool Commit();
 }

@@ -20,15 +20,13 @@ public class ManagerAllContact : AuditableEntity<int>
 
     }
 
-    private ManagerAllContact(Name name, Contact contact, Manager manager)
+    private ManagerAllContact(Name name, Contact contact, Manager manager) : this() 
     {
         ValidateManagerAllContact(name, contact, manager);
         Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
         Contact = Contact.Create(contact.ContactType, contact.Value);
-        Manager = Manager.Create(manager.EmployeeNumber, manager.Name, manager.Account,
-           manager.Address, manager.ManagerNumber,
-           manager.ManagerAllContacts, manager.ManagerPersonalContact, manager.ManagedAgents
-           );
+        Manager = manager;
+           
     }
 
     public static ManagerAllContact Create(Name name, Contact contact, Manager manager)

@@ -1,7 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
-using Assembly.RealEstateManagement.Services.Dtos;
+using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Interfaces;
 
 namespace Assembly.RealEstateManagement.Services.Services;
@@ -15,7 +15,7 @@ public class AgentPersonalContactsServices : IAgentPersonalContactsServices
         _unitOfWork = unitOfWork;
     }
 
-    public ManagerPersonalContactDto Add(CreateAgentPersonalContactsDto agentPersonalContacts)
+    public AgentPersonalContactsDto Add(CreateAgentPersonalContactsDto agentPersonalContacts)
     {
         _unitOfWork.BeginTransaction();
 
@@ -44,7 +44,7 @@ public class AgentPersonalContactsServices : IAgentPersonalContactsServices
 
         }
 
-        var agentPersonalContactsDto = new ManagerPersonalContactDto
+        var agentPersonalContactsDto = new AgentPersonalContactsDto
         {
             ContactType = addedAgentPersonalContact.Contact.ContactType.ToString(),
             Value = addedAgentPersonalContact.Contact.Value,
@@ -60,33 +60,33 @@ public class AgentPersonalContactsServices : IAgentPersonalContactsServices
         return agentPersonalContactsDto;
     }
 
-    public IEnumerable<ManagerPersonalContactDto> GetManagerPersonalsContacts()
+    public IEnumerable<AgentPersonalContactsDto> GetAgentPersonalsContacts()
     {
-        var managerPersonalContacts = new List<ManagerPersonalContact>();
+        var agentPersonalContacts = new List<AgentPersonalContact>();
 
-        managerPersonalContacts = _unitOfWork.ManagerPersonalContactRepository.GetAllManagerPersonalContactWithManager();
+        agentPersonalContacts = _unitOfWork.AgentPersonalContactRepository.GetAllAgentPersonalContactWithAgent();
 
-        return managerPersonalContacts.Select(x => new ManagerPersonalContactDto
+        return agentPersonalContacts.Select(x => new AgentPersonalContactsDto
         {
             ContactType = x.Contact.ContactType.ToString(),
             Value = x.Contact.Value,
-            Manager = new ManagerDto
+            Agent = new AgentDto
             {
-                EmployeeNumber = x.Manager.EmployeeNumber,
-                ManagerNumber = x.Manager.ManagerNumber,
-                FirstName = x.Manager.Name.FirstName,
-                LastName = x.Manager.Name.LastName,
+                EmployeeNumber = x.Agent.EmployeeNumber,
+                AgentNumber = x.Agent.AgentNumber,
+                FirstName = x.Agent.Name.FirstName,
+                LastName = x.Agent.Name.LastName,
             }
 
 
         }).ToList();
     }
 
-    public List<ManagerPersonalContactDto> GetContactsByManagerId(int managerId)
+    public List<AgentPersonalContactsDto> GetPersonalContactsByAgentId(int agentId)
     {
-        var contacts = _unitOfWork.ManagerPersonalContactRepository.GetMyPersonalContacts(managerId);
+        var contacts = _unitOfWork.AgentPersonalContactRepository.GetMyPersonalContacts(agentId);
 
-        return contacts.Select(contact => new ManagerPersonalContactDto
+        return contacts.Select(contact => new AgentPersonalContactsDto
         {
 
             ContactType = contact.Contact.ContactType.ToString(),

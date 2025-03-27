@@ -1,4 +1,4 @@
-﻿using Assembly.RealEstateManagement.Services.Dtos;
+﻿using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;

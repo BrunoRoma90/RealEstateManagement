@@ -1,4 +1,4 @@
-﻿namespace Assembly.RealEstateManagement.Services.Dtos;
+﻿namespace Assembly.RealEstateManagement.Services.Dtos.Common;
 
 public class AddressDto
 {

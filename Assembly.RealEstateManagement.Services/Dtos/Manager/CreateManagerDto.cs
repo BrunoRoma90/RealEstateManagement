@@ -1,4 +1,6 @@
-﻿namespace Assembly.RealEstateManagement.Services.Dtos;
+﻿using Assembly.RealEstateManagement.Services.Dtos.Common;
+
+namespace Assembly.RealEstateManagement.Services.Dtos.Manager;
 
 public class CreateManagerDto
 {
@@ -9,7 +11,7 @@ public class CreateManagerDto
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    
+
     public AddressDto Address { get; set; }
 
 }

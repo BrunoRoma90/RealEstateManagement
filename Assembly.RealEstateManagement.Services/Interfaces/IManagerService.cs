@@ -1,5 +1,5 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
-using Assembly.RealEstateManagement.Services.Dtos;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 
 namespace Assembly.RealEstateManagement.Services.Interfaces;
 

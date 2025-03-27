@@ -1,6 +1,6 @@
-﻿namespace Assembly.RealEstateManagement.Services.Dtos;
+﻿namespace Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 
-public class AdministrativeUserPersonalContactDto 
+public class AdministrativeUserPersonalContactDto
 {
     public string ContactType { get; set; }
     public string Value { get; set; }

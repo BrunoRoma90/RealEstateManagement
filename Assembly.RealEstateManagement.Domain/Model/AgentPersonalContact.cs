@@ -24,9 +24,7 @@ public class AgentPersonalContact : AuditableEntity<int>
     {
         ValidateAgentPersonalContact(contact,agent);
         Contact = Contact.Create(contact.ContactType, contact.Value);
-        Agent = Agent.Create(agent.Name, agent.Account,
-           agent.Address, agent.EmployeeNumber, agent.AgentNumber,
-           agent.AgentPersonalContact, agent.ManagedProperty, agent.AgentAllContact, agent.Manager);
+        Agent = agent;
     }
 
     public static AgentPersonalContact Create(Contact contact, Agent agent)

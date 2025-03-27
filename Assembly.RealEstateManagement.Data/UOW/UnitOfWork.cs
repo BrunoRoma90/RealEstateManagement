@@ -20,6 +20,10 @@ internal class UnitOfWork : IUnitOfWork
     public IAgentPersonalContactRepository AgentPersonalContactRepository { get; set; }
     public IAdministrativeUserPersonalContactRepository AdministrativeUserPersonalContactRepository { get; set; }
 
+    public IManagerAllContactRepository ManagerAllContactRepository { get; set; }
+    public IAgentAllContactRepository AgentAllContactRepository { get; set; }
+    public IAdministrativeUserAllContactRepository AdministrativeUserAllContactRepository { get; set; }
+
 
 
     public UnitOfWork(ApplicationDbContext context, IManagerRepository managerRepository,
@@ -27,7 +31,10 @@ internal class UnitOfWork : IUnitOfWork
         IAdministrativeUsersRepository administrativeUsersRepository,
         IManagerPersonalContactRepository managerPersonalContactRepository,
         IAgentPersonalContactRepository agentPersonalContactRepository,
-        IAdministrativeUserPersonalContactRepository administrativeUserPersonalContactRepository) 
+        IAdministrativeUserPersonalContactRepository administrativeUserPersonalContactRepository,
+        IManagerAllContactRepository managerAllContactRepository,
+        IAgentAllContactRepository agentAllContactRepository,
+        IAdministrativeUserAllContactRepository administrativeUserAllContactRepository) 
     {
         _context = context;
         ManagerRepository = managerRepository;
@@ -36,6 +43,9 @@ internal class UnitOfWork : IUnitOfWork
         ManagerPersonalContactRepository = managerPersonalContactRepository;
         AgentPersonalContactRepository = agentPersonalContactRepository;
         AdministrativeUserPersonalContactRepository = administrativeUserPersonalContactRepository;
+        ManagerAllContactRepository = managerAllContactRepository;
+        AgentAllContactRepository = agentAllContactRepository;
+        AdministrativeUserAllContactRepository = administrativeUserAllContactRepository;
     }
 
     public void BeginTransaction()
