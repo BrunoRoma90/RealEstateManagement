@@ -93,14 +93,47 @@ public class AgentService : IAgentService
         return agentDto;
     }
 
-    public Agent GetAgentById(int id)
+    public AgentDto GetAgentById(int id)
     {
         var agent = _unitOfWork.AgentRepository.GetById(id);
-        if (agent == null)
+        if (agent is null)
         {
             throw new KeyNotFoundException($"Agent with ID {id} not found.");
         }
-        return agent;
+        return new AgentDto
+        {
+            EmployeeNumber = agent.EmployeeNumber,
+            AgentNumber = agent.AgentNumber,
+            FirstName = agent.Name.FirstName,
+            LastName = agent.Name.LastName,
+            Email = agent.Account.Email,
+            Address = new AddressDto
+            {
+                Street = agent.Address.Street,
+                Number = agent.Address.Number,
+                PostalCode = agent.Address.PostalCode,
+                City = agent.Address.City,
+                Country = agent.Address.Country,
+
+            },
+            Manager = new ManagerDto
+            {
+                EmployeeNumber = agent.Manager.EmployeeNumber,
+                ManagerNumber = agent.Manager.ManagerNumber,
+                FirstName = agent.Manager.Name.FirstName,
+                LastName = agent.Manager.Name.LastName,
+                //Email = addedAgent.Manager.Account.Email,
+                //Address = new AddressDto
+                //{
+                //    Street = addedAgent.Manager.Address.Street,
+                //    Number = addedAgent.Manager.Address.Number,
+                //    PostalCode = addedAgent.Manager.Address.PostalCode,
+                //    City = addedAgent.Manager.Address.City,
+                //    Country = addedAgent.Manager.Address.Country
+                //}
+
+            }
+        };
     }
 
     public IEnumerable<AgentDto> GetAgents()

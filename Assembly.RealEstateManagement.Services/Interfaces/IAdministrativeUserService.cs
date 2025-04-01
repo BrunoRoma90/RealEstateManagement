@@ -8,7 +8,7 @@ public interface IAdministrativeUserService
 
     IEnumerable<AdministrativeUserDto> GetAdministrativeUsers();
 
-    public AdministrativeUser GetAdministrativeUserById(int id);
+    public AdministrativeUserDto GetAdministrativeUserById(int id);
     AdministrativeUserDto Add(CreateAdministrativeUserDto administrativeUser);
 
 

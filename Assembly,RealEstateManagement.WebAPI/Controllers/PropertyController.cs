@@ -22,6 +22,13 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return _propertyService.GetProperties();
         }
 
+        [HttpGet]
+        [Route("GetById/{id:int}")]
+        public ActionResult<PropertyDto> GetbyId([FromRoute] int id)
+        {
+            return Ok(_propertyService.GetPropertyById(id));
+        }
+
         [HttpPost]
 
         public ActionResult<PropertyDto> Add([FromBody]CreatePropertyDto property)

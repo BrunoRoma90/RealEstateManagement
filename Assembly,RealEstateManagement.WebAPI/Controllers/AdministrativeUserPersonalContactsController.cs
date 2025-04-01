@@ -1,4 +1,5 @@
 ﻿using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,14 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
         public IEnumerable<AdministrativeUserPersonalContactDto> Get()
         {
             return _administrativeUserPersonalContactsServices.GetAdministrativeUsersPersonalsContacts();
+        }
+
+        [HttpGet]
+        [Route("GetPersonalContactsByAdministrativeUserId/{id:int}")]
+
+        public ActionResult<AdministrativeUserPersonalContactDto> GetPersonalContactsByAdministrativeUserId([FromRoute] int id)
+        {
+            return Ok(_administrativeUserPersonalContactsServices.GetPersonalContactsByAdministrativeUserId(id));
         }
         [HttpPost]
 

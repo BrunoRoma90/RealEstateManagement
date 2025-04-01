@@ -7,7 +7,7 @@ public interface IAgentService
 {
     IEnumerable<AgentDto> GetAgents();
 
-    public Agent GetAgentById(int id);
+    public AgentDto GetAgentById(int id);
     AgentDto Add(CreateAgentDto agent);
 
     //public void AddVisitToMyList(int agentId, Visit visit);

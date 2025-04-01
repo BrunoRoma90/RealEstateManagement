@@ -23,6 +23,14 @@ public class AgentController : BaseController
         return _agentService.GetAgents();
     }
 
+    [HttpGet]
+    [Route("GetById/{id:int}")]
+
+    public ActionResult<AgentDto> GetbyId([FromRoute] int id)
+    {
+        return Ok(_agentService.GetAgentById(id));
+    }
+
     [HttpPost]
 
     public ActionResult<AgentDto> Add(CreateAgentDto agent)

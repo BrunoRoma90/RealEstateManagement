@@ -1,6 +1,8 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
 using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
+using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Interfaces;
+using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers
@@ -21,6 +23,15 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
         {
             return _administrativeUserService.GetAdministrativeUsers();
         }
+
+        [HttpGet]
+        [Route("GetById/{id:int}")]
+
+        public ActionResult<AdministrativeUserDto> GetbyId([FromRoute] int id)
+        {
+            return Ok(_administrativeUserService.GetAdministrativeUserById(id));
+        }
+
 
         [HttpPost]
 

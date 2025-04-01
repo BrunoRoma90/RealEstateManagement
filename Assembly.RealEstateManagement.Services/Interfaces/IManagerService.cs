@@ -8,7 +8,7 @@ public interface IManagerService
 
     IEnumerable<ManagerDto> GetManagers();
 
-    public Manager GetManagerById(int id);
+    public ManagerDto GetManagerById(int id);
     ManagerDto Add(CreateManagerDto manager);
 
     //public Agent GetAgent(int id);

@@ -65,14 +65,30 @@ public class ManagerService : IManagerService
         return managerDto;
     }
 
-    public Manager GetManagerById(int id)
+    public ManagerDto GetManagerById(int id)
     {
         var manager = _unitOfWork.ManagerRepository.GetById(id);
-        if (manager == null)
+        if (manager is null)
         {
             throw new KeyNotFoundException($"Manager with ID {id} not found.");
         }
-        return manager;
+        return new ManagerDto 
+        {
+            EmployeeNumber = manager.EmployeeNumber,
+            ManagerNumber = manager.ManagerNumber,
+            FirstName = manager.Name.FirstName,
+            LastName = manager.Name.LastName,
+            Email = manager.Account.Email,
+            Address = new AddressDto
+            {
+                Street = manager.Address.Street,
+                Number = manager.Address.Number,
+                PostalCode = manager.Address.PostalCode,
+                City = manager.Address.City,
+                Country = manager.Address.Country,
+
+            }
+        };
     }
 
     public IEnumerable<ManagerDto> GetManagers()

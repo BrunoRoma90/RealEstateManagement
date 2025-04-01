@@ -64,14 +64,30 @@ public class AdministrativeUserService : IAdministrativeUserService
         return administrativeUserDto;
     }
 
-    public AdministrativeUser GetAdministrativeUserById(int id)
+    public AdministrativeUserDto GetAdministrativeUserById(int id)
     {
         var administrativeUser = _unitOfWork.AdministrativeUsersRepository.GetById(id);
         if (administrativeUser == null)
         {
             throw new KeyNotFoundException($"Manager with ID {id} not found.");
         }
-        return administrativeUser;
+        return new AdministrativeUserDto 
+        {
+            EmployeeNumber = administrativeUser.EmployeeNumber,
+            AdministrativeNumber = administrativeUser.AdministrativeNumber,
+            FirstName = administrativeUser.Name.FirstName,
+            LastName = administrativeUser.Name.LastName,
+            Email = administrativeUser.Account.Email,
+            Address = new AddressDto
+            {
+                Street = administrativeUser.Address.Street,
+                Number = administrativeUser.Address.Number,
+                PostalCode = administrativeUser.Address.PostalCode,
+                City = administrativeUser.Address.City,
+                Country = administrativeUser.Address.Country,
+
+            }
+        };
     }
 
     public IEnumerable<AdministrativeUserDto> GetAdministrativeUsers()

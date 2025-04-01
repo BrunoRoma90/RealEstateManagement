@@ -1,5 +1,7 @@
-﻿using Assembly.RealEstateManagement.Services.Dtos.Manager;
+﻿using Assembly.RealEstateManagement.Services.Dtos.Agent;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
+using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers
@@ -20,6 +22,15 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
         {
             return _managerAllContactsServices.GetManagerAllContacts();
         }
+
+        [HttpGet]
+        [Route("GetAllContactsByManagerId/{id:int}")]
+
+        public ActionResult<ManagerAllContactsDto> GetAllContactsByManagerId([FromRoute] int id)
+        {
+            return Ok(_managerAllContactsServices.GetAllContactsByManagerId(id));
+        }
+
         [HttpPost]
 
         public ActionResult<ManagerAllContactsDto> Add(CreateManagerAllContactsDto managerAllContact)
