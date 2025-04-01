@@ -17,6 +17,8 @@ public interface IUnitOfWork : IDisposable
     public IAgentAllContactRepository AgentAllContactRepository { get; }
     public IAdministrativeUserAllContactRepository AdministrativeUserAllContactRepository { get; }
 
+    public IPropertyRepository PropertyRepository { get; }
+
     void BeginTransaction();
     public bool Commit();
 }

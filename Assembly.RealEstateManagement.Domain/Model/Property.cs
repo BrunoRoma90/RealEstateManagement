@@ -60,8 +60,7 @@ public class Property : AuditableEntity<int>
         List<Room> rooms, List<PropertyImage> propertyImages) : this()
     {
         ValidateProperty(agent, propertyType, price, priceBySquareMeter, sizeBySquareMeters, description, address, transactionType, availability, rooms, propertyImages);
-        Agent = Agent.Create(agent.Name, agent.Account, agent.Address, agent.AgentNumber, agent.EmployeeNumber, agent.AgentPersonalContact,
-            agent.ManagedProperty, agent.AgentAllContact, agent.Manager);
+        Agent = agent;
         PropertyType = propertyType;
         Price = price;
         PriceBySquareMeter = priceBySquareMeter;
@@ -92,6 +91,23 @@ public class Property : AuditableEntity<int>
     public static void Restore(Property property)
     {
         property.IsDeleted = false;
+    }
+
+    public void AddRoom(Room room)
+    {
+        if (room == null)
+            throw new ArgumentNullException(nameof(room), "Room cannot be null.");
+
+        Rooms.Add(room);
+    }
+
+   
+    public void AddPropertyImage(PropertyImage propertyImage)
+    {
+        if (propertyImage == null)
+            throw new ArgumentNullException(nameof(propertyImage), "Property Image cannot be null.");
+
+        PropertyImages.Add(propertyImage);
     }
 
 
