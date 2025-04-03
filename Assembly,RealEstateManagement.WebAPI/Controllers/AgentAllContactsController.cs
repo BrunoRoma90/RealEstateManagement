@@ -12,7 +12,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
     {
         private readonly IAgentAllContactsServices _agentAllContactsServices;
 
-        private AgentAllContactsController(IAgentAllContactsServices agentAllContactsServices)
+        public AgentAllContactsController(IAgentAllContactsServices agentAllContactsServices)
         {
             _agentAllContactsServices = agentAllContactsServices;
         }

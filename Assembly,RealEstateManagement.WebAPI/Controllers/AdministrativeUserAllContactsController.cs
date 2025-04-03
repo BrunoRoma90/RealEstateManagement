@@ -13,7 +13,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
     {
         private readonly IAdministrativeUsersAllContactsServices _administrativeUsersAllContactsServices;
 
-        private AdministrativeUserAllContactsController(IAdministrativeUsersAllContactsServices administrativeUsersAllContactsServices)
+        public AdministrativeUserAllContactsController(IAdministrativeUsersAllContactsServices administrativeUsersAllContactsServices)
         {
             _administrativeUsersAllContactsServices = administrativeUsersAllContactsServices;
         }
@@ -25,7 +25,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllContactsByManagerId/{id:int}")]
+        [Route("GetAllContactsByAdministrativeUserId/{id:int}")]
 
         public ActionResult<AdministrativeUsersAllContactsDto> GetAllContactsByAdministrativeUserId([FromRoute] int id)
         {

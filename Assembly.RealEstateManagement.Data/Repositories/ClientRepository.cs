@@ -1,6 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Data.Context;
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assembly.RealEstateManagement.Data.Repositories;
 
@@ -37,5 +38,15 @@ internal class ClientRepository : Repository<Client, int>, IClientRepository
         throw new NotImplementedException();
     }
 
-    
+
+    public List<Client> GetAllClientWithAccount()
+    {
+        return DbSet.Include(x => x.Account).ToList();
+    }
+
+    public List<Client> GetAllClientWithAddress()
+    {
+        return DbSet.Include(x => x.Address).ToList();
+    }
+
 }

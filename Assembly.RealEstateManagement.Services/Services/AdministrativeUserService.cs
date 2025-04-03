@@ -67,9 +67,19 @@ public class AdministrativeUserService : IAdministrativeUserService
     public AdministrativeUserDto GetAdministrativeUserById(int id)
     {
         var administrativeUser = _unitOfWork.AdministrativeUsersRepository.GetById(id);
+        var account = _unitOfWork.AdministrativeUsersRepository.GetAdministrativeUserAccount(id);
+        var address = _unitOfWork.AdministrativeUsersRepository.GetAdministrativeUserAddress(id);
         if (administrativeUser == null)
         {
-            throw new KeyNotFoundException($"Manager with ID {id} not found.");
+            throw new KeyNotFoundException($"AdministrativeUser with ID {id} not found.");
+        }
+        if (account is null)
+        {
+            throw new KeyNotFoundException($"AdministrativeUser account with ID {id} not found.");
+        }
+        if (address is null)
+        {
+            throw new KeyNotFoundException($"AdministrativeUser address with ID {id} not found.");
         }
         return new AdministrativeUserDto 
         {

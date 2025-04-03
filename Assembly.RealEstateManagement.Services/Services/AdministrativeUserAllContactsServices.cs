@@ -20,11 +20,11 @@ public class AdministrativeUserAllContactsServices : IAdministrativeUsersAllCont
     {
         _unitOfWork.BeginTransaction();
 
-        var agent = _unitOfWork.AdministrativeUsersRepository.GetById(administrativeUserAllContacts.AdministrativeUser.Id);
+        var administrativeUser = _unitOfWork.AdministrativeUsersRepository.GetById(administrativeUserAllContacts.AdministrativeUser.Id);
 
-        if (agent == null)
+        if (administrativeUser == null)
         {
-            throw new Exception("Manager not found.");
+            throw new Exception("AdministrativeUser not found.");
         }
         if (!Enum.TryParse<ContactType>(administrativeUserAllContacts.ContactType, true, out var contactType))
         {
@@ -35,7 +35,7 @@ public class AdministrativeUserAllContactsServices : IAdministrativeUsersAllCont
         AdministrativeUserAllContact administrativeUserAllContactToAdd = AdministrativeUserAllContact.Create(
         Name.Create(administrativeUserAllContacts.FirstName, administrativeUserAllContacts.MiddleNames, administrativeUserAllContacts.LastName),
         Contact.Create(contactType, administrativeUserAllContacts.Value),
-        agent
+        administrativeUser
         );
 
         AdministrativeUserAllContact addedAdministrativeUserAllContact;
@@ -90,9 +90,9 @@ public class AdministrativeUserAllContactsServices : IAdministrativeUsersAllCont
         }).ToList();
     }
 
-    public List<AdministrativeUsersAllContactsDto> GetContactsByAdministrativeUserId(int agentId)
+    public List<AdministrativeUsersAllContactsDto> GetContactsByAdministrativeUserId(int administrativeUserId)
     {
-        var contacts = _unitOfWork.AgentAllContactRepository.GetAgentContacts(agentId);
+        var contacts = _unitOfWork.AdministrativeUserAllContactRepository.GetAdministrativeUserContacts(administrativeUserId);
 
         return contacts.Select(contact => new AdministrativeUsersAllContactsDto
         {

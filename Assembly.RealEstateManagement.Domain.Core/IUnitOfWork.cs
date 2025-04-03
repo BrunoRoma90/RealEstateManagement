@@ -19,6 +19,8 @@ public interface IUnitOfWork : IDisposable
 
     public IPropertyRepository PropertyRepository { get; }
 
+    public IClientRepository ClientRepository { get; }
+
     void BeginTransaction();
     public bool Commit();
 }

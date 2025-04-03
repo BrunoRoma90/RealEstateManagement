@@ -9,6 +9,9 @@ public interface IClientRepository : IRepository<Client, int>
 
     public List<FavoriteProperties> GetFavoritePropertiesbyClientId(int clientId);
 
+    public List<Client> GetAllClientWithAccount();
+    public List<Client> GetAllClientWithAddress();
+
     public List<Comment> GetCommentsByClientId(int clientId);
 
     public List<Rating> GetRatingsByClientId(int clientId);

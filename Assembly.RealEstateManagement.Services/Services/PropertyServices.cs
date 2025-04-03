@@ -18,7 +18,10 @@ public class PropertyServices : IPropertyServices
     }
     public IEnumerable<PropertyDto> GetProperties()
     {
-        var properties = _unitOfWork.PropertyRepository.GetAll();
+        var properties = new List<Property>();
+        properties = _unitOfWork.PropertyRepository.GetAllPropertiesWithAddress();
+        properties = _unitOfWork.PropertyRepository.GetAllPropertiesWithAgent();
+
 
         return properties.Select(p => new PropertyDto
         {
@@ -72,10 +75,20 @@ public class PropertyServices : IPropertyServices
     public PropertyDto GetPropertyById(int id)
     {
         var property = _unitOfWork.PropertyRepository.GetById(id);
+        var agent = _unitOfWork.PropertyRepository.GetAgentByPropertyId(id);
+        var address = _unitOfWork.PropertyRepository.GetPropertyAddress(id);
 
         if (property is null)
         {
-            throw new ArgumentNullException(nameof(property), "User id not found");
+            throw new ArgumentNullException(nameof(property), "property id not found");
+        }
+        if (agent is null)
+        {
+            throw new ArgumentNullException(nameof(property), "agent id not found");
+        }
+        if (address is null)
+        {
+            throw new ArgumentNullException(nameof(property), "address id not found");
         }
 
         return new PropertyDto
@@ -84,11 +97,11 @@ public class PropertyServices : IPropertyServices
             Agent = new AgentDto
             {
 
-                EmployeeNumber = property.Agent.EmployeeNumber,
-                AgentNumber = property.Agent.AgentNumber,
-                FirstName = property.Agent.Name.FirstName,
-                LastName = property.Agent.Name.LastName,
-                Email = property.Agent.Account.Email,
+                EmployeeNumber = agent.EmployeeNumber,
+                AgentNumber = agent.AgentNumber,
+                FirstName = agent.Name.FirstName,
+                LastName = agent.Name.LastName,
+                Email = agent.Account.Email,
             },
             PropertyType = property.PropertyType,
             Price = property.Price,
@@ -97,11 +110,11 @@ public class PropertyServices : IPropertyServices
             Description = property.Description,
             Address = new AddressDto
             {
-                Street = property.Address.Street,
-                Number = property.Address.Number,
-                PostalCode = property.Address.PostalCode,
-                City = property.Address.City,
-                Country = property.Address.Country
+                Street = address.Street,
+                Number = address.Number,
+                PostalCode = address.PostalCode,
+                City = address.City,
+                Country = address.Country
             },
             TransactionType = property.TransactionType,
             Availability = property.Availability,

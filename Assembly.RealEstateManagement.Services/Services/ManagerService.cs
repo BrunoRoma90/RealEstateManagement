@@ -68,9 +68,19 @@ public class ManagerService : IManagerService
     public ManagerDto GetManagerById(int id)
     {
         var manager = _unitOfWork.ManagerRepository.GetById(id);
+        var account = _unitOfWork.ManagerRepository.GetManagerAccount(id);
+        var address = _unitOfWork.ManagerRepository.GetManagerAddress(id);
         if (manager is null)
         {
             throw new KeyNotFoundException($"Manager with ID {id} not found.");
+        }
+        if (account is null)
+        {
+            throw new KeyNotFoundException($"Manager account with ID {id} not found.");
+        }
+        if (address is null)
+        {
+            throw new KeyNotFoundException($"Manager address with ID {id} not found.");
         }
         return new ManagerDto 
         {

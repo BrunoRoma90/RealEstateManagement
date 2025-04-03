@@ -2,6 +2,8 @@
 using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
 
 namespace Assembly.RealEstateManagement.Data.Repositories;
@@ -16,6 +18,8 @@ internal class PropertyRepository : Repository<Property, int>, IPropertyReposito
     {
         return DbSet.Where(p => p.Agent.Id == agentId).ToList();
     }
+
+    
 
     public Property? GetPropertyByAddressId(int addressId)
     {
@@ -38,5 +42,34 @@ internal class PropertyRepository : Repository<Property, int>, IPropertyReposito
         .FirstOrDefault(p => p.Id == propertyId);
 
         return property?.Rooms ?? new List<Room>();
+    }
+
+    public List<Property> GetAllPropertiesWithAddress()
+    {
+        return DbSet.Include(x => x.Address).ToList();
+    }
+
+    public List<Property> GetAllPropertiesWithAgent()
+    {
+        return DbSet.Include(x => x.Agent)
+            .ThenInclude(m => m.Account)
+            .Include(m => m.Agent.Address)
+            .ToList();
+    }
+
+    public Agent? GetAgentByPropertyId(int propertyId)
+    {
+        return DbSet.Where(a => a.Id == propertyId)
+                .Include(a => a.Agent)
+                .ThenInclude(agent => agent.Account)
+                .Select(a => a.Agent)
+                .FirstOrDefault();
+    }
+
+
+    public Address? GetPropertyAddress(int propertyId)
+    {
+        var property = DbSet.Include(p => p.Address).FirstOrDefault(p => p.Id == propertyId);
+        return property?.Address;
     }
 }
