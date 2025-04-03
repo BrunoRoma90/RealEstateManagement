@@ -49,4 +49,16 @@ internal class ClientRepository : Repository<Client, int>, IClientRepository
         return DbSet.Include(x => x.Address).ToList();
     }
 
+    public Account? GetClientAccount(int clientId)
+    {
+        var client = DbSet.Include(a => a.Account).FirstOrDefault(a => a.Id == clientId);
+        return client?.Account;
+    }
+
+    public Address? GetClientAddress(int clientId)
+    {
+        var client = DbSet.Include(a => a.Address).FirstOrDefault(a => a.Id == clientId);
+        return client?.Address;
+    }
+
 }

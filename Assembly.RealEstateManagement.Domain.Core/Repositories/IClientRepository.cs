@@ -16,4 +16,8 @@ public interface IClientRepository : IRepository<Client, int>
 
     public List<Rating> GetRatingsByClientId(int clientId);
 
+    public Account? GetClientAccount(int clientId);
+
+    public Address? GetClientAddress(int clientId);
+
 }

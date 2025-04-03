@@ -52,13 +52,13 @@ public class Client : AuditableEntity<int>
     public static Client Create(Name name, Account account, Address address, List<FavoriteProperties> favoriteProperties,
         List<Rating> ratings, List<Comment> comments)
     {
-        return new Client(name, account, address, false, favoriteProperties, ratings, comments);
+        return new Client(name, account, address, true, favoriteProperties, ratings, comments);
     }
 
     public static Client Update(Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
     List<Rating> newRatings, List<Comment> newComments)
     {
-        return new Client(newName, newAccount, newAddress, false, newFavoriteProperties, newRatings, newComments);
+        return new Client(newName, newAccount, newAddress, true, newFavoriteProperties, newRatings, newComments);
     }
 
 
