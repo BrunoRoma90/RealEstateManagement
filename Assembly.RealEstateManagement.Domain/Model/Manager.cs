@@ -20,6 +20,10 @@ public class Manager : Employee
     {
         ValidateManager(managerNumber, employeeNumber, managerPersonalContact, managerAllContacts);
         Id = id;
+        EmployeeNumber = employeeNumber;
+        Name = name;
+        Account = account;
+        Address = address;
         ManagerNumber = managerNumber;
         ManagerPersonalContact = managerPersonalContact;
         ManagerAllContacts = managerAllContacts;
