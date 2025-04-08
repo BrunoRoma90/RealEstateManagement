@@ -51,12 +51,26 @@ public class Manager : Employee
     {
         return new Manager(emplyeeNumber, name, account, address, managerNumber, managerPersonalContacts, managerAllContacts, managedAgents);
     }
-    public static Manager Update(int newEmplyeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
+    public static Manager Update(int id, int newEmplyeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
        List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
     {
 
-        return new Manager(newEmplyeeNumber, newName, newAccount, newAddress, newManagerNumber, newManagerPersonalContacts, newManagerAllContacts, newManagedAgents);
+        return new Manager(id, newEmplyeeNumber, newName, newAccount, newAddress, newManagerNumber, newManagerPersonalContacts, newManagerAllContacts, newManagedAgents);
     }
+
+    //public void Update(int id, int newEmployeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
+    //    List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
+    //{
+    //    Id = id;
+    //    EmployeeNumber = newEmployeeNumber;
+    //    Name = newName;
+    //    Account.Update(newAccount.Email, newAccount.Password);
+    //    Address.UpdateAddress(newAddress.Id, newAddress.Street, newAddress.Number, newAddress.PostalCode, newAddress.City, newAddress.Country);
+    //    ManagerNumber = newManagerNumber;
+    //    ManagerPersonalContact = newManagerPersonalContacts;
+    //    ManagerAllContacts = newManagerAllContacts;
+    //    ManagedAgents = newManagedAgents;
+    //}
 
 
 

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Assembly.RealEstateManagement.Domain.Common;
 
 namespace Assembly.RealEstateManagement.Domain.Model;
@@ -30,6 +31,19 @@ public class Account : AuditableEntity<int>
     {
         return new Account(email, password);
     }
+
+    public static Account Update(int id,string newEmail, string newPassword)
+    {
+        return new Account(id ,newEmail, newPassword);
+    }
+
+    //public void Update(string newEmail, string newPassword)
+    //{
+       
+    //    Email = newEmail;
+    //    Password = newPassword;
+    //}
+
 
 
     public void UpdateEmailAndPassword(string newEmail, string newPassword)

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Assembly.RealEstateManagement.Domain.Core;
+﻿using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Model;
-using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Dtos.Client;
 using Assembly.RealEstateManagement.Services.Dtos.Common;
-using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Dtos.Property;
 using Assembly.RealEstateManagement.Services.Interfaces;
 

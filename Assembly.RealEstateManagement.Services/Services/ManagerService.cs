@@ -16,55 +16,6 @@ public class ManagerService : IManagerService
         _unitOfWork = unitOfWork;
     }
 
-    public ManagerDto Add(CreateManagerDto manager)
-    {
-        _unitOfWork.BeginTransaction();
-
-        Manager managerToAdd = Manager.Create(
-        manager.EmployeeNumber,
-        Name.Create(manager.FirstName, manager.MiddleNames, manager.LastName),
-        Account.Create(manager.Email, manager.Password),
-        Address.Create(manager.Address.Street, manager.Address.Number, manager.Address.PostalCode, manager.Address.City, manager.Address.Country),
-        manager.ManagerNumber,
-        new List<ManagerAllContact>(),
-        new List<ManagerPersonalContact>(),
-        new List<Agent>()
-         );
-
-        Manager addedManager;
-        using (_unitOfWork) 
-        {
-            addedManager = _unitOfWork.ManagerRepository.Add(managerToAdd);
-            _unitOfWork.Commit();
-
-        }
-
-        var managerDto = new ManagerDto
-        {
-
-            EmployeeNumber = addedManager.EmployeeNumber,
-            ManagerNumber = addedManager.ManagerNumber,
-            FirstName = addedManager.Name.FirstName,
-            LastName = addedManager.Name.LastName,
-            Email = addedManager.Account.Email,
-            Address = new AddressDto
-            {
-                Street = addedManager.Address.Street,
-                Number = addedManager.Address.Number,
-                PostalCode = addedManager.Address.PostalCode,
-                City = addedManager.Address.City,
-                Country = addedManager.Address.Country,
-
-            }
-
-
-        };
-
-
-
-        return managerDto;
-    }
-
     public ManagerDto GetManagerById(int id)
     {
         var manager = _unitOfWork.ManagerRepository.GetById(id);
@@ -127,6 +78,175 @@ public class ManagerService : IManagerService
 
         }).ToList();
     }
+
+
+    public ManagerDto Add(CreateManagerDto manager)
+    {
+
+        _unitOfWork.BeginTransaction();
+
+        Manager managerToAdd = Manager.Create(
+        manager.EmployeeNumber,
+        Name.Create(manager.FirstName, manager.MiddleNames, manager.LastName),
+        Account.Create(manager.Email, manager.Password),
+        Address.Create(manager.Address.Street, manager.Address.Number, manager.Address.PostalCode, manager.Address.City, manager.Address.Country),
+        manager.ManagerNumber,
+        new List<ManagerAllContact>(),
+        new List<ManagerPersonalContact>(),
+        new List<Agent>()
+         );
+
+        Manager addedManager;
+        using (_unitOfWork)
+        {
+            addedManager = _unitOfWork.ManagerRepository.Add(managerToAdd);
+            _unitOfWork.Commit();
+
+        }
+
+        var managerDto = new ManagerDto
+        {
+
+            EmployeeNumber = addedManager.EmployeeNumber,
+            ManagerNumber = addedManager.ManagerNumber,
+            FirstName = addedManager.Name.FirstName,
+            LastName = addedManager.Name.LastName,
+            Email = addedManager.Account.Email,
+            Address = new AddressDto
+            {
+                Street = addedManager.Address.Street,
+                Number = addedManager.Address.Number,
+                PostalCode = addedManager.Address.PostalCode,
+                City = addedManager.Address.City,
+                Country = addedManager.Address.Country,
+
+            }
+
+
+        };
+
+
+
+        return managerDto;
+    }
+
+
+    public ManagerDto Update(UpdateManagerDto managerDto)
+    {
+        var existingManager = _unitOfWork.ManagerRepository.GetById(managerDto.Id);
+        if (existingManager == null)
+            throw new ArgumentNullException(nameof(existingManager), "Manager not found.");
+
+        var address = Address.UpdateAddress(
+            existingManager.Address.Id,
+            managerDto.Address?.Street ?? existingManager.Address.Street,
+            managerDto.Address?.Number ?? existingManager.Address.Number,
+            managerDto.Address?.PostalCode ?? existingManager.Address.PostalCode,
+            managerDto.Address?.City ?? existingManager.Address.City,
+            managerDto.Address?.Country ?? existingManager.Address.Country
+        );
+
+        var account = Account.Update(
+            existingManager.Account.Id,
+            managerDto.Email ?? existingManager.Account.Email,
+            managerDto.Password ?? existingManager.Account.Password
+        );
+
+        var name = Name.Create(
+            managerDto.FirstName ?? existingManager.Name.FirstName,
+            managerDto.MiddleNames?.Any() == true ? managerDto.MiddleNames : existingManager.Name.MiddleNames,
+            managerDto.LastName ?? existingManager.Name.LastName
+        );
+
+        var updatedManager = Manager.Update(
+            existingManager.Id,
+            managerDto.EmployeeNumber != 0 ? managerDto.EmployeeNumber : existingManager.EmployeeNumber,
+            name,
+            account,
+            address,
+            managerDto.ManagerNumber != 0 ? managerDto.ManagerNumber : existingManager.ManagerNumber,
+            existingManager.ManagerAllContacts,
+            existingManager.ManagerPersonalContact,
+            existingManager.ManagedAgents
+        );
+
+        using (_unitOfWork)
+        {
+            var result = _unitOfWork.ManagerRepository.Update(updatedManager);
+            _unitOfWork.Commit();
+
+            return new ManagerDto
+            {
+                Id = result.Id,
+                EmployeeNumber = result.EmployeeNumber,
+                FirstName = result.Name.FirstName,
+                LastName = result.Name.LastName,
+                Email = result.Account.Email,
+                Address = new AddressDto
+                {
+                    Street = result.Address.Street,
+                    Number = result.Address.Number,
+                    PostalCode = result.Address.PostalCode,
+                    City = result.Address.City,
+                    Country = result.Address.Country,
+                },
+                ManagerNumber = result.ManagerNumber,
+            };
+        }
+    }
+
+
+
+
+
+    //public ManagerDto Update(UpdateManagerDto managerDto)
+    //{
+    //    var existingManager = _unitOfWork.ManagerRepository.GetById(managerDto.Id);
+    //    if (existingManager == null)
+    //        throw new ArgumentNullException(nameof(existingManager), "Manager not found.");
+
+
+
+
+    //    using (_unitOfWork)
+    //    {
+    //        _unitOfWork.BeginTransaction();
+
+
+    //        var updatedManager = Manager.Update(
+    //            managerDto.Id,
+    //            managerDto.EmployeeNumber != 0 ? managerDto.EmployeeNumber : existingManager.EmployeeNumber,
+    //            managerDto.ManagerNumber != 0 ? managerDto.ManagerNumber : existingManager.ManagerNumber,
+    //            existingManager.ManagerAllContacts,
+    //            existingManager.ManagerPersonalContact,
+    //            existingManager.ManagedAgents
+    //        );
+
+    //        _unitOfWork.ManagerRepository.Update(updatedManager);
+    //        _unitOfWork.Commit();
+    //    }
+
+    //    return new ManagerDto
+    //    {
+    //        Id = existingManager.Id,
+    //        EmployeeNumber = existingManager.EmployeeNumber,
+    //        FirstName = existingManager.Name.FirstName,
+    //        LastName = existingManager.Name.LastName,
+    //        Email = existingManager.Account.Email,
+    //        Address = new AddressDto
+    //        {
+    //            Street = existingManager.Address.Street,
+    //            Number = existingManager.Address.Number,
+    //            PostalCode = existingManager.Address.PostalCode,
+    //            City = existingManager.Address.City,
+    //            Country = existingManager.Address.Country,
+    //        },
+    //        ManagerNumber = existingManager.ManagerNumber,
+    //    };
+    //}
+
+
+
     //public Agent GetAgent(int id)
     //{
     //    return _managerRepository.GetAgent(id);

@@ -83,18 +83,18 @@ public class Client : AuditableEntity<int>
         {
             throw new ArgumentNullException(nameof(address), "Address is required.");
         }
-        if (favoriteProperties == null || favoriteProperties.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(favoriteProperties), "Favorite Properties list is required.");
-        }
-        if (ratings == null || ratings.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(ratings), "Ratings list is required.");
-        }
-        if (comments == null || comments.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(comments), "Comments list is required.");
-        }
+        //if (favoriteProperties == null || favoriteProperties.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(favoriteProperties), "Favorite Properties list is required.");
+        //}
+        //if (ratings == null || ratings.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(ratings), "Ratings list is required.");
+        //}
+        //if (comments == null || comments.Count == 0)
+        //{
+        //    throw new ArgumentNullException(nameof(comments), "Comments list is required.");
+        //}
     }
 }
 

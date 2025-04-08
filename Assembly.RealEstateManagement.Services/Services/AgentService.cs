@@ -19,79 +19,6 @@ public class AgentService : IAgentService
         _unitOfWork = unitOfWork;
     }
 
-    public AgentDto Add(CreateAgentDto agent)
-    {
-        _unitOfWork.BeginTransaction();
-
-        var manager = _unitOfWork.ManagerRepository.GetById(agent.Manager.Id);
-        if (manager == null)
-        {
-            throw new Exception("Manager not found.");
-        }
-
-        Agent agentToAdd = Agent.Create(
-        Name.Create(agent.FirstName, agent.MiddleNames, agent.LastName),
-        Account.Create(agent.Email, agent.Password),
-        Address.Create(agent.Address.Street, agent.Address.Number, agent.Address.PostalCode, agent.Address.City, agent.Address.Country),
-        agent.AgentNumber,
-        agent.EmployeeNumber,
-        new List<AgentPersonalContact>(),
-        new List<Property>(),
-        new List<AgentAllContact>(),
-        manager        
-        );
-
-        Agent addedAgent;
-        using (_unitOfWork)
-        {
-            addedAgent = _unitOfWork.AgentRepository.Add(agentToAdd);
-            _unitOfWork.Commit();
-
-        }
-
-        var agentDto = new AgentDto
-        {
-
-            EmployeeNumber = addedAgent.EmployeeNumber,
-            AgentNumber = addedAgent.AgentNumber,
-            FirstName = addedAgent.Name.FirstName,
-            LastName = addedAgent.Name.LastName,
-            Email = addedAgent.Account.Email,
-            Address = new AddressDto
-            {
-                Street = addedAgent.Address.Street,
-                Number = addedAgent.Address.Number,
-                PostalCode = addedAgent.Address.PostalCode,
-                City = addedAgent.Address.City,
-                Country = addedAgent.Address.Country,
-
-            },
-            Manager = new ManagerDto
-            {
-                EmployeeNumber = addedAgent.Manager.EmployeeNumber,
-                ManagerNumber = addedAgent.Manager.ManagerNumber,
-                FirstName = addedAgent.Manager.Name.FirstName,
-                LastName = addedAgent.Manager.Name.LastName,
-                //Email = addedAgent.Manager.Account.Email,
-                //Address = new AddressDto
-                //{
-                //    Street = addedAgent.Manager.Address.Street,
-                //    Number = addedAgent.Manager.Address.Number,
-                //    PostalCode = addedAgent.Manager.Address.PostalCode,
-                //    City = addedAgent.Manager.Address.City,
-                //    Country = addedAgent.Manager.Address.Country
-                //}
-
-            }
-
-
-
-        };
-
-
-
-        return agentDto;
-    }
 
     public AgentDto GetAgentById(int id)
     {
@@ -188,6 +115,151 @@ public class AgentService : IAgentService
 
         }).ToList();
     }
+
+
+    public AgentDto Add(CreateAgentDto agent)
+    {
+        _unitOfWork.BeginTransaction();
+
+        var manager = _unitOfWork.ManagerRepository.GetById(agent.Manager.Id);
+        if (manager == null)
+        {
+            throw new Exception("Manager not found.");
+        }
+
+        Agent agentToAdd = Agent.Create(
+        Name.Create(agent.FirstName, agent.MiddleNames, agent.LastName),
+        Account.Create(agent.Email, agent.Password),
+        Address.Create(agent.Address.Street, agent.Address.Number, agent.Address.PostalCode, agent.Address.City, agent.Address.Country),
+        agent.AgentNumber,
+        agent.EmployeeNumber,
+        new List<AgentPersonalContact>(),
+        new List<Property>(),
+        new List<AgentAllContact>(),
+        manager
+        );
+
+        Agent addedAgent;
+        using (_unitOfWork)
+        {
+            addedAgent = _unitOfWork.AgentRepository.Add(agentToAdd);
+            _unitOfWork.Commit();
+
+        }
+
+        var agentDto = new AgentDto
+        {
+
+            EmployeeNumber = addedAgent.EmployeeNumber,
+            AgentNumber = addedAgent.AgentNumber,
+            FirstName = addedAgent.Name.FirstName,
+            LastName = addedAgent.Name.LastName,
+            Email = addedAgent.Account.Email,
+            Address = new AddressDto
+            {
+                Street = addedAgent.Address.Street,
+                Number = addedAgent.Address.Number,
+                PostalCode = addedAgent.Address.PostalCode,
+                City = addedAgent.Address.City,
+                Country = addedAgent.Address.Country,
+
+            },
+            Manager = new ManagerDto
+            {
+                EmployeeNumber = addedAgent.Manager.EmployeeNumber,
+                ManagerNumber = addedAgent.Manager.ManagerNumber,
+                FirstName = addedAgent.Manager.Name.FirstName,
+                LastName = addedAgent.Manager.Name.LastName,
+                //Email = addedAgent.Manager.Account.Email,
+                //Address = new AddressDto
+                //{
+                //    Street = addedAgent.Manager.Address.Street,
+                //    Number = addedAgent.Manager.Address.Number,
+                //    PostalCode = addedAgent.Manager.Address.PostalCode,
+                //    City = addedAgent.Manager.Address.City,
+                //    Country = addedAgent.Manager.Address.Country
+                //}
+
+            }
+
+
+
+        };
+
+
+
+        return agentDto;
+    }
+
+    public AgentDto Update(UpdateAgentDto agent)
+    {
+        throw new NotImplementedException();
+    }
+
+
+
+    //public AgentDto Update(UpdateAgentDto agent)
+    //{
+    //    _unitOfWork.BeginTransaction();
+
+    //    var existingAgent = _unitOfWork.AgentRepository.GetById(agent.Id);
+    //    if (existingAgent == null)
+    //    {
+    //        throw new Exception("Agent not found.");
+    //    }
+
+    //    var manager = _unitOfWork.ManagerRepository.GetById(agent.Manager.Id);
+    //    if (manager == null)
+    //    {
+    //        throw new Exception("Manager not found.");
+    //    }
+
+
+    //    Agent.Update(existingAgent.Id,
+    //        Name.UpdateName(agent.FirstName, agent.MiddleNames, agent.LastName),
+    //        Account.Update(agent.Email, agent.Password),
+    //        Address.UpdateAddress( agent.Address.Street, agent.Address.Number, agent.Address.PostalCode, agent.Address.City, agent.Address.Country),
+    //        agent.AgentNumber,
+    //        agent.EmployeeNumber,
+    //        existingAgent.AgentPersonalContact, // preserva os contactos
+    //        existingAgent.ManagedProperty,      // preserva propriedades
+    //        existingAgent.AgentAllContact,      // preserva contactos gerais
+    //        manager
+    //    );
+
+    //    Agent updatedAgent;
+    //    using (_unitOfWork)
+    //    {
+    //        updatedAgent = _unitOfWork.AgentRepository.Update(existingAgent);
+    //        _unitOfWork.Commit();
+    //    }
+
+    //    var agentDto = new AgentDto
+    //    {
+    //        EmployeeNumber = updatedAgent.EmployeeNumber,
+    //        AgentNumber = updatedAgent.AgentNumber,
+    //        FirstName = updatedAgent.Name.FirstName,
+    //        LastName = updatedAgent.Name.LastName,
+    //        Email = updatedAgent.Account.Email,
+    //        Address = new AddressDto
+    //        {
+    //            Street = updatedAgent.Address.Street,
+    //            Number = updatedAgent.Address.Number,
+    //            PostalCode = updatedAgent.Address.PostalCode,
+    //            City = updatedAgent.Address.City,
+    //            Country = updatedAgent.Address.Country,
+    //        },
+    //        Manager = new ManagerDto
+    //        {
+    //            EmployeeNumber = updatedAgent.Manager.EmployeeNumber,
+    //            ManagerNumber = updatedAgent.Manager.ManagerNumber,
+    //            FirstName = updatedAgent.Manager.Name.FirstName,
+    //            LastName = updatedAgent.Manager.Name.LastName,
+    //        }
+    //    };
+
+    //    return agentDto;
+    //}
 
 
 

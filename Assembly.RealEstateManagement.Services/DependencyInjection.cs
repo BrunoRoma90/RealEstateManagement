@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddScoped<IAgentAllContactsServices, AgentAllContactServices>();
         services.AddScoped<IAdministrativeUsersAllContactsServices, AdministrativeUserAllContactsServices>();
         services.AddScoped<IPropertyServices, PropertyServices>();
+        services.AddScoped<IClientServices, ClientServices>();
+        services.AddScoped<IVisitServices, VisitServices>();
         return services;
     }
 }

@@ -38,11 +38,17 @@ public class AgentController : BaseController
         return Ok(_agentService.Add(agent));
     }
 
-    [HttpPut]
-
-    public ActionResult<ManagerDto> Update(CreateManagerDto manager)
+    [HttpPut("{id:int}")]
+    public ActionResult<AgentDto> Update(
+    [FromRoute] int id,
+    [FromBody] UpdateAgentDto agent)
     {
-        return BadRequest();
+        if (id != agent.Id)
+        {
+            return BadRequest("User IDs must match");
+        }
+
+        return Ok(_agentService.Update(agent));
     }
 
     [HttpDelete]

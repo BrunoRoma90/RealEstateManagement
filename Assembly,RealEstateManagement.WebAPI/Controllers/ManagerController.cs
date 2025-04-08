@@ -38,11 +38,18 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_managerService.Add(manager));
         }
 
-        [HttpPut]
 
-        public ActionResult<ManagerDto> Update(CreateManagerDto manager)
+        [HttpPut("{id:int}")]
+        public ActionResult<ManagerDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateManagerDto manager)
         {
-            return BadRequest();
+            if (id != manager.Id)
+            {
+                return BadRequest("User IDs must match");
+            }
+
+            return Ok(_managerService.Update(manager));
         }
 
         [HttpDelete]

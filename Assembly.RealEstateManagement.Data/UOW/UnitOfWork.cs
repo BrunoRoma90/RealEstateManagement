@@ -28,6 +28,8 @@ internal class UnitOfWork : IUnitOfWork
 
     public IClientRepository ClientRepository { get; set; }
 
+    public IVisitRepository VisitRepository { get; set; }
+
 
 
     public UnitOfWork(ApplicationDbContext context, IManagerRepository managerRepository,
@@ -40,7 +42,8 @@ internal class UnitOfWork : IUnitOfWork
         IAgentAllContactRepository agentAllContactRepository,
         IAdministrativeUserAllContactRepository administrativeUserAllContactRepository,
         IPropertyRepository propertyRepository,
-        IClientRepository clientRepository) 
+        IClientRepository clientRepository,
+        IVisitRepository visitRepository) 
     {
         _context = context;
         ManagerRepository = managerRepository;
@@ -54,6 +57,7 @@ internal class UnitOfWork : IUnitOfWork
         AdministrativeUserAllContactRepository = administrativeUserAllContactRepository;
         PropertyRepository = propertyRepository;
         ClientRepository = clientRepository;
+        VisitRepository = visitRepository;
     }
 
     public void BeginTransaction()

@@ -10,6 +10,8 @@ public interface IAgentService
     public AgentDto GetAgentById(int id);
     AgentDto Add(CreateAgentDto agent);
 
+    AgentDto Update(UpdateAgentDto agent);
+
     //public void AddVisitToMyList(int agentId, Visit visit);
     //public void RemoveVisitToMyList(int agentId, Visit visit);
     //List<Visit> GetAllVisits(int agentId);

@@ -21,6 +21,8 @@ public interface IUnitOfWork : IDisposable
 
     public IClientRepository ClientRepository { get; }
 
+    public IVisitRepository VisitRepository { get; }
+
     void BeginTransaction();
     public bool Commit();
 }

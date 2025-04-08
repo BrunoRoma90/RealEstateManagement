@@ -27,11 +27,9 @@ public class Visit : AuditableEntity<int>
     private Visit(Client client, Property property, Agent agent, DateTime visitDate, string notes) : this()
     {
         ValidateVisit(property, client, agent, visitDate);
-        Client = Client.Create(client.Name, client.Account, client.Address, client.FavoriteProperties, client.Ratings, client.Comments);
-        Property = Property.Create(property.Agent, property.PropertyType, property.Price, property.PriceBySquareMeter, property.SizeBySquareMeters,
-            property.Description, property.Address, property.TransactionType, property.Availability, property.Rooms, property.PropertyImages);
-        Agent = Agent.Create(agent.Name, agent.Account, agent.Address, agent.AgentNumber, agent.EmployeeNumber, agent.AgentPersonalContact, agent.ManagedProperty,
-            agent.AgentAllContact, agent.Manager);
+        Client = client;
+        Property = property;
+        Agent = agent;
         VisitDate = visitDate;
         Notes = notes;
     }
