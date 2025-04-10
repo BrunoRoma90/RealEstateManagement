@@ -59,16 +59,32 @@ public class AdministrativeUser : Employee
     }
 
 
-
-    public static AdministrativeUser Update(Name newName, Account newAccount, Address newAddress, int newEmployeeNumber, int newAdministrativeNumber,
+    public void Update(int id,Name newName, Account newAccount, Address newAddress, int newEmployeeNumber, int newAdministrativeNumber,
        List<AdministrativeUserAllContact> newAdministrativeUserAllContacts,
-       List<AdministrativeUserPersonalContact> newUserPersonalContacts)
+       List<AdministrativeUserPersonalContact> newAdministrativeUserPersonalContacts) 
     {
-        return new AdministrativeUser(newName, newAccount, newAddress, newEmployeeNumber, newAdministrativeNumber, newAdministrativeUserAllContacts,
-            newUserPersonalContacts, false);
+        Id = id;
+        Name = newName;
+        Account = newAccount;
+        Address = newAddress;
+        EmployeeNumber = newEmployeeNumber;
+        AdministrativeNumber = newAdministrativeNumber;
+        AdministrativeUsersPersonalContact = newAdministrativeUserPersonalContacts;
+        AdministrativeUsersAllContact = newAdministrativeUserAllContacts;
+
+
+
     }
 
-   
+    //public static AdministrativeUser Update(Name newName, Account newAccount, Address newAddress, int newEmployeeNumber, int newAdministrativeNumber,
+    //   List<AdministrativeUserAllContact> newAdministrativeUserAllContacts,
+    //   List<AdministrativeUserPersonalContact> newUserPersonalContacts)
+    //{
+    //    return new AdministrativeUser(newName, newAccount, newAddress, newEmployeeNumber, newAdministrativeNumber, newAdministrativeUserAllContacts,
+    //        newUserPersonalContacts, false);
+    //}
+
+
 
     public static void Restore(AdministrativeUser administrativeUser)
     {

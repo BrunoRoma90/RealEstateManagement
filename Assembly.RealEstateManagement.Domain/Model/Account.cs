@@ -37,12 +37,12 @@ public class Account : AuditableEntity<int>
         return new Account(id ,newEmail, newPassword);
     }
 
-    //public void Update(string newEmail, string newPassword)
-    //{
-       
-    //    Email = newEmail;
-    //    Password = newPassword;
-    //}
+    public void Update(string newEmail, string newPassword)
+    {
+
+        Email = newEmail;
+        Password = newPassword;
+    }
 
 
 

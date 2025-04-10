@@ -40,22 +40,24 @@ public class Address : AuditableEntity<int>
         return new Address(street,number, postalCode,city,country);
     }
 
-    public static Address UpdateAddress(int id,string newStreet, int newNumber, string newPostalCode, string newCity, string newCountry)
-    {
-
-        return new Address(id,newStreet, newNumber, newPostalCode, newCity, newCountry);
-
-    }
-
-    //public void UpdateAddress(int id, string newStreet, int newNumber, string newPostalCode, string newCity, string newCountry) 
+    //public static Address UpdateAddress(int id,string newStreet, int newNumber, string newPostalCode, string newCity, string newCountry)
     //{
-    //    Id = id;
-    //    Street = newStreet;
-    //    Number = newNumber;
-    //    PostalCode = newPostalCode;
-    //    City = newCity;
-    //    Country = newCountry;
+
+    //    return new Address(id,newStreet, newNumber, newPostalCode, newCity, newCountry);
+
     //}
+
+
+
+    public void UpdateAddress(string newStreet, int newNumber, string newPostalCode, string newCity, string newCountry)
+    {
+        
+        Street = newStreet;
+        Number = newNumber;
+        PostalCode = newPostalCode;
+        City = newCity;
+        Country = newCountry;
+    }
 
 
 

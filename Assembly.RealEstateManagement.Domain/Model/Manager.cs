@@ -12,7 +12,7 @@ public class Manager : Employee
 
     private Manager() { }
 
-    private Manager(int id, int employeeNumber, Name name, Account account, Address address,
+    private Manager(int id,int employeeNumber, Name name, Account account, Address address,
         int managerNumber,
         List<ManagerPersonalContact> managerPersonalContact,
         List<ManagerAllContact> managerAllContacts,
@@ -55,26 +55,26 @@ public class Manager : Employee
     {
         return new Manager(emplyeeNumber, name, account, address, managerNumber, managerPersonalContacts, managerAllContacts, managedAgents);
     }
-    public static Manager Update(int id, int newEmplyeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
-       List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
-    {
-
-        return new Manager(id, newEmplyeeNumber, newName, newAccount, newAddress, newManagerNumber, newManagerPersonalContacts, newManagerAllContacts, newManagedAgents);
-    }
-
-    //public void Update(int id, int newEmployeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
-    //    List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
+    //public static Manager Update(int id, int newEmplyeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
+    //   List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
     //{
-    //    Id = id;
-    //    EmployeeNumber = newEmployeeNumber;
-    //    Name = newName;
-    //    Account.Update(newAccount.Email, newAccount.Password);
-    //    Address.UpdateAddress(newAddress.Id, newAddress.Street, newAddress.Number, newAddress.PostalCode, newAddress.City, newAddress.Country);
-    //    ManagerNumber = newManagerNumber;
-    //    ManagerPersonalContact = newManagerPersonalContacts;
-    //    ManagerAllContacts = newManagerAllContacts;
-    //    ManagedAgents = newManagedAgents;
+
+    //    return new Manager(id, newEmplyeeNumber, newName, newAccount, newAddress, newManagerNumber, newManagerPersonalContacts, newManagerAllContacts, newManagedAgents);
     //}
+
+    public void Update(int id, int newEmployeeNumber, Name newName, Account newAccount, Address newAddress, int newManagerNumber,
+        List<ManagerAllContact> newManagerAllContacts, List<ManagerPersonalContact> newManagerPersonalContacts, List<Agent> newManagedAgents)
+    {
+        Id = id;
+        EmployeeNumber = newEmployeeNumber;
+        Name = newName;
+        Account = newAccount;
+        Address = newAddress;
+        ManagerNumber = newManagerNumber;
+        ManagerPersonalContact = newManagerPersonalContacts;
+        ManagerAllContacts = newManagerAllContacts;
+        ManagedAgents = newManagedAgents;
+    }
 
 
 

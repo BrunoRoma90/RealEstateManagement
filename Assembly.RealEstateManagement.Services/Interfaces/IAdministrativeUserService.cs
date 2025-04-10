@@ -1,5 +1,4 @@
-﻿using Assembly.RealEstateManagement.Domain.Model;
-using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
+﻿using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 
 namespace Assembly.RealEstateManagement.Services.Interfaces;
 
@@ -10,6 +9,8 @@ public interface IAdministrativeUserService
 
     public AdministrativeUserDto GetAdministrativeUserById(int id);
     AdministrativeUserDto Add(CreateAdministrativeUserDto administrativeUser);
+
+    AdministrativeUserDto Update(UpdateAdministrativeUserDto administrativeUser);
 
 
     //public Visit GetVisitByClientId(int clientId);

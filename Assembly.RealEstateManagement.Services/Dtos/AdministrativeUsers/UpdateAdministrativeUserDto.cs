@@ -1,12 +1,12 @@
 ﻿using Assembly.RealEstateManagement.Services.Dtos.Common;
 
-namespace Assembly.RealEstateManagement.Services.Dtos.Manager;
+namespace Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 
-public class UpdateManagerDto
+public class UpdateAdministrativeUserDto
 {
-    public int Id { get; set; }
+    public int Id { get; set; } 
     public int EmployeeNumber { get; set; }
-    public int ManagerNumber { get; set; }
+    public int AdministrativeNumber { get; set; }
     public string? FirstName { get; set; }
     public string[]? MiddleNames { get; set; }
     public string? LastName { get; set; }
@@ -14,4 +14,6 @@ public class UpdateManagerDto
     public string? Password { get; set; }
 
     public AddressDto? Address { get; set; }
+
+    public bool IsAdmin { get; set; }
 }

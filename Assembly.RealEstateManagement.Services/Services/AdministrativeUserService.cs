@@ -4,6 +4,7 @@ using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 using Assembly.RealEstateManagement.Services.Dtos.Common;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 
@@ -127,6 +128,90 @@ public class AdministrativeUserService : IAdministrativeUserService
         }).ToList();
     }
 
+    public AdministrativeUserDto Update(UpdateAdministrativeUserDto administrativeUser)
+    {
+        var existingAdministrativeUser = _unitOfWork.AdministrativeUsersRepository.GetById(administrativeUser.Id);
+        var existingAddress = _unitOfWork.AdministrativeUsersRepository.GetAdministrativeUserAddress(administrativeUser.Id);
+        var existingAccount = _unitOfWork.AdministrativeUsersRepository.GetAdministrativeUserAccount(administrativeUser.Id);
+
+        if (existingAdministrativeUser is null)
+            throw new KeyNotFoundException("AdministrativeUser not found.");
+
+        if (existingAccount is null)
+            throw new KeyNotFoundException("AdministrativeUser account not found.");
+
+        if (existingAddress is null)
+            throw new KeyNotFoundException("AdministrativeUser address not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+            string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            string[] IsValidArray(string[]? value, string[] current) =>
+                value == null || value.Length == 0 || (value.Length == 1 && value[0] == "string") ? current : value;
+
+            existingAdministrativeUser.Name.Update(
+                IsValidString(administrativeUser.FirstName, existingAdministrativeUser.Name.FirstName),
+                IsValidArray(administrativeUser.MiddleNames, existingAdministrativeUser.Name.MiddleNames),
+                IsValidString(administrativeUser.LastName, existingAdministrativeUser.Name.LastName));
+
+            existingAdministrativeUser.Account.Update(
+                IsValidString(administrativeUser.Email, existingAdministrativeUser.Account.Email),
+                IsValidString(administrativeUser.Password, existingAdministrativeUser.Account.Password));
+
+            existingAdministrativeUser.Address.UpdateAddress(
+                IsValidString(administrativeUser.Address?.Street, existingAdministrativeUser.Address.Street),
+                administrativeUser.Address?.Number == 0 ? existingAdministrativeUser.Address.Number : administrativeUser.Address.Number,
+                IsValidString(administrativeUser.Address?.PostalCode, existingAdministrativeUser.Address.PostalCode),
+                IsValidString(administrativeUser.Address?.City, existingAdministrativeUser.Address.City),
+                IsValidString(administrativeUser.Address?.Country, existingAdministrativeUser.Address.Country)
+            );
+
+
+            existingAdministrativeUser.Update(
+                existingAdministrativeUser.Id,
+                existingAdministrativeUser.Name,
+                existingAdministrativeUser.Account,
+                existingAdministrativeUser.Address,
+                administrativeUser.EmployeeNumber == 0 ? existingAdministrativeUser.EmployeeNumber : administrativeUser.EmployeeNumber,
+                administrativeUser.AdministrativeNumber == 0 ? existingAdministrativeUser.AdministrativeNumber : administrativeUser.AdministrativeNumber,
+                new List<AdministrativeUserAllContact>(),
+                new List<AdministrativeUserPersonalContact>()
+
+            );
+
+
+            _unitOfWork.AdministrativeUsersRepository.Update(existingAdministrativeUser);
+            _unitOfWork.Commit();
+
+
+            var administrativeUserDto = new AdministrativeUserDto
+            {
+                Id = existingAdministrativeUser.Id,
+                EmployeeNumber = existingAdministrativeUser.EmployeeNumber,
+                AdministrativeNumber = existingAdministrativeUser.AdministrativeNumber,
+                FirstName = existingAdministrativeUser.Name.FirstName,
+                LastName = existingAdministrativeUser.Name.LastName,
+                Email = existingAdministrativeUser.Account.Email,
+                Address = new AddressDto
+                {
+                    Street = existingAdministrativeUser.Address.Street,
+                    Number = existingAdministrativeUser.Address.Number,
+                    PostalCode = existingAdministrativeUser.Address.PostalCode,
+                    City = existingAdministrativeUser.Address.City,
+                    Country = existingAdministrativeUser.Address.Country
+                }
+            };
+
+            return administrativeUserDto;
+        }
+    }
+
+
     //public void AddNotes(int visitId, string notes)
     //{
     //    _administrativesUserRepository.AddNotes(visitId, notes);
@@ -183,3 +268,4 @@ public class AdministrativeUserService : IAdministrativeUserService
     //}
 
 }
+

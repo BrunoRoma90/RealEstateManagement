@@ -1,6 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Domain.Model;
 using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 using Assembly.RealEstateManagement.Services.Dtos.Agent;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -40,11 +41,17 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_administrativeUserService.Add(administrativeUser));
         }
 
-        [HttpPut]
-
-        public ActionResult<AdministrativeUserDto> Update(CreateAdministrativeUserDto administrativeUser)
+        [HttpPut("{id:int}")]
+        public ActionResult<AdministrativeUserDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateAdministrativeUserDto administrativeUser)
         {
-            return BadRequest();
+            if (id != administrativeUser.Id)
+            {
+                return BadRequest("AdministrativeUser IDs must match");
+            }
+
+            return Ok(_administrativeUserService.Update(administrativeUser));
         }
 
         [HttpDelete]

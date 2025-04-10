@@ -1,14 +1,8 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core;
-using Assembly.RealEstateManagement.Domain.Core.Repositories;
-using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
-using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Dtos.Common;
 using Assembly.RealEstateManagement.Services.Dtos.Manager;
-using Assembly.RealEstateManagement.Services.Dtos.Property;
 using Assembly.RealEstateManagement.Services.Interfaces;
-using System.Net;
-using System.Security.Principal;
 
 namespace Assembly.RealEstateManagement.Services.Services;
 
@@ -140,41 +134,69 @@ public class ManagerService : IManagerService
     }
 
 
+
     public ManagerDto Update(UpdateManagerDto manager)
     {
         var existingManager = _unitOfWork.ManagerRepository.GetById(manager.Id);
+        var existingAddress = _unitOfWork.ManagerRepository.GetManagerAddress(manager.Id);
+        var existingAccount = _unitOfWork.ManagerRepository.GetManagerAccount(manager.Id);
+
         if (existingManager is null)
             throw new KeyNotFoundException("Manager not found.");
 
-        var existingAddress = existingManager.Address;
-        var existingAccount = existingManager.Account;
+        if (existingAccount is null)
+            throw new KeyNotFoundException("Manager account not found.");
+
+        if (existingAddress is null)
+            throw new KeyNotFoundException("Manager address not found.");
 
         using (_unitOfWork)
         {
             _unitOfWork.BeginTransaction();
 
-            // Atualiza os value objects
-            var updatedName = Name.UpdateName(manager.FirstName, manager.MiddleNames, manager.LastName);
-            var updatedAccount = Account.Update(existingAccount.Id, manager.Email, manager.Password);
-            var updatedAddress = Address.UpdateAddress(existingAddress.Id, manager.Address.Street, manager.Address.Number, manager.Address.PostalCode, manager.Address.City, manager.Address.Country);
 
-            // Aqui não crias um novo manager — só atualizas o existente
-            existingManager.Update(
-                existingManager.Id,
-                manager.EmployeeNumber,
-                updatedName,
-                updatedAccount,
-                updatedAddress,
-                manager.ManagerNumber,
-                existingManager.ManagerAllContacts,
-                existingManager.ManagerPersonalContact,
-                existingManager.ManagedAgents
+            string IsValidString(string? value, string current) =>
+            string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            string[] IsValidArray(string[]? value, string[] current) =>
+                value == null || value.Length == 0 || (value.Length == 1 && value[0] == "string") ? current : value;
+
+            existingManager.Name.Update(
+                IsValidString(manager.FirstName, existingManager.Name.FirstName),
+                IsValidArray(manager.MiddleNames, existingManager.Name.MiddleNames),
+                IsValidString(manager.LastName, existingManager.Name.LastName));
+
+            existingManager.Account.Update(
+                IsValidString(manager.Email, existingManager.Account.Email),
+                IsValidString(manager.Password, existingManager.Account.Password));
+
+            existingManager.Address.UpdateAddress(
+                IsValidString(manager.Address?.Street, existingManager.Address.Street),
+                manager.Address?.Number == 0 ? existingManager.Address.Number : manager.Address.Number,
+                IsValidString(manager.Address?.PostalCode, existingManager.Address.PostalCode),
+                IsValidString(manager.Address?.City, existingManager.Address.City),
+                IsValidString(manager.Address?.Country, existingManager.Address.Country)
             );
 
-            
+
+            existingManager.Update(
+                existingManager.Id,
+                manager.EmployeeNumber == 0 ? existingManager.EmployeeNumber : manager.EmployeeNumber,
+                existingManager.Name,
+                existingManager.Account,
+                existingManager.Address,
+                manager.ManagerNumber == 0 ? existingManager.ManagerNumber : manager.ManagerNumber,
+                new List<ManagerAllContact>(),
+                new List<ManagerPersonalContact>(),
+                new List<Agent>()
+            );
+
+
+            _unitOfWork.ManagerRepository.Update(existingManager);
             _unitOfWork.Commit();
 
-            return new ManagerDto
+
+            var managerDto = new ManagerDto
             {
                 Id = existingManager.Id,
                 EmployeeNumber = existingManager.EmployeeNumber,
@@ -188,9 +210,11 @@ public class ManagerService : IManagerService
                     Number = existingManager.Address.Number,
                     PostalCode = existingManager.Address.PostalCode,
                     City = existingManager.Address.City,
-                    Country = existingManager.Address.Country,
+                    Country = existingManager.Address.Country
                 }
             };
+
+            return managerDto;
         }
     }
 
@@ -202,85 +226,75 @@ public class ManagerService : IManagerService
     //    var existingAccount = _unitOfWork.ManagerRepository.GetManagerAccount(manager.Id);
 
     //    if (existingManager is null)
-    //    {
-    //        throw new KeyNotFoundException($"Manager not found.");
-    //    }
+    //        throw new KeyNotFoundException("Manager not found.");
+
     //    if (existingAccount is null)
-    //    {
-    //        throw new KeyNotFoundException($"Manager account not found.");
-    //    }
+    //        throw new KeyNotFoundException("Manager account not found.");
+
     //    if (existingAddress is null)
-    //    {
-    //        throw new KeyNotFoundException($"Manager address not found.");
-    //    }
+    //        throw new KeyNotFoundException("Manager address not found.");
 
     //    using (_unitOfWork)
     //    {
-
     //        _unitOfWork.BeginTransaction();
 
 
-    //        if (existingManager == null)
-    //        {
-    //            throw new Exception("Manager not found.");
-    //        }
-    //        if (existingAddress == null)
-    //        {
-    //            throw new Exception("Address not found.");
-    //        }
-    //        if (existingAccount == null)
-    //        {
-    //            throw new Exception("Account not found.");
-    //        }
+    //        existingManager.Name.Update(
+    //            string.IsNullOrWhiteSpace(manager.FirstName) ? existingManager.Name.FirstName : manager.FirstName,
+    //            manager.MiddleNames == null || manager.MiddleNames.Length == 0 ? existingManager.Name.MiddleNames : manager.MiddleNames,
+    //            string.IsNullOrWhiteSpace(manager.LastName) ? existingManager.Name.LastName : manager.LastName);
+
+    //        existingManager.Account.Update(
+    //            string.IsNullOrWhiteSpace(manager.Email) ? existingManager.Account.Email : manager.Email,
+    //            string.IsNullOrWhiteSpace(manager.Password) ? existingManager.Account.Password : manager.Password);
+
+    //        existingManager.Address.UpdateAddress(
+    //            string.IsNullOrWhiteSpace(manager.Address.Street) ? existingManager.Address.Street : manager.Address.Street,
+    //            manager.Address.Number == 0 ? existingManager.Address.Number : manager.Address.Number,
+    //            string.IsNullOrWhiteSpace(manager.Address.PostalCode) ? existingManager.Address.PostalCode : manager.Address.PostalCode,
+    //            string.IsNullOrWhiteSpace(manager.Address.City) ? existingManager.Address.City : manager.Address.City,
+    //            string.IsNullOrWhiteSpace(manager.Address.Country) ? existingManager.Address.Country : manager.Address.Country
+    //        );
 
 
-    //        Manager managerToUpdate = Manager.Update(
-    //            existingManager.Id, manager.EmployeeNumber, 
-    //            Name.UpdateName(manager.FirstName, manager.MiddleNames, manager.LastName),
-    //            Account.Update(existingAccount.Id, manager.Email, manager.Password),
-    //            Address.UpdateAddress(existingAddress.Id, manager.Address.Street, manager.Address.Number, manager.Address.PostalCode, manager.Address.City, manager.Address.Country),
-    //            manager.ManagerNumber,
-    //            new List<ManagerAllContact>(),
-    //            new List<ManagerPersonalContact>(),
+    //        existingManager.Update(
+    //            existingManager.Id,
+    //            manager.EmployeeNumber == 0 ? existingManager.EmployeeNumber : manager.EmployeeNumber,
+    //            existingManager.Name,
+    //            existingManager.Account,
+    //            existingManager.Address,
+    //            manager.ManagerNumber == 0 ? existingManager.ManagerNumber : manager.ManagerNumber,
+    //            new List<ManagerAllContact>(), 
+    //            new List<ManagerPersonalContact>(), 
     //            new List<Agent>()
     //        );
 
-    //        var managerUpdated = _unitOfWork.ManagerRepository.Update(managerToUpdate);
+
+    //        _unitOfWork.ManagerRepository.Update(existingManager);
     //        _unitOfWork.Commit();
+
 
     //        var managerDto = new ManagerDto
     //        {
-    //            Id = managerUpdated.Id,
-    //            EmployeeNumber = managerUpdated.EmployeeNumber,
-    //            ManagerNumber = managerUpdated.ManagerNumber,
-    //            FirstName = managerUpdated.Name.FirstName,
-    //            LastName = managerUpdated.Name.LastName,
-    //            Email = managerUpdated.Account.Email,
+    //            Id = existingManager.Id,
+    //            EmployeeNumber = existingManager.EmployeeNumber,
+    //            ManagerNumber = existingManager.ManagerNumber,
+    //            FirstName = existingManager.Name.FirstName,
+    //            LastName = existingManager.Name.LastName,
+    //            Email = existingManager.Account.Email,
     //            Address = new AddressDto
     //            {
-    //                Street = managerUpdated.Address.Street,
-    //                Number = managerUpdated.Address.Number,
-    //                PostalCode = managerUpdated.Address.PostalCode,
-    //                City = managerUpdated.Address.City,
-    //                Country = managerUpdated.Address.Country,
-
+    //                Street = existingManager.Address.Street,
+    //                Number = existingManager.Address.Number,
+    //                PostalCode = existingManager.Address.PostalCode,
+    //                City = existingManager.Address.City,
+    //                Country = existingManager.Address.Country
     //            }
     //        };
 
-
     //        return managerDto;
-
     //    }
-
-
-
     //}
-
-
-
-
-
-
 
 
 
