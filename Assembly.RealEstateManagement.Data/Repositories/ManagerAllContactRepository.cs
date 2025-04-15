@@ -12,6 +12,14 @@ internal class ManagerAllContactRepository : Repository<ManagerAllContact, int>,
 
     }
 
+    public ManagerAllContact? GetManagerContactWithManager(int id)
+    {
+        return DbSet.Include(x => x.Manager)
+            .ThenInclude(m => m.Account)
+            .Include(m => m.Manager.Address)
+            .FirstOrDefault(x => x.Id == id);
+    }
+
     public List<ManagerAllContact> GetManagerContacts(int managerId)
     {
         return DbSet.Where(mac => mac.Manager.Id == managerId).ToList();

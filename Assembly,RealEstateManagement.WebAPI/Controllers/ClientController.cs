@@ -1,4 +1,5 @@
 ﻿using Assembly.RealEstateManagement.Services.Dtos.Client;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Dtos.Property;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
@@ -38,9 +39,17 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
 
         [HttpPut]
 
-        public ActionResult<ClientDto> Update(CreateClientDto client)
+        [HttpPut("{id:int}")]
+        public ActionResult<ClientDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateClient client)
         {
-            return BadRequest();
+            if (id != client.Id)
+            {
+                return BadRequest("Client IDs must match");
+            }
+
+            return Ok(_clientServices.Update(client));
         }
 
         [HttpDelete]

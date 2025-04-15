@@ -1,4 +1,5 @@
-﻿using Assembly.RealEstateManagement.Services.Dtos.Agent;
+﻿using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
+using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
@@ -38,11 +39,17 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_agentAllContactsServices.Add(agentAllContact));
         }
 
-        [HttpPut]
-
-        public ActionResult<AgentAllContactsDto> Update(CreateAgentAllContactsDto agentAllContact)
+        [HttpPut("{id:int}")]
+        public ActionResult<AgentDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateAgentAllContactsDto agentAllContacts)
         {
-            return BadRequest();
+            if (id != agentAllContacts.Id)
+            {
+                return BadRequest("IDs must match");
+            }
+
+            return Ok(_agentAllContactsServices.Update(agentAllContacts));
         }
 
         [HttpDelete]

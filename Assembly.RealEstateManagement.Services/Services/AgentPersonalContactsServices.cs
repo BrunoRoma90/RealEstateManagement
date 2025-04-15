@@ -1,6 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos.AdministrativeUsers;
 using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Interfaces;
 
@@ -92,5 +93,68 @@ public class AgentPersonalContactsServices : IAgentPersonalContactsServices
             ContactType = contact.Contact.ContactType.ToString(),
             Value = contact.Contact.Value
         }).ToList();
+    }
+
+    public AgentPersonalContactsDto Update(UpdateAgentPersonalContactsDto agentPersonalContacts)
+    {
+        var existingContact = _unitOfWork.AgentPersonalContactRepository.GetAgentContactWithAgent(agentPersonalContacts.Id);
+
+        if (existingContact is null)
+            throw new KeyNotFoundException("Agent contact not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+                string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+
+            var newContactType = existingContact.Contact.ContactType;
+            var newContactValue = existingContact.Contact.Value;
+
+            if (!string.IsNullOrWhiteSpace(agentPersonalContacts.ContactType) &&
+                agentPersonalContacts.ContactType != "string")
+            {
+                if (Enum.TryParse<ContactType>(agentPersonalContacts.ContactType, true, out var parsedType))
+                {
+                    newContactType = parsedType;
+                }
+                else
+                {
+                    var validValues = string.Join(", ", Enum.GetNames(typeof(ContactType)));
+                    throw new ArgumentException($"Invalid contact type. Valid values are: {validValues}");
+                }
+            }
+
+            newContactValue = IsValidString(agentPersonalContacts.Value, newContactValue);
+
+            existingContact.Contact.Update(newContactType, newContactValue);
+
+
+            existingContact.Update(
+                existingContact.Id,
+                existingContact.Contact
+            );
+
+            _unitOfWork.AgentPersonalContactRepository.Update(existingContact);
+            _unitOfWork.Commit();
+
+
+            return new AgentPersonalContactsDto
+            {
+
+                ContactType = existingContact.Contact.ContactType.ToString(),
+                Value = existingContact.Contact.Value,
+                Agent = new AgentDto
+                {
+                    EmployeeNumber = existingContact.Agent.EmployeeNumber,
+                    AgentNumber = existingContact.Agent.AgentNumber,
+                    FirstName = existingContact.Agent.Name.FirstName,
+                    LastName = existingContact.Agent.Name.LastName,
+                }
+            };
+        }
     }
 }

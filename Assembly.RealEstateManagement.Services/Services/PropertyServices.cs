@@ -227,5 +227,100 @@ public class PropertyServices : IPropertyServices
         return propertyDto;
     }
 
-  
+    public PropertyDto Update(UpdatePropertyDto property)
+    {
+        var existingProperty = _unitOfWork.PropertyRepository.GetById(property.Id);
+        var existingAddress = _unitOfWork.PropertyRepository.GetPropertyAddress(property.Id);
+        var existingAgent = _unitOfWork.PropertyRepository.GetAgentByPropertyId(property.Id);
+      
+
+        if (existingProperty is null)
+            throw new KeyNotFoundException("Property not found.");
+
+        if (existingAddress is null)
+            throw new KeyNotFoundException("Property address not found.");
+
+        if (existingAgent is null)
+            throw new KeyNotFoundException("Property Agent not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+            string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            T IsValidEnum<T>(T value, T current) where T : Enum =>
+            EqualityComparer<T>.Default.Equals(value, default(T)) ? current : value;
+
+            existingProperty.Address.UpdateAddress(
+                IsValidString(property.Address?.Street, existingProperty.Address.Street),
+                property.Address?.Number == 0 ? existingProperty.Address.Number : property.Address.Number,
+                IsValidString(property.Address?.PostalCode, existingProperty.Address.PostalCode),
+                IsValidString(property.Address?.City, existingProperty.Address.City),
+                IsValidString(property.Address?.Country, existingProperty.Address.Country)
+            );
+
+            var newAgent = property.AgentId.HasValue && property.AgentId.Value != 0 && property.AgentId.Value != existingProperty.Id
+            ? _unitOfWork.AgentRepository.GetById(property.AgentId.Value)
+            : existingAgent;
+
+            if (newAgent is null)
+                throw new KeyNotFoundException("New manager not found.");
+
+
+            existingProperty.Update(
+                existingProperty.Id,
+                newAgent,
+                IsValidEnum(property.PropertyType, existingProperty.PropertyType),
+                property.Price == 0 ? existingProperty.Price : property.Price,
+                property.PriceBySquareMeter == 0 ? existingProperty.PriceBySquareMeter : property.PriceBySquareMeter,
+                property.SizeBySquareMeters == 0 ? existingProperty.SizeBySquareMeters : property.SizeBySquareMeters,
+                IsValidString(property.Description, existingProperty.Description),
+                existingProperty.Address,
+                IsValidEnum(property.TransactionType, existingProperty.TransactionType),
+                IsValidEnum(property.Availability, existingProperty.Availability),
+                new List<Room>(),
+                new List<PropertyImage>()
+            );
+
+
+            _unitOfWork.PropertyRepository.Update(existingProperty);
+            _unitOfWork.Commit();
+
+
+            var propertyDto = new PropertyDto
+            {
+                Id = existingProperty.Id,
+                Agent = new AgentDto
+                {
+                    EmployeeNumber = existingProperty.Agent.EmployeeNumber,
+                    AgentNumber = existingProperty.Agent.AgentNumber,
+                    FirstName = existingProperty.Agent.Name.FirstName,
+                    LastName = existingProperty.Agent.Name.LastName,
+                    Email = existingProperty.Agent.Account.Email,
+                },
+                PropertyType = existingProperty.PropertyType,
+                Price = existingProperty.Price,
+                PriceBySquareMeter = existingProperty.PriceBySquareMeter,
+                SizeBySquareMeters = existingProperty.SizeBySquareMeters,
+                Description = existingProperty.Description,
+                Address = new AddressDto
+                {
+                    Street = existingProperty.Address.Street,
+                    Number = existingProperty.Address.Number,
+                    PostalCode = existingProperty.Address.PostalCode,
+                    City = existingProperty.Address.City,
+                    Country = existingProperty.Address.Country,
+
+                },
+                TransactionType = existingProperty.TransactionType,
+                Availability = existingProperty.Availability,
+
+            };
+
+            return propertyDto;
+        }
+    }
 }

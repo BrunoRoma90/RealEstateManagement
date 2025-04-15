@@ -33,12 +33,18 @@ public class ManagerPersonalContact : AuditableEntity<int>
         return new ManagerPersonalContact(contact, manager);
     }
 
-    public static ManagerPersonalContact Update(Contact newContact, Manager newManager)
+    //public static ManagerPersonalContact Update(Contact newContact, Manager newManager)
+    //{
+    //    return new ManagerPersonalContact(newContact, newManager);
+    //}
+
+    public void Update(int id, Contact newContact)
     {
-        return new ManagerPersonalContact(newContact, newManager);
+        Id = id;
+        Contact = newContact;
     }
 
- 
+
 
     public static void Restore(ManagerPersonalContact managerPersonalContact)
     {

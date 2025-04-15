@@ -1,6 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 
@@ -92,5 +93,68 @@ public class ManagerPersonalContactsServices : IManagerPersonalContactsServices
             ContactType = contact.Contact.ContactType.ToString(),
             Value = contact.Contact.Value
         }).ToList();
+    }
+
+    public ManagerPersonalContactDto Update(UpdateManagerPersonalContactsDto managerPersonalContacts)
+    {
+        var existingContact = _unitOfWork.ManagerPersonalContactRepository.GetManagerContactWithManager(managerPersonalContacts.Id);
+
+        if (existingContact is null)
+            throw new KeyNotFoundException("Agent contact not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+                string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+
+            var newContactType = existingContact.Contact.ContactType;
+            var newContactValue = existingContact.Contact.Value;
+
+            if (!string.IsNullOrWhiteSpace(managerPersonalContacts.ContactType) &&
+                managerPersonalContacts.ContactType != "string")
+            {
+                if (Enum.TryParse<ContactType>(managerPersonalContacts.ContactType, true, out var parsedType))
+                {
+                    newContactType = parsedType;
+                }
+                else
+                {
+                    var validValues = string.Join(", ", Enum.GetNames(typeof(ContactType)));
+                    throw new ArgumentException($"Invalid contact type. Valid values are: {validValues}");
+                }
+            }
+
+            newContactValue = IsValidString(managerPersonalContacts.Value, newContactValue);
+
+            existingContact.Contact.Update(newContactType, newContactValue);
+
+
+            existingContact.Update(
+                existingContact.Id,
+                existingContact.Contact
+            );
+
+            _unitOfWork.ManagerPersonalContactRepository.Update(existingContact);
+            _unitOfWork.Commit();
+
+
+            return new ManagerPersonalContactDto
+            {
+
+                ContactType = existingContact.Contact.ContactType.ToString(),
+                Value = existingContact.Contact.Value,
+                Manager = new ManagerDto
+                {
+                    EmployeeNumber = existingContact.Manager.EmployeeNumber,
+                    ManagerNumber = existingContact.Manager.ManagerNumber,
+                    FirstName = existingContact.Manager.Name.FirstName,
+                    LastName = existingContact.Manager.Name.LastName,
+                }
+            };
+        }
     }
 }

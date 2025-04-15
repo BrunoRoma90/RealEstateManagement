@@ -16,6 +16,48 @@ public class AdministrativeUserAllContactsServices : IAdministrativeUsersAllCont
         _unitOfWork = unitOfWork;
     }
 
+   
+
+    public IEnumerable<AdministrativeUsersAllContactsDto> GetAdministrativeUserAllContacts()
+    {
+        var administrativeUserAllContacts = new List<AdministrativeUserAllContact>();
+
+        administrativeUserAllContacts = _unitOfWork.AdministrativeUserAllContactRepository.GetAllAdministrativeUserAllContactWithAdministrativeUser();
+
+        return administrativeUserAllContacts.Select(x => new AdministrativeUsersAllContactsDto
+        {
+            FirstName = x.Name.FirstName,
+            MiddleNames = x.Name.MiddleNames,
+            LastName = x.Name.LastName,
+            ContactType = x.Contact.ContactType.ToString(),
+            Value = x.Contact.Value,
+            AdministrativeUser = new AdministrativeUserDto
+            {
+                EmployeeNumber = x.AdministrativeUser.EmployeeNumber,
+                AdministrativeNumber = x.AdministrativeUser.AdministrativeNumber,
+                FirstName = x.AdministrativeUser.Name.FirstName,
+                LastName = x.AdministrativeUser.Name.LastName,
+            }
+
+
+        }).ToList();
+    }
+
+    public List<AdministrativeUsersAllContactsDto> GetContactsByAdministrativeUserId(int administrativeUserId)
+    {
+        var contacts = _unitOfWork.AdministrativeUserAllContactRepository.GetAdministrativeUserContacts(administrativeUserId);
+
+        return contacts.Select(contact => new AdministrativeUsersAllContactsDto
+        {
+            FirstName = contact.Name.FirstName,
+            MiddleNames = contact.Name.MiddleNames,
+            LastName = contact.Name.LastName,
+            ContactType = contact.Contact.ContactType.ToString(),
+            Value = contact.Contact.Value
+        }).ToList();
+    }
+
+
     public AdministrativeUsersAllContactsDto Add(CreateAdministrativeUserAllContactsDto administrativeUserAllContacts)
     {
         _unitOfWork.BeginTransaction();
@@ -65,43 +107,81 @@ public class AdministrativeUserAllContactsServices : IAdministrativeUsersAllCont
         return administrativeUserAllContactsDto;
     }
 
-    public IEnumerable<AdministrativeUsersAllContactsDto> GetAdministrativeUserAllContacts()
+    public AdministrativeUsersAllContactsDto Update(UpdateAdministrativeUserAllContactsDto administrativeUserAllContacts)
     {
-        var administrativeUserAllContacts = new List<AdministrativeUserAllContact>();
 
-        administrativeUserAllContacts = _unitOfWork.AdministrativeUserAllContactRepository.GetAllAdministrativeUserAllContactWithAdministrativeUser();
+        var existingContact = _unitOfWork.AdministrativeUserAllContactRepository.GetAdministrativeUserContactWithAdministrativeUser(administrativeUserAllContacts.Id);
 
-        return administrativeUserAllContacts.Select(x => new AdministrativeUsersAllContactsDto
+        if (existingContact is null)
+            throw new KeyNotFoundException("Administrative user contact not found.");
+
+        using (_unitOfWork)
         {
-            FirstName = x.Name.FirstName,
-            MiddleNames = x.Name.MiddleNames,
-            LastName = x.Name.LastName,
-            ContactType = x.Contact.ContactType.ToString(),
-            Value = x.Contact.Value,
-            AdministrativeUser = new AdministrativeUserDto
+            _unitOfWork.BeginTransaction();
+
+            
+            string IsValidString(string? value, string current) =>
+                string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            string[] IsValidArray(string[]? value, string[] current) =>
+                value == null || value.Length == 0 || (value.Length == 1 && value[0] == "string") ? current : value;
+
+            
+            existingContact.Name.Update(
+                IsValidString(administrativeUserAllContacts.FirstName, existingContact.Name.FirstName),
+                IsValidArray(administrativeUserAllContacts.MiddleNames, existingContact.Name.MiddleNames),
+                IsValidString(administrativeUserAllContacts.LastName, existingContact.Name.LastName)
+            );
+
+            
+            var newContactType = existingContact.Contact.ContactType;
+            var newContactValue = existingContact.Contact.Value;
+
+            if (!string.IsNullOrWhiteSpace(administrativeUserAllContacts.ContactType) &&
+                administrativeUserAllContacts.ContactType != "string")
             {
-                EmployeeNumber = x.AdministrativeUser.EmployeeNumber,
-                AdministrativeNumber = x.AdministrativeUser.AdministrativeNumber,
-                FirstName = x.AdministrativeUser.Name.FirstName,
-                LastName = x.AdministrativeUser.Name.LastName,
+                if (Enum.TryParse<ContactType>(administrativeUserAllContacts.ContactType, true, out var parsedType))
+                {
+                    newContactType = parsedType;
+                }
+                else
+                {
+                    var validValues = string.Join(", ", Enum.GetNames(typeof(ContactType)));
+                    throw new ArgumentException($"Invalid contact type. Valid values are: {validValues}");
+                }
             }
 
+            newContactValue = IsValidString(administrativeUserAllContacts.Value, newContactValue);
 
-        }).ToList();
+            existingContact.Contact.Update(newContactType, newContactValue);
+
+            
+            existingContact.Update(
+                existingContact.Id,
+                existingContact.Name,
+                existingContact.Contact
+            );
+
+            _unitOfWork.AdministrativeUserAllContactRepository.Update(existingContact);
+            _unitOfWork.Commit();
+
+            
+            return new AdministrativeUsersAllContactsDto
+            {
+                FirstName = existingContact.Name.FirstName,
+                MiddleNames = existingContact.Name.MiddleNames,
+                LastName = existingContact.Name.LastName,
+                ContactType = existingContact.Contact.ContactType.ToString(),
+                Value = existingContact.Contact.Value,
+                AdministrativeUser = new AdministrativeUserDto
+                {
+                    EmployeeNumber = existingContact.AdministrativeUser.EmployeeNumber,
+                    AdministrativeNumber = existingContact.AdministrativeUser.AdministrativeNumber,
+                    FirstName = existingContact.AdministrativeUser.Name.FirstName,
+                    LastName = existingContact.AdministrativeUser.Name.LastName,
+                }
+            };
+        }
+        
     }
-
-    public List<AdministrativeUsersAllContactsDto> GetContactsByAdministrativeUserId(int administrativeUserId)
-    {
-        var contacts = _unitOfWork.AdministrativeUserAllContactRepository.GetAdministrativeUserContacts(administrativeUserId);
-
-        return contacts.Select(contact => new AdministrativeUsersAllContactsDto
-        {
-            FirstName = contact.Name.FirstName,
-            MiddleNames = contact.Name.MiddleNames,
-            LastName = contact.Name.LastName,
-            ContactType = contact.Contact.ContactType.ToString(),
-            Value = contact.Contact.Value
-        }).ToList();
-    }
-
 }

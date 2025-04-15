@@ -8,5 +8,7 @@ public interface IAdministrativeUsersPersonalContactsServices
 
     public List<AdministrativeUserPersonalContactDto> GetPersonalContactsByAdministrativeUserId(int administrativeUserId);
     AdministrativeUserPersonalContactDto Add(CreateAdministrativeUserPersonalContactDto administrativeUserPersonalContacts);
+
+    AdministrativeUserPersonalContactDto Update(UpdateAdministrativeUserPersonalContactDto administrativeUserPersonalContacts);
 }
 

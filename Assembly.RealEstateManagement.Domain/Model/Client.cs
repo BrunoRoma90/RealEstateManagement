@@ -55,10 +55,22 @@ public class Client : AuditableEntity<int>
         return new Client(name, account, address, true, favoriteProperties, ratings, comments);
     }
 
-    public static Client Update(Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
-    List<Rating> newRatings, List<Comment> newComments)
+    //public static Client Update(Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
+    //List<Rating> newRatings, List<Comment> newComments)
+    //{
+    //    return new Client(newName, newAccount, newAddress, true, newFavoriteProperties, newRatings, newComments);
+    //}
+
+    public void Update(int id,Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
+   List<Rating> newRatings, List<Comment> newComments)
     {
-        return new Client(newName, newAccount, newAddress, true, newFavoriteProperties, newRatings, newComments);
+        Id = id;
+        Name = newName;
+        Account = newAccount;
+        Address = newAddress;
+        FavoriteProperties = newFavoriteProperties;
+        Ratings= newRatings;
+        FavoriteProperties = newFavoriteProperties;
     }
 
 

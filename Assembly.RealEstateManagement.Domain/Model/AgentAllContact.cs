@@ -35,10 +35,17 @@ public class AgentAllContact : AuditableEntity<int>
         return new AgentAllContact(name, contact, agent);
     }
 
-    public static AgentAllContact Update(Name newName, Contact newContact, Agent newAgent)
+    public void Update(int id, Name newName, Contact newContact)
     {
-        return new AgentAllContact(newName, newContact, newAgent);
+        Id = id;
+        Name = newName;
+        Contact = newContact;
     }
+
+    //public static AgentAllContact Update(Name newName, Contact newContact, Agent newAgent)
+    //{
+    //    return new AgentAllContact(newName, newContact, newAgent);
+    //}
 
 
     public static void Restore(AgentAllContact agentAllContact)

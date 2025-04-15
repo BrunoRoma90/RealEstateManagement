@@ -12,6 +12,16 @@ internal class AdministrativeUserAllContactRepository : Repository<Administrativ
 
     }
 
+    public AdministrativeUserAllContact? GetAdministrativeUserContactWithAdministrativeUser(int id) 
+    {
+        return DbSet.Include(x => x.AdministrativeUser)
+            .ThenInclude(m => m.Account)
+            .Include(m => m.AdministrativeUser.Address)
+            .FirstOrDefault(x => x.Id == id);
+    }
+
+
+
     public List<AdministrativeUserAllContact> GetAdministrativeUserContacts(int administrativeUserId)
     {
         return DbSet.Where(auac => auac.AdministrativeUser.Id == administrativeUserId).ToList();

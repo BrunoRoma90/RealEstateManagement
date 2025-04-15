@@ -39,11 +39,18 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_administrativeUsersAllContactsServices.Add(administrativeUsersAllContact));
         }
 
-        [HttpPut]
 
-        public ActionResult<AdministrativeUsersAllContactsDto> Update(CreateAdministrativeUserAllContactsDto administrativeUsersAllContact)
+        [HttpPut("{id:int}")]
+        public ActionResult<AdministrativeUserDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateAdministrativeUserAllContactsDto administrativeUserAllContacts)
         {
-            return BadRequest();
+            if (id != administrativeUserAllContacts.Id)
+            {
+                return BadRequest("IDs must match");
+            }
+
+            return Ok(_administrativeUsersAllContactsServices.Update(administrativeUserAllContacts));
         }
 
         [HttpDelete]

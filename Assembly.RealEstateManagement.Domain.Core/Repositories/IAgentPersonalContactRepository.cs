@@ -7,4 +7,6 @@ public interface IAgentPersonalContactRepository : IRepository<AgentPersonalCont
     public List<AgentPersonalContact> GetMyPersonalContacts(int agentId);
 
     public List<AgentPersonalContact> GetAllAgentPersonalContactWithAgent();
+
+    public AgentPersonalContact? GetAgentContactWithAgent(int id);
 }

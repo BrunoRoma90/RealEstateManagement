@@ -8,4 +8,6 @@ public interface IClientServices
 
     public ClientDto GetClientById(int id);
     ClientDto Add(CreateClientDto client);
+
+    ClientDto Update(UpdateClient updateClient);
 }

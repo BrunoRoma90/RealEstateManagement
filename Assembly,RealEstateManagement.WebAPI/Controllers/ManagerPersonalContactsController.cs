@@ -39,11 +39,17 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_managerPersonalContactsServices.Add(managerPersonalContact));
         }
 
-        [HttpPut]
-
-        public ActionResult<ManagerPersonalContactDto> Update(CreateManagerPersonalContacts managerPersonalContact)
+        [HttpPut("{id:int}")]
+        public ActionResult<ManagerDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateManagerPersonalContactsDto managerPersonallContacts)
         {
-            return BadRequest();
+            if (id != managerPersonallContacts.Id)
+            {
+                return BadRequest("IDs must match");
+            }
+
+            return Ok(_managerPersonalContactsServices.Update(managerPersonallContacts));
         }
 
         [HttpDelete]

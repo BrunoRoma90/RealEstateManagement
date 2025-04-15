@@ -34,9 +34,16 @@ public class ManagerAllContact : AuditableEntity<int>
         return new ManagerAllContact(name, contact, manager);
     }
 
-    public static ManagerAllContact Update(Name newName, Contact newContact, Manager newManager)
+    //public static ManagerAllContact Update(Name newName, Contact newContact, Manager newManager)
+    //{
+    //    return new ManagerAllContact(newName, newContact, newManager);
+    //}
+
+    public void Update(int id, Name newName, Contact newContact)
     {
-        return new ManagerAllContact(newName, newContact, newManager);
+        Id = id;
+        Name = newName;
+        Contact = newContact;
     }
 
 

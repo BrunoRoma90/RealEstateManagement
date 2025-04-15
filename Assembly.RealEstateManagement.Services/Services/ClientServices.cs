@@ -181,4 +181,83 @@ public class ClientServices : IClientServices
 
         return clientDto;
     }
+
+    public ClientDto Update(UpdateClient client)
+    {
+        var existingClient = _unitOfWork.ClientRepository.GetById(client.Id);
+        var existingAddress = _unitOfWork.ClientRepository.GetClientAddress(client.Id);
+        var existingAccount = _unitOfWork.ClientRepository.GetClientAccount(client.Id);
+
+        if (existingClient is null)
+            throw new KeyNotFoundException("Manager not found.");
+
+        if (existingAccount is null)
+            throw new KeyNotFoundException("Manager account not found.");
+
+        if (existingAddress is null)
+            throw new KeyNotFoundException("Manager address not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+            string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            string[] IsValidArray(string[]? value, string[] current) =>
+                value == null || value.Length == 0 || (value.Length == 1 && value[0] == "string") ? current : value;
+
+            existingClient.Name.Update(
+                IsValidString(client.FirstName, existingClient.Name.FirstName),
+                IsValidArray(client.MiddleNames, existingClient.Name.MiddleNames),
+                IsValidString(client.LastName, existingClient.Name.LastName));
+
+            existingClient.Account.Update(
+                IsValidString(client.Email, existingClient.Account.Email),
+                IsValidString(client.Password, existingClient.Account.Password));
+
+            existingClient.Address.UpdateAddress(
+                IsValidString(client.Address?.Street, existingClient.Address.Street),
+                client.Address?.Number == 0 ? existingClient.Address.Number : client.Address.Number,
+                IsValidString(client.Address?.PostalCode, existingClient.Address.PostalCode),
+                IsValidString(client.Address?.City, existingClient.Address.City),
+                IsValidString(client.Address?.Country, existingClient.Address.Country)
+            );
+
+
+            existingClient.Update(
+                existingClient.Id,
+                existingClient.Name,
+                existingClient.Account,
+                existingClient.Address,
+                new List<FavoriteProperties>(),
+                new List<Rating>(),
+                new List<Comment>()
+            );
+
+
+            _unitOfWork.ClientRepository.Update(existingClient);
+            _unitOfWork.Commit();
+
+
+            var clientDto = new ClientDto
+            {
+                Id = existingClient.Id,
+                FirstName = existingClient.Name.FirstName,
+                LastName = existingClient.Name.LastName,
+                Email = existingClient.Account.Email,
+                Address = new AddressDto
+                {
+                    Street = existingClient.Address.Street,
+                    Number = existingClient.Address.Number,
+                    PostalCode = existingClient.Address.PostalCode,
+                    City = existingClient.Address.City,
+                    Country = existingClient.Address.Country
+                }
+            };
+
+            return clientDto;
+        }
+    }
 }

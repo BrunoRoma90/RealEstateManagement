@@ -9,4 +9,6 @@ public interface IVisitServices
 
     public VisitDto GetVisitById(int id);
     VisitDto Add(CreateVisitDto visit);
+
+    VisitDto Update(UpdateVisitDto visit);
 }

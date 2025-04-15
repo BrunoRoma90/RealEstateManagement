@@ -193,7 +193,97 @@ public class AgentService : IAgentService
 
     public AgentDto Update(UpdateAgentDto agent)
     {
-        throw new NotImplementedException();
+        var existingAgent = _unitOfWork.AgentRepository.GetById(agent.Id);
+        var existingAddress = _unitOfWork.AgentRepository.GetAgentAddress(agent.Id);
+        var existingAccount = _unitOfWork.AgentRepository.GetAgentAccount(agent.Id);
+        var existingManager = _unitOfWork.AgentRepository.GetManagerByAgentId(agent.Id);
+
+        if (existingAgent is null)
+            throw new KeyNotFoundException("Agent not found.");
+
+        if (existingAccount is null)
+            throw new KeyNotFoundException("Agent account not found.");
+
+        if (existingAddress is null)
+            throw new KeyNotFoundException("Agent address not found.");
+
+        if (existingManager is null)
+            throw new KeyNotFoundException("Agent manager not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+            string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            string[] IsValidArray(string[]? value, string[] current) =>
+                value == null || value.Length == 0 || (value.Length == 1 && value[0] == "string") ? current : value;
+
+            existingAgent.Name.Update(
+                IsValidString(agent.FirstName, existingAgent.Name.FirstName),
+                IsValidArray(agent.MiddleNames, existingAgent.Name.MiddleNames),
+                IsValidString(agent.LastName, existingAgent.Name.LastName));
+
+            existingAgent.Account.Update(
+                IsValidString(agent.Email, existingAgent.Account.Email),
+                IsValidString(agent.Password, existingAgent.Account.Password));
+
+            existingAgent.Address.UpdateAddress(
+                IsValidString(agent.Address?.Street, existingAgent.Address.Street),
+                agent.Address?.Number == 0 ? existingAgent.Address.Number : agent.Address.Number,
+                IsValidString(agent.Address?.PostalCode, existingAgent.Address.PostalCode),
+                IsValidString(agent.Address?.City, existingAgent.Address.City),
+                IsValidString(agent.Address?.Country, existingAgent.Address.Country)
+            );
+
+            var newManager = agent.ManagerId.HasValue && agent.ManagerId.Value != 0 && agent.ManagerId.Value != existingManager.Id
+            ? _unitOfWork.ManagerRepository.GetById(agent.ManagerId.Value)
+            : existingManager;
+
+            if (newManager is null)
+                throw new KeyNotFoundException("New manager not found.");
+
+
+            existingAgent.Update(
+                existingAgent.Id,
+                existingAgent.Name,
+                existingAgent.Account,
+                existingAgent.Address,
+                agent.EmployeeNumber == 0 ? existingAgent.EmployeeNumber : agent.EmployeeNumber,
+                agent.AgentNumber == 0 ? existingAgent.AgentNumber : agent.AgentNumber,
+                new List<AgentPersonalContact>(),
+                new List<Property>(),
+                new List<AgentAllContact>(),
+                newManager
+            );
+
+
+            _unitOfWork.AgentRepository.Update(existingAgent);
+            _unitOfWork.Commit();
+
+
+            var agentDto = new AgentDto
+            {
+                Id = existingAgent.Id,
+                EmployeeNumber = existingAgent.EmployeeNumber,
+                AgentNumber = existingAgent.AgentNumber,
+                FirstName = existingAgent.Name.FirstName,
+                LastName = existingAgent.Name.LastName,
+                Email = existingAgent.Account.Email,
+                Address = new AddressDto
+                {
+                    Street = existingAgent.Address.Street,
+                    Number = existingAgent.Address.Number,
+                    PostalCode = existingAgent.Address.PostalCode,
+                    City = existingAgent.Address.City,
+                    Country = existingAgent.Address.Country
+                }
+            };
+
+            return agentDto;
+        }
     }
 
 

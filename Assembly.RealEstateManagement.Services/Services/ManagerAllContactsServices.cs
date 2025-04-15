@@ -1,6 +1,7 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core;
 using Assembly.RealEstateManagement.Domain.Enums;
 using Assembly.RealEstateManagement.Domain.Model;
+using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
 
@@ -101,5 +102,85 @@ public class ManagerAllContactsServices : IManagerAllContactsServices
             ContactType = contact.Contact.ContactType.ToString(),
             Value = contact.Contact.Value
         }).ToList();
+    }
+
+
+
+    public ManagerAllContactsDto Update(UpdateManagerAllContactsDto managerAllContacts)
+    {
+
+        var existingContact = _unitOfWork.ManagerAllContactRepository.GetManagerContactWithManager(managerAllContacts.Id);
+
+        if (existingContact is null)
+            throw new KeyNotFoundException("Agent contact not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+                string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            string[] IsValidArray(string[]? value, string[] current) =>
+                value == null || value.Length == 0 || (value.Length == 1 && value[0] == "string") ? current : value;
+
+
+            existingContact.Name.Update(
+                IsValidString(managerAllContacts.FirstName, existingContact.Name.FirstName),
+                IsValidArray(managerAllContacts.MiddleNames, existingContact.Name.MiddleNames),
+                IsValidString(managerAllContacts.LastName, existingContact.Name.LastName)
+            );
+
+
+            var newContactType = existingContact.Contact.ContactType;
+            var newContactValue = existingContact.Contact.Value;
+
+            if (!string.IsNullOrWhiteSpace(managerAllContacts.ContactType) &&
+                managerAllContacts.ContactType != "string")
+            {
+                if (Enum.TryParse<ContactType>(managerAllContacts.ContactType, true, out var parsedType))
+                {
+                    newContactType = parsedType;
+                }
+                else
+                {
+                    var validValues = string.Join(", ", Enum.GetNames(typeof(ContactType)));
+                    throw new ArgumentException($"Invalid contact type. Valid values are: {validValues}");
+                }
+            }
+
+            newContactValue = IsValidString(managerAllContacts.Value, newContactValue);
+
+            existingContact.Contact.Update(newContactType, newContactValue);
+
+
+            existingContact.Update(
+                existingContact.Id,
+                existingContact.Name,
+                existingContact.Contact
+            );
+
+            _unitOfWork.ManagerAllContactRepository.Update(existingContact);
+            _unitOfWork.Commit();
+
+
+            return new ManagerAllContactsDto
+            {
+                FirstName = existingContact.Name.FirstName,
+                MiddleNames = existingContact.Name.MiddleNames,
+                LastName = existingContact.Name.LastName,
+                ContactType = existingContact.Contact.ContactType.ToString(),
+                Value = existingContact.Contact.Value,
+                Manager = new ManagerDto
+                {
+                    EmployeeNumber = existingContact.Manager.EmployeeNumber,
+                    ManagerNumber = existingContact.Manager.ManagerNumber,
+                    FirstName = existingContact.Manager.Name.FirstName,
+                    LastName = existingContact.Manager.Name.LastName,
+                }
+            };
+        }
+
     }
 }

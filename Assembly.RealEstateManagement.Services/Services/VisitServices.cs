@@ -116,6 +116,82 @@ public class VisitServices : IVisitServices
         return visitDto;
     }
 
+    public VisitDto Update(UpdateVisitDto visit)
+    {
+        var existingVisit = _unitOfWork.VisitRepository.GetById(visit.Id);
+        var existingAgent = _unitOfWork.VisitRepository.GetAgentByVisitId(visit.Id);
+        var existingClient = _unitOfWork.VisitRepository.GetClientByVisitId(visit.Id);
+        var existingProperty = _unitOfWork.VisitRepository.GetPropertyByVisitId(visit.Id);
 
-   
+        if (existingVisit is null)
+            throw new KeyNotFoundException("Visit not found.");
+
+        if (existingAgent is null)
+            throw new KeyNotFoundException("Agent account not found.");
+
+        if (existingClient is null)
+            throw new KeyNotFoundException("Client address not found.");
+
+        if (existingProperty is null)
+            throw new KeyNotFoundException("Property not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+            string IsValidString(string? value, string current) =>
+            string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+            var newAgent = visit.AgentId.HasValue && visit.AgentId.Value != 0 && visit.AgentId.Value != existingAgent.Id
+            ? _unitOfWork.AgentRepository.GetById(visit.AgentId.Value)
+            : existingAgent;
+
+            if (newAgent is null)
+                throw new KeyNotFoundException("New agent not found.");
+
+            var newClient = visit.ClientId.HasValue && visit.ClientId.Value != 0 && visit.ClientId.Value != existingClient.Id
+            ? _unitOfWork.ClientRepository.GetById(visit.ClientId.Value)
+            : existingClient;
+
+            if (newClient is null)
+                throw new KeyNotFoundException("New client not found.");
+
+            var newProperty = visit.PropertyId.HasValue && visit.PropertyId.Value != 0 && visit.PropertyId.Value != existingProperty.Id
+            ? _unitOfWork.PropertyRepository.GetById(visit.PropertyId.Value)
+            : existingProperty;
+
+            if (newProperty is null)
+                throw new KeyNotFoundException("New property not found.");
+
+            existingVisit.Update(
+           existingVisit.Id,
+           newClient,
+           newProperty,
+           newAgent,
+           visit.VisitDate,
+           IsValidString(visit.Notes, existingVisit.Notes)
+           );
+
+            _unitOfWork.VisitRepository.Update(existingVisit);
+            _unitOfWork.Commit();
+
+
+
+            var visitDto = new VisitDto
+            {
+                ClientId = existingVisit.Client.Id,
+                PropertyId = existingVisit.Property.Id,
+                AgentId = existingVisit.Agent.Id,
+                VisitDate = existingVisit.VisitDate,
+                Notes = existingVisit.Notes,
+            };
+
+
+            return visitDto;
+
+        }
+
+       
+
+    }
 }

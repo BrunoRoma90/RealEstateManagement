@@ -10,4 +10,6 @@ public interface IAdministrativeUsersAllContactsServices
 
     public List<AdministrativeUsersAllContactsDto> GetContactsByAdministrativeUserId(int administrativeUserId);
     AdministrativeUsersAllContactsDto Add(CreateAdministrativeUserAllContactsDto administrativeUserAllContacts);
+
+    AdministrativeUsersAllContactsDto Update(UpdateAdministrativeUserAllContactsDto administrativeUserAllContacts);
 }

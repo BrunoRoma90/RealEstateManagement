@@ -7,4 +7,6 @@ public interface IAdministrativeUserPersonalContactRepository : IRepository<Admi
     public List<AdministrativeUserPersonalContact> GetMyPersonalContacts(int administrativeUserId);
 
     public List<AdministrativeUserPersonalContact> GetAllAdministrativeUserPersonalContactWithAdministrativeUser();
+
+    public AdministrativeUserPersonalContact? GetAdministrativeUserContactWithAdministrativeUser(int id);
 }

@@ -8,5 +8,6 @@ public interface IAgentPersonalContactsServices
 
     public List<AgentPersonalContactsDto> GetPersonalContactsByAgentId(int agentId);
     AgentPersonalContactsDto Add(CreateAgentPersonalContactsDto agentPersonalContacts);
+    AgentPersonalContactsDto Update(UpdateAgentPersonalContactsDto agentPersonalContacts);
 }
 

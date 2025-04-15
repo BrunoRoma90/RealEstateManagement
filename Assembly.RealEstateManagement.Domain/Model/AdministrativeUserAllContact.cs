@@ -36,11 +36,17 @@ public class AdministrativeUserAllContact : AuditableEntity<int>
         return new AdministrativeUserAllContact(name, contact, administrativeUser);
     }
 
-    public static AdministrativeUserAllContact Update(Name newName, Contact newContact, AdministrativeUser newAdministrativeUser)
-    {
-        return new AdministrativeUserAllContact( newName, newContact, newAdministrativeUser);
-    }
+    //public static AdministrativeUserAllContact Update(Name newName, Contact newContact, AdministrativeUser newAdministrativeUser)
+    //{
+    //    return new AdministrativeUserAllContact( newName, newContact, newAdministrativeUser);
+    //}
 
+    public void Update(int id, Name newName, Contact newContact) 
+    {
+        Id = id;
+        Name = newName;
+        Contact = newContact;
+    }
 
 
 

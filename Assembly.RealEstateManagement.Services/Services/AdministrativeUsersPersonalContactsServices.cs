@@ -94,4 +94,67 @@ public class AdministrativeUsersPersonalContactsServices : IAdministrativeUsersP
             Value = contact.Contact.Value
         }).ToList();
     }
+
+    public AdministrativeUserPersonalContactDto Update(UpdateAdministrativeUserPersonalContactDto administrativeUserPersonalContacts)
+    {
+        var existingContact = _unitOfWork.AdministrativeUserPersonalContactRepository.GetAdministrativeUserContactWithAdministrativeUser(administrativeUserPersonalContacts.Id);
+
+        if (existingContact is null)
+            throw new KeyNotFoundException("Administrative user contact not found.");
+
+        using (_unitOfWork)
+        {
+            _unitOfWork.BeginTransaction();
+
+
+            string IsValidString(string? value, string current) =>
+                string.IsNullOrWhiteSpace(value) || value == "string" ? current : value;
+
+
+            var newContactType = existingContact.Contact.ContactType;
+            var newContactValue = existingContact.Contact.Value;
+
+            if (!string.IsNullOrWhiteSpace(administrativeUserPersonalContacts.ContactType) &&
+                administrativeUserPersonalContacts.ContactType != "string")
+            {
+                if (Enum.TryParse<ContactType>(administrativeUserPersonalContacts.ContactType, true, out var parsedType))
+                {
+                    newContactType = parsedType;
+                }
+                else
+                {
+                    var validValues = string.Join(", ", Enum.GetNames(typeof(ContactType)));
+                    throw new ArgumentException($"Invalid contact type. Valid values are: {validValues}");
+                }
+            }
+
+            newContactValue = IsValidString(administrativeUserPersonalContacts.Value, newContactValue);
+
+            existingContact.Contact.Update(newContactType, newContactValue);
+
+
+            existingContact.Update(
+                existingContact.Id,
+                existingContact.Contact
+            );
+
+            _unitOfWork.AdministrativeUserPersonalContactRepository.Update(existingContact);
+            _unitOfWork.Commit();
+
+
+            return new AdministrativeUserPersonalContactDto
+            {
+
+                ContactType = existingContact.Contact.ContactType.ToString(),
+                Value = existingContact.Contact.Value,
+                AdministrativeUser = new AdministrativeUserDto
+                {
+                    EmployeeNumber = existingContact.AdministrativeUser.EmployeeNumber,
+                    AdministrativeNumber = existingContact.AdministrativeUser.AdministrativeNumber,
+                    FirstName = existingContact.AdministrativeUser.Name.FirstName,
+                    LastName = existingContact.AdministrativeUser.Name.LastName,
+                }
+            };
+        }
+    }
 }

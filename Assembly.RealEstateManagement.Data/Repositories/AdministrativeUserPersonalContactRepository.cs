@@ -13,6 +13,16 @@ internal class AdministrativeUserPersonalContactRepository : Repository<Administ
 
     }
 
+
+    public AdministrativeUserPersonalContact? GetAdministrativeUserContactWithAdministrativeUser(int id)
+    {
+        return DbSet.Include(x => x.AdministrativeUser)
+            .ThenInclude(m => m.Account)
+            .Include(m => m.AdministrativeUser.Address)
+            .FirstOrDefault(x => x.Id == id);
+    }
+
+
     public List<AdministrativeUserPersonalContact> GetMyPersonalContacts(int administrativeUserId)
     {
         return DbSet.Where(aupc => aupc.AdministrativeUser.Id == administrativeUserId).ToList();
@@ -26,4 +36,6 @@ internal class AdministrativeUserPersonalContactRepository : Repository<Administ
             .Include(m => m.AdministrativeUser.Address)
             .ToList();
     }
+
+   
 }

@@ -9,4 +9,6 @@ public interface IManagerAllContactRepository : IRepository<ManagerAllContact, i
 
     public List<ManagerAllContact> GetAllManagerAllContactWithManager();
 
+    public ManagerAllContact? GetManagerContactWithManager(int id);
+
 }

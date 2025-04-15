@@ -49,12 +49,26 @@ public class Agent : Employee
         return new Agent(name, account, address, agentNumber, employeeNumber, agentPersonalContacts, managedProperties, agentAllContacts, manager);
      }
 
-    public static Agent Update(int id ,Name newName, Account newAccount, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
-       List<Property> newManagedProperties, List<AgentAllContact> newAgentAllContacts, Manager newManager)
-    {
-        return new Agent(id , newEmployeeNumber, newName, newAccount, newAddress, newAgentNumber, newAgentPersonalContacts, newManagedProperties, newAgentAllContacts, newManager);
-    }
+    //public static Agent Update(int id ,Name newName, Account newAccount, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
+    //   List<Property> newManagedProperties, List<AgentAllContact> newAgentAllContacts, Manager newManager)
+    //{
+    //    return new Agent(id , newEmployeeNumber, newName, newAccount, newAddress, newAgentNumber, newAgentPersonalContacts, newManagedProperties, newAgentAllContacts, newManager);
+    //}
 
+    public void Update(int id, Name newName, Account newAccount, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
+      List<Property> newManagedProperties, List<AgentAllContact> newAgentAllContacts, Manager newManager)
+    {
+        Id = id;
+        Name = newName;
+        Account = newAccount;
+        Address = newAddress;
+        AgentNumber = newAgentNumber;
+        EmployeeNumber = newEmployeeNumber;
+        AgentPersonalContact = newAgentPersonalContacts;
+        ManagedProperty = newManagedProperties;
+        AgentAllContact = newAgentAllContacts;
+        Manager = newManager;
+    }
 
 
     public static void Restore(Agent agent)

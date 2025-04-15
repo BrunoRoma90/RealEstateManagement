@@ -32,9 +32,15 @@ public class AgentPersonalContact : AuditableEntity<int>
         return new AgentPersonalContact(contact, agent);
     }
 
-    public static AgentPersonalContact Update(Contact newContact, Agent newAgent)
+    //public static AgentPersonalContact Update(Contact newContact, Agent newAgent)
+    //{
+    //    return new AgentPersonalContact(newContact, newAgent);
+    //}
+
+    public void Update(int id, Contact newContact)
     {
-        return new AgentPersonalContact(newContact, newAgent);
+        Id = id;
+        Contact = newContact;
     }
 
 

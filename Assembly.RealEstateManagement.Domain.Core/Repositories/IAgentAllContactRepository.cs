@@ -6,4 +6,6 @@ public interface IAgentAllContactRepository : IRepository<AgentAllContact, int>
 {
     public List<AgentAllContact> GetAgentContacts(int agentId);
     public List<AgentAllContact> GetAllAgentAllContactWithAgent();
+
+    public AgentAllContact? GetAgentContactWithAgent(int id);
 }

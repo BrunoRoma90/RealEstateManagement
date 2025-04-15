@@ -26,11 +26,17 @@ public class Contact
        return new Contact(contactType, value);
     }
 
-    public static Contact Update(ContactType newContactType, string newValue)
-    {
-        return new Contact(newContactType, newValue);
-    }
+    //public static Contact Update(ContactType newContactType, string newValue)
+    //{
+    //    return new Contact(newContactType, newValue);
+    //}
 
+
+    public void Update(ContactType newContactType, string newValue) 
+    {
+        ContactType = newContactType;
+        Value = newValue;
+    }
   
 
 

@@ -16,6 +16,8 @@ public class Visit : AuditableEntity<int>
 
     private Visit(int id, Client client, Property property, Agent agent, DateTime visitDate, string notes):this()
     {
+        ValidateVisit(property, client, agent, visitDate);
+        Id = id; 
         Client = client;
         Property = property;
         Agent = agent;
@@ -39,9 +41,21 @@ public class Visit : AuditableEntity<int>
         return new Visit(client, property, agent, visitDate, notes);
     }
 
-    public static Visit Update(Client newClient, Property newProperty, Agent newAgent, DateTime newVisitDate, string newNotes)
+    //public static Visit Update(Client newClient, Property newProperty, Agent newAgent, DateTime newVisitDate, string newNotes)
+    //{
+    //    return new Visit(newClient, newProperty, newAgent, newVisitDate, newNotes);
+    //}
+
+    public void Update(int id,Client newClient, Property newProperty, Agent newAgent, DateTime newVisitDate, string newNotes)
     {
-        return new Visit(newClient, newProperty, newAgent, newVisitDate, newNotes);
+        ValidateVisit(newProperty, newClient, newAgent, newVisitDate); 
+        Id = id;
+        Client = newClient;
+        Property = newProperty;
+        Agent = newAgent;
+        VisitDate = newVisitDate;
+        Notes = newNotes;
+
     }
 
 

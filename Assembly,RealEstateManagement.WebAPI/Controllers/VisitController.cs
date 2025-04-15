@@ -1,6 +1,8 @@
 ﻿using Assembly.RealEstateManagement.Services.Dtos.Common;
+using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Dtos.Property;
 using Assembly.RealEstateManagement.Services.Interfaces;
+using Assembly.RealEstateManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers
@@ -36,11 +38,17 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_visitServices.Add(visit));
         }
 
-        [HttpPut]
-
-        public ActionResult<VisitDto> Update(CreateVisitDto visit)
+        [HttpPut("{id:int}")]
+        public ActionResult<VisitDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateVisitDto visit)
         {
-            return BadRequest();
+            if (id != visit.Id)
+            {
+                return BadRequest("Visit IDs must match");
+            }
+
+            return Ok(_visitServices.Update(visit));
         }
 
         [HttpDelete]

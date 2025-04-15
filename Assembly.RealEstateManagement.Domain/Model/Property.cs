@@ -81,11 +81,28 @@ public class Property : AuditableEntity<int>
             address, transactionType, availability, rooms, propertyImages);
     }
 
-    public static Property Update(Agent newAgent, PropertyType newPropertyType, decimal newPrice, decimal newPriceBySquareMeter, decimal newSizeBySquareMeters,
-        string newDescription, Address newAddress, TransactionType newTransactionType, Availability newAvailability, List<Room> newRooms, List<PropertyImage> newPropertyImages)
+    //public static Property Update(Agent newAgent, PropertyType newPropertyType, decimal newPrice, decimal newPriceBySquareMeter, decimal newSizeBySquareMeters,
+    //    string newDescription, Address newAddress, TransactionType newTransactionType, Availability newAvailability, List<Room> newRooms, List<PropertyImage> newPropertyImages)
+    //{
+    //    return new Property(newAgent, newPropertyType, newPrice, newPriceBySquareMeter, newSizeBySquareMeters, newDescription,
+    //        newAddress, newTransactionType, newAvailability, newRooms, newPropertyImages);
+    //}
+
+    public void Update(int id,Agent newAgent, PropertyType newPropertyType, decimal newPrice, decimal newPriceBySquareMeter, decimal newSizeBySquareMeters,
+       string newDescription, Address newAddress, TransactionType newTransactionType, Availability newAvailability, List<Room> newRooms, List<PropertyImage> newPropertyImages)
     {
-        return new Property(newAgent, newPropertyType, newPrice, newPriceBySquareMeter, newSizeBySquareMeters, newDescription,
-            newAddress, newTransactionType, newAvailability, newRooms, newPropertyImages);
+        Id = id;
+        Agent = newAgent;
+        PropertyType = newPropertyType;
+        Price = newPrice;
+        PriceBySquareMeter = newPriceBySquareMeter;
+        SizeBySquareMeters = newSizeBySquareMeters;
+        Description = newDescription;
+        Address = newAddress;
+        TransactionType = newTransactionType;
+        Availability = newAvailability;
+        Rooms = newRooms;
+        PropertyImages = newPropertyImages;
     }
 
     public static void Restore(Property property)

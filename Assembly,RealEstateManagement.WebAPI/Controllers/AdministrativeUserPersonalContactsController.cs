@@ -38,12 +38,20 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_administrativeUserPersonalContactsServices.Add(administrativeUserPersonalContact));
         }
 
-        [HttpPut]
 
-        public ActionResult<AdministrativeUserPersonalContactDto> Update(CreateAdministrativeUserPersonalContactDto administrativeUserPersonalContact)
+        [HttpPut("{id:int}")]
+        public ActionResult<AdministrativeUserDto> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateAdministrativeUserPersonalContactDto administrativeUserPersonallContacts)
         {
-            return BadRequest();
+            if (id != administrativeUserPersonallContacts.Id)
+            {
+                return BadRequest("IDs must match");
+            }
+
+            return Ok(_administrativeUserPersonalContactsServices.Update(administrativeUserPersonallContacts));
         }
+
 
         [HttpDelete]
 

@@ -8,5 +8,7 @@ public interface IManagerPersonalContactRepository : IRepository<ManagerPersonal
     public List<ManagerPersonalContact> GetMyPersonalContacts(int managerId);
 
     public List<ManagerPersonalContact> GetAllManagerPersonalContactWithManager();
+
+    public ManagerPersonalContact? GetManagerContactWithManager(int id);
 }
 

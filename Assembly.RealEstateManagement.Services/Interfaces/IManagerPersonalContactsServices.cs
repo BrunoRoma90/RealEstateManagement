@@ -8,6 +8,7 @@ public interface IManagerPersonalContactsServices
 
     public List<ManagerPersonalContactDto> GetContactsByManagerId(int managerId);
     ManagerPersonalContactDto Add(CreateManagerPersonalContacts managerPersonalContacts);
+    ManagerPersonalContactDto Update(UpdateManagerPersonalContactsDto managerPersonalContacts);
 
 }
 

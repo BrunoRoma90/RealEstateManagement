@@ -10,4 +10,6 @@ public interface IPropertyServices
 
     public PropertyDto GetPropertyById(int id);
     PropertyDto Add(CreatePropertyDto property);
+
+    PropertyDto Update(UpdatePropertyDto property);
 }
