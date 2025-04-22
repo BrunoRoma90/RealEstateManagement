@@ -150,7 +150,8 @@ public class ClientServices : IClientServices
 
             Client clientToAdd = Client.Create(
             Name.Create(client.FirstName, client.MiddleNames, client.LastName),
-            Account.Create(client.Email, client.Password),
+            client.Email,
+            client.Password,
             Address.Create(client.Address.Street, client.Address.Number, client.Address.PostalCode, client.Address.City, client.Address.Country),
             new List<FavoriteProperties>(),
             new List<Rating>(),
@@ -215,7 +216,7 @@ public class ClientServices : IClientServices
 
             existingClient.Account.Update(
                 IsValidString(client.Email, existingClient.Account.Email),
-                IsValidString(client.Password, existingClient.Account.Password));
+                client.Password ?? string.Empty);
 
             existingClient.Address.UpdateAddress(
                 IsValidString(client.Address?.Street, existingClient.Address.Street),
@@ -229,7 +230,8 @@ public class ClientServices : IClientServices
             existingClient.Update(
                 existingClient.Id,
                 existingClient.Name,
-                existingClient.Account,
+                IsValidString(client.Email, existingClient.Account.Email),
+                client.Password ?? string.Empty,
                 existingClient.Address,
                 new List<FavoriteProperties>(),
                 new List<Rating>(),

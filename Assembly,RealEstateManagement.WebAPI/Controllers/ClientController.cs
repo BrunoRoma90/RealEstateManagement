@@ -37,7 +37,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
             return Ok(_clientServices.Add(client));
         }
 
-        [HttpPut]
+      
 
         [HttpPut("{id:int}")]
         public ActionResult<ClientDto> Update(

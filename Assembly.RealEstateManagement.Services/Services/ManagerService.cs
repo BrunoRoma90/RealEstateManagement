@@ -91,7 +91,8 @@ public class ManagerService : IManagerService
         Manager managerToAdd = Manager.Create(
         manager.EmployeeNumber,
         Name.Create(manager.FirstName, manager.MiddleNames, manager.LastName),
-        Account.Create(manager.Email, manager.Password),
+        manager.Email,
+        manager.Password,
         Address.Create(manager.Address.Street, manager.Address.Number, manager.Address.PostalCode, manager.Address.City, manager.Address.Country),
         manager.ManagerNumber,
         new List<ManagerAllContact>(),
@@ -168,7 +169,7 @@ public class ManagerService : IManagerService
 
             existingManager.Account.Update(
                 IsValidString(manager.Email, existingManager.Account.Email),
-                IsValidString(manager.Password, existingManager.Account.Password));
+                manager.Password ?? string.Empty);
 
             existingManager.Address.UpdateAddress(
                 IsValidString(manager.Address?.Street, existingManager.Address.Street),
@@ -183,7 +184,8 @@ public class ManagerService : IManagerService
                 existingManager.Id,
                 manager.EmployeeNumber == 0 ? existingManager.EmployeeNumber : manager.EmployeeNumber,
                 existingManager.Name,
-                existingManager.Account,
+                IsValidString(manager.Email, existingManager.Account.Email),
+                manager.Password ?? string.Empty,
                 existingManager.Address,
                 manager.ManagerNumber == 0 ? existingManager.ManagerNumber : manager.ManagerNumber,
                 new List<ManagerAllContact>(),

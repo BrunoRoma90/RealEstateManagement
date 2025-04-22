@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assembly.RealEstateManagement.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250227153825_InitialState")]
+    [Migration("20250418154622_InitialState")]
     partial class InitialState
     {
         /// <inheritdoc />
@@ -46,9 +46,13 @@ namespace Assembly.RealEstateManagement.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2");

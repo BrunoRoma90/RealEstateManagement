@@ -18,7 +18,8 @@ namespace Assembly.RealEstateManagement.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),

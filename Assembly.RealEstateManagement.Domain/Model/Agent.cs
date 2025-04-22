@@ -31,22 +31,24 @@ public class Agent : Employee
         
     }
 
-    private Agent(Name name, Account account, Address address, int agentNumber, int employeeNumber , List<AgentPersonalContact> agentPersonalContact,
+    private Agent(Name name, string email, string password, Address address, int agentNumber, int employeeNumber , List<AgentPersonalContact> agentPersonalContact,
         List<Property> managedProperty, List<AgentAllContact> agentAllContact, Manager manager)
-        :base(employeeNumber , name, account, address)
+        :base(employeeNumber , name, null, address)
     {
         ValidateAgent(agentNumber, employeeNumber, agentPersonalContact,managedProperty, agentAllContact, manager);
         AgentNumber = agentNumber;
+        Account = Account.Create(email, password);
         AgentPersonalContact = agentPersonalContact;
         ManagedProperty = managedProperty;
         AgentAllContact = agentAllContact;
         Manager = manager;
     }
 
-     public static Agent Create(Name name, Account account, Address address, int agentNumber, int employeeNumber, List<AgentPersonalContact> agentPersonalContacts,
+     public static Agent Create(Name name, string email, string password, Address address, int agentNumber, int employeeNumber, List<AgentPersonalContact> agentPersonalContacts,
        List<Property> managedProperties, List<AgentAllContact> agentAllContacts, Manager manager)
      {
-        return new Agent(name, account, address, agentNumber, employeeNumber, agentPersonalContacts, managedProperties, agentAllContacts, manager);
+        
+        return new Agent(name, email, password, address, agentNumber, employeeNumber, agentPersonalContacts, managedProperties, agentAllContacts, manager);
      }
 
     //public static Agent Update(int id ,Name newName, Account newAccount, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
@@ -55,12 +57,12 @@ public class Agent : Employee
     //    return new Agent(id , newEmployeeNumber, newName, newAccount, newAddress, newAgentNumber, newAgentPersonalContacts, newManagedProperties, newAgentAllContacts, newManager);
     //}
 
-    public void Update(int id, Name newName, Account newAccount, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
+    public void Update(int id, Name newName, string newEmail, string newPassword, Address newAddress, int newAgentNumber, int newEmployeeNumber, List<AgentPersonalContact> newAgentPersonalContacts,
       List<Property> newManagedProperties, List<AgentAllContact> newAgentAllContacts, Manager newManager)
     {
         Id = id;
         Name = newName;
-        Account = newAccount;
+        Account.Update(newEmail, newPassword);
         Address = newAddress;
         AgentNumber = newAgentNumber;
         EmployeeNumber = newEmployeeNumber;

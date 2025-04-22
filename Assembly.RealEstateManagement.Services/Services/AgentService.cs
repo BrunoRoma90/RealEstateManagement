@@ -129,7 +129,8 @@ public class AgentService : IAgentService
 
         Agent agentToAdd = Agent.Create(
         Name.Create(agent.FirstName, agent.MiddleNames, agent.LastName),
-        Account.Create(agent.Email, agent.Password),
+        agent.Email,
+        agent.Password,
         Address.Create(agent.Address.Street, agent.Address.Number, agent.Address.PostalCode, agent.Address.City, agent.Address.Country),
         agent.AgentNumber,
         agent.EmployeeNumber,
@@ -170,15 +171,7 @@ public class AgentService : IAgentService
                 ManagerNumber = addedAgent.Manager.ManagerNumber,
                 FirstName = addedAgent.Manager.Name.FirstName,
                 LastName = addedAgent.Manager.Name.LastName,
-                //Email = addedAgent.Manager.Account.Email,
-                //Address = new AddressDto
-                //{
-                //    Street = addedAgent.Manager.Address.Street,
-                //    Number = addedAgent.Manager.Address.Number,
-                //    PostalCode = addedAgent.Manager.Address.PostalCode,
-                //    City = addedAgent.Manager.Address.City,
-                //    Country = addedAgent.Manager.Address.Country
-                //}
+             
 
             }
 
@@ -228,7 +221,7 @@ public class AgentService : IAgentService
 
             existingAgent.Account.Update(
                 IsValidString(agent.Email, existingAgent.Account.Email),
-                IsValidString(agent.Password, existingAgent.Account.Password));
+                agent.Password ?? string.Empty);
 
             existingAgent.Address.UpdateAddress(
                 IsValidString(agent.Address?.Street, existingAgent.Address.Street),
@@ -249,7 +242,8 @@ public class AgentService : IAgentService
             existingAgent.Update(
                 existingAgent.Id,
                 existingAgent.Name,
-                existingAgent.Account,
+                IsValidString(agent.Email, existingAgent.Account.Email),
+                agent.Password ?? string.Empty,
                 existingAgent.Address,
                 agent.EmployeeNumber == 0 ? existingAgent.EmployeeNumber : agent.EmployeeNumber,
                 agent.AgentNumber == 0 ? existingAgent.AgentNumber : agent.AgentNumber,

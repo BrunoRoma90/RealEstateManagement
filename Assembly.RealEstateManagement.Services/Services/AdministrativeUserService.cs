@@ -23,7 +23,8 @@ public class AdministrativeUserService : IAdministrativeUserService
 
         AdministrativeUser administrativeUserToAdd = AdministrativeUser.Create(
         Name.Create(administrativeUser.FirstName, administrativeUser.MiddleNames, administrativeUser.LastName),
-        Account.Create(administrativeUser.Email, administrativeUser.Password),
+        administrativeUser.Email,
+        administrativeUser.Password,
         Address.Create(administrativeUser.Address.Street, administrativeUser.Address.Number, administrativeUser.Address.PostalCode, administrativeUser.Address.City, administrativeUser.Address.Country),
         administrativeUser.EmployeeNumber,
         administrativeUser.AdministrativeNumber,
@@ -161,7 +162,7 @@ public class AdministrativeUserService : IAdministrativeUserService
 
             existingAdministrativeUser.Account.Update(
                 IsValidString(administrativeUser.Email, existingAdministrativeUser.Account.Email),
-                IsValidString(administrativeUser.Password, existingAdministrativeUser.Account.Password));
+                administrativeUser.Password ?? string.Empty);
 
             existingAdministrativeUser.Address.UpdateAddress(
                 IsValidString(administrativeUser.Address?.Street, existingAdministrativeUser.Address.Street),
@@ -175,7 +176,8 @@ public class AdministrativeUserService : IAdministrativeUserService
             existingAdministrativeUser.Update(
                 existingAdministrativeUser.Id,
                 existingAdministrativeUser.Name,
-                existingAdministrativeUser.Account,
+                IsValidString(administrativeUser.Email, existingAdministrativeUser.Account.Email),
+                administrativeUser.Password ?? string.Empty,
                 existingAdministrativeUser.Address,
                 administrativeUser.EmployeeNumber == 0 ? existingAdministrativeUser.EmployeeNumber : administrativeUser.EmployeeNumber,
                 administrativeUser.AdministrativeNumber == 0 ? existingAdministrativeUser.AdministrativeNumber : administrativeUser.AdministrativeNumber,

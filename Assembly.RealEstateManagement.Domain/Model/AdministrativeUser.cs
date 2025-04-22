@@ -13,10 +13,10 @@ public class AdministrativeUser : Employee
 
     private AdministrativeUser() { }
 
-    private AdministrativeUser(int id, Name name, Account account, Address address, int employeeNumber,int administrativeNumber,
+    private AdministrativeUser(int id, Name name, string email, string password, Address address, int employeeNumber,int administrativeNumber,
         List<AdministrativeUserPersonalContact> administrativeUsersPersonalContact,
         List<AdministrativeUserAllContact> administrativeUsersAllContact,
-        bool isAdmin): base(employeeNumber, name, account, address)
+        bool isAdmin): base(employeeNumber, name, null, address)
     {
         ValidateAdministrativeUsers(administrativeNumber, employeeNumber, administrativeUsersPersonalContact, administrativeUsersAllContact);
         Id = id;
@@ -27,13 +27,13 @@ public class AdministrativeUser : Employee
 
     }
 
-    private AdministrativeUser(Name name, Account account, Address address, int employeeNumber, int administrativeNumber,
+    private AdministrativeUser(Name name, string email, string password, Address address, int employeeNumber, int administrativeNumber,
         List<AdministrativeUserAllContact> administrativeUserAllContacts,
         List<AdministrativeUserPersonalContact> administrativeUserPersonalContacts, bool isAdmin)
     {
         ValidateAdministrativeUsers(administrativeNumber, administrativeNumber, administrativeUserPersonalContacts, administrativeUserAllContacts);
         Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
-        Account = Account.Create(account.Email, account.Email);
+        Account = Account.Create(email, password);
         Address = Address.Create(address.Street, address.Number, address.PostalCode, address.City, address.Country);
         EmployeeNumber = employeeNumber;
         AdministrativeNumber = administrativeNumber;
@@ -50,22 +50,23 @@ public class AdministrativeUser : Employee
         IsAdmin = isAdmin;
     }
 
-    public static AdministrativeUser Create(Name name, Account account, Address address, int employeeNumber, int administrativeNumber,
+    public static AdministrativeUser Create(Name name, string email, string password, Address address, int employeeNumber, int administrativeNumber,
        List<AdministrativeUserAllContact> administrativeUserAllContacts,
        List<AdministrativeUserPersonalContact> userPersonalContacts) 
     {
-        return new AdministrativeUser(name, account, address, employeeNumber, administrativeNumber, administrativeUserAllContacts,
+        
+        return new AdministrativeUser(name, email, password, address, employeeNumber, administrativeNumber, administrativeUserAllContacts,
             userPersonalContacts, false );
     }
 
 
-    public void Update(int id,Name newName, Account newAccount, Address newAddress, int newEmployeeNumber, int newAdministrativeNumber,
+    public void Update(int id,Name newName, string newEmail, string newPassword, Address newAddress, int newEmployeeNumber, int newAdministrativeNumber,
        List<AdministrativeUserAllContact> newAdministrativeUserAllContacts,
        List<AdministrativeUserPersonalContact> newAdministrativeUserPersonalContacts) 
     {
         Id = id;
         Name = newName;
-        Account = newAccount;
+        Account.Update(newEmail, newPassword);
         Address = newAddress;
         EmployeeNumber = newEmployeeNumber;
         AdministrativeNumber = newAdministrativeNumber;

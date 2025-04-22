@@ -35,7 +35,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Extensions
                 return;
             }
 
-            var manager = Manager.Create(100, Name.Create("Bruno", new string[] { "Miguel" }, "Roma"), Account.Create("bruno@gmail.com", "12345"),
+            var manager = Manager.Create(100, Name.Create("Bruno", new string[] { "Miguel" }, "Roma"), "bruno@gmail.com", "12345",
            Address.Create("Rua x", 5, "1562-958", "Lisboa", "Portugal"), 25, new List<ManagerAllContact>(), new List<ManagerPersonalContact>(),
            new List<Agent>());
 

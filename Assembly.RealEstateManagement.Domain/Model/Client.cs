@@ -16,15 +16,15 @@ public class Client : AuditableEntity<int>
 
     private Client() { }
 
-    private Client(int id, Name name, Account account, Address address, bool isRegistered,
+    private Client(int id, Name name, string email, string password, Address address, bool isRegistered,
         List<FavoriteProperties> favoriteProperties,
         List<Rating> ratings,
         List<Comment> comments)
     {
-        ValidateClient(name, account, address, favoriteProperties, ratings, comments);
+        ValidateClient(name, email, password, address, favoriteProperties, ratings, comments);
         Id = id;
         Name = name;
-        Account = account;
+        Account = Account.Create(email, password);
         Address = address;
         IsRegistered = isRegistered;
         FavoriteProperties = favoriteProperties;
@@ -33,14 +33,15 @@ public class Client : AuditableEntity<int>
 
     }
 
-    private Client(Name name, Account account, Address address, bool isRegistered,
+    private Client(Name name, string email, string password, Address address, bool isRegistered,
         List<FavoriteProperties> favoriteProperties,
         List<Rating> ratings,
         List<Comment> comments)
-    {
-        ValidateClient(name, account, address, favoriteProperties, ratings, comments);
+    {   
+        
+        ValidateClient(name, email, password, address, favoriteProperties, ratings, comments);
         Name = Name.Create(name.FirstName, name.MiddleNames, name.LastName);
-        Account = Account.Create(account.Email, account.Password);
+        Account = Account.Create(email, password);
         Address = Address.Create(address.Street, address.Number, address.PostalCode, address.City, address.Country);
         IsRegistered = isRegistered;
         FavoriteProperties = favoriteProperties;
@@ -49,10 +50,11 @@ public class Client : AuditableEntity<int>
     
     }
 
-    public static Client Create(Name name, Account account, Address address, List<FavoriteProperties> favoriteProperties,
+    public static Client Create(Name name, string email, string password, Address address, List<FavoriteProperties> favoriteProperties,
         List<Rating> ratings, List<Comment> comments)
     {
-        return new Client(name, account, address, true, favoriteProperties, ratings, comments);
+        
+        return new Client(name, email, password, address, true, favoriteProperties, ratings, comments);
     }
 
     //public static Client Update(Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
@@ -61,12 +63,12 @@ public class Client : AuditableEntity<int>
     //    return new Client(newName, newAccount, newAddress, true, newFavoriteProperties, newRatings, newComments);
     //}
 
-    public void Update(int id,Name newName, Account newAccount, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
+    public void Update(int id,Name newName, string newEmail, string newPassword, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
    List<Rating> newRatings, List<Comment> newComments)
     {
         Id = id;
         Name = newName;
-        Account = newAccount;
+        Account.Update(newEmail, newPassword);
         Address = newAddress;
         FavoriteProperties = newFavoriteProperties;
         Ratings= newRatings;
@@ -79,7 +81,7 @@ public class Client : AuditableEntity<int>
         client.IsDeleted = false;
     }
 
-    private void ValidateClient(Name name, Account account, Address address,
+    private void ValidateClient(Name name, string email, string password, Address address,
         List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)
     {
         
@@ -87,9 +89,13 @@ public class Client : AuditableEntity<int>
         {
             throw new ArgumentException(nameof(name), "Name is required.");
         }
-        if (account == null)
+        if (email == null)
         {
-            throw new ArgumentNullException(nameof(account), "Account is required.");
+            throw new ArgumentNullException(nameof(email), "Email is required.");
+        }
+        if (password == null)
+        {
+            throw new ArgumentNullException(nameof(password), "Password is required.");
         }
         if (address == null)
         {
