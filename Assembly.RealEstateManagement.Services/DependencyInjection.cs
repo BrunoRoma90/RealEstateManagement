@@ -1,6 +1,8 @@
 ﻿using Assembly.RealEstateManagement.Domain.Core.Repositories;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
+using Assembly.RealStateManagement.Security.Interfaces;
+using Assembly.RealStateManagement.Security.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Assembly.RealEstateManagement.Services;
@@ -22,6 +24,9 @@ public static class DependencyInjection
         services.AddScoped<IPropertyServices, PropertyServices>();
         services.AddScoped<IClientServices, ClientServices>();
         services.AddScoped<IVisitServices, VisitServices>();
+
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+
         return services;
     }
 }

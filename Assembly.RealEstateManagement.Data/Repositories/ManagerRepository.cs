@@ -50,6 +50,13 @@ internal class ManagerRepository : Repository<Manager, int>, IManagerRepository
         return DbSet.Include(x => x.Address).ToList();
     }
 
+    public Manager? GetByEmail(string email)
+    {
+        return DbSet
+            .Include(a => a.Account)
+            .FirstOrDefault(a => a.Account.Email == email);
+    }
+
     #region 
     //public void AddAgent(int managerId, Agent agent)
     //{

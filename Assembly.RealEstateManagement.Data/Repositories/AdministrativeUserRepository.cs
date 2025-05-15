@@ -44,6 +44,13 @@ internal class AdministrativeUserRepository : Repository<AdministrativeUser, int
         return DbSet.Include(x => x.Address).ToList();
     }
 
+    public AdministrativeUser? GetByEmail(string email)
+    {
+        return DbSet
+            .Include(a => a.Account)
+            .FirstOrDefault(a => a.Account.Email == email);
+    }
+
 
     #region
     //public AdministrativeUser Add(AdministrativeUser obj)

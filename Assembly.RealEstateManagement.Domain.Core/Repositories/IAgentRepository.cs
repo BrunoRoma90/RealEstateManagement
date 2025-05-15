@@ -20,6 +20,8 @@ public interface IAgentRepository : IRepository<Agent, int>
 
     public List<Agent> GetAllAgentsWithManager();
 
+    public Agent? GetByEmail(string email);
+
 
     #region
     //public Property GetPropertyById(int propertyId);

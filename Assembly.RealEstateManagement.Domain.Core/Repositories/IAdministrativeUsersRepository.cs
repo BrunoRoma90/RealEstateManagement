@@ -15,7 +15,9 @@ public interface IAdministrativeUsersRepository : IRepository<AdministrativeUser
     public List<AdministrativeUser> GetAllAdministrativeUserWithAccount();
 
     public List<AdministrativeUser> GetAllAdministrativeUserWithAddress();
-   
+
+    public AdministrativeUser? GetByEmail(string email);
+
 
     #region
     //public List<Agent> GetAgents();

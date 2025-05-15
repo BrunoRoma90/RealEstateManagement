@@ -3,10 +3,12 @@ using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Dtos.Property;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers
 {
+    [Authorize(Roles = "Manager, Agent, AdministrativeUser, Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class VisitController : BaseController

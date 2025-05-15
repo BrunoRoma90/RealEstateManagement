@@ -61,4 +61,11 @@ internal class ClientRepository : Repository<Client, int>, IClientRepository
         return client?.Address;
     }
 
+    public Client? GetByEmail(string email)
+    {
+        return DbSet
+            .Include(a => a.Account)
+            .FirstOrDefault(a => a.Account.Email == email);
+    }
+
 }

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Assembly.RealEstateManagement.Domain.Core\Assembly.RealEstateManagement.Domain.Core.csproj" />
+    <ProjectReference Include="..\Assembly.RealStateManagement.Security\Assembly.RealStateManagement.Security.csproj" />
   </ItemGroup>
 
 </Project>

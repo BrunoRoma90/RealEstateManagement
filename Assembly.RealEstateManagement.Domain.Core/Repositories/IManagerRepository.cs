@@ -14,7 +14,11 @@ public interface IManagerRepository : IRepository<Manager, int>
     public Manager? GetManagerByManagerNumber(int managerNumber);
 
     public Manager? GetManagerByEmployeeNumber(int employeeNumber);
-    
+
+    public Manager? GetByEmail(string email);
+
+
+
     #region
     //public List<Agent> GetAgents();
 

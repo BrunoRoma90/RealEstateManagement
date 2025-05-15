@@ -2,10 +2,12 @@
 using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers
 {
+    [Authorize(Roles = "Agent")]
     [ApiController]
     [Route("api/[controller]")]
     public class AgentPersonalContactsController : BaseController

@@ -2,12 +2,15 @@
 using Assembly.RealEstateManagement.Services.Dtos.Property;
 using Assembly.RealEstateManagement.Services.Interfaces;
 using Assembly.RealEstateManagement.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers
 {
+    [Authorize(Roles = "Client,Agent,Manager,AdministrativeUser,Admin")]
     [ApiController]
     [Route("api/[controller]")]
+    
     public class PropertyController : BaseController
     {
         private readonly IPropertyServices _propertyService;
@@ -31,7 +34,7 @@ namespace Assembly_RealEstateManagement.WebAPI.Controllers
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Client,Agent,Manager,AdministrativeUser,Admin")]
         public ActionResult<PropertyDto> Add([FromBody]CreatePropertyDto property)
         {
             return Ok(_propertyService.Add(property));

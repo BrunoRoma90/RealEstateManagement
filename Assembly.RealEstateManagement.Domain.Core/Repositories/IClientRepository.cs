@@ -20,4 +20,6 @@ public interface IClientRepository : IRepository<Client, int>
 
     public Address? GetClientAddress(int clientId);
 
+    public Client? GetByEmail(string email);
+
 }

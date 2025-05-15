@@ -133,6 +133,11 @@ internal class AgentRepository : Repository<Agent, int>, IAgentRepository
             .ToList();
     }
 
-
+    public Agent? GetByEmail(string email)
+    {
+        return DbSet
+            .Include(a => a.Account)
+            .FirstOrDefault(a => a.Account.Email == email);
+    }
 
 }

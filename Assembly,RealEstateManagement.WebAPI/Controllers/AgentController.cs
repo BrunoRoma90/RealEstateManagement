@@ -1,10 +1,12 @@
 ﻿using Assembly.RealEstateManagement.Services.Dtos.Agent;
 using Assembly.RealEstateManagement.Services.Dtos.Manager;
 using Assembly.RealEstateManagement.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assembly_RealEstateManagement.WebAPI.Controllers;
 
+[Authorize(Roles = "Manager, Agent, AdministrativeUser, Admin")]
 [ApiController]
 [Route("api/[controller]")]
 public class AgentController : BaseController

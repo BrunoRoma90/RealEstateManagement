@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assembly.RealEstateManageme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly.RealEstateManagement.ConsoleApp", "Assembly.RealEstateManagement.ConsoleApp\Assembly.RealEstateManagement.ConsoleApp.csproj", "{214D2A7B-2662-475F-845B-712203CA0A8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly.RealStateManagement.Security", "Assembly.RealStateManagement.Security\Assembly.RealStateManagement.Security.csproj", "{228EA87D-83CC-43B2-9D02-CB275431845D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{214D2A7B-2662-475F-845B-712203CA0A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{214D2A7B-2662-475F-845B-712203CA0A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{214D2A7B-2662-475F-845B-712203CA0A8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{228EA87D-83CC-43B2-9D02-CB275431845D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{228EA87D-83CC-43B2-9D02-CB275431845D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{228EA87D-83CC-43B2-9D02-CB275431845D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{228EA87D-83CC-43B2-9D02-CB275431845D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,5 +79,6 @@ Global
 		{38900706-B325-4C5B-AA1E-75204D454141} = {B1D7205A-0C17-4370-83B4-0CDFC95B82BC}
 		{669D1DE8-2A8A-442B-B40E-A5859B7E7B77} = {25B5B17F-FB0C-4623-9610-404C12C5D836}
 		{214D2A7B-2662-475F-845B-712203CA0A8A} = {25B5B17F-FB0C-4623-9610-404C12C5D836}
+		{228EA87D-83CC-43B2-9D02-CB275431845D} = {B1D7205A-0C17-4370-83B4-0CDFC95B82BC}
 	EndGlobalSection
 EndGlobal
