@@ -7,7 +7,9 @@ public interface IClientRepository : IRepository<Client, int>
 {
     public Client Login(string username, string password);
 
-    public List<FavoriteProperties> GetFavoritePropertiesbyClientId(int clientId);
+    public List<FavoriteProperty> GetFavoritePropertiesbyClientId(int clientId);
+
+    public Client? GetClientWithFavorites(int clientId);
 
     public List<Client> GetAllClientWithAccount();
     public List<Client> GetAllClientWithAddress();

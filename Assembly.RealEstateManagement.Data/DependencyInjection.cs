@@ -34,7 +34,8 @@ public static class DependencyInjection
         services.AddScoped<IVisitRepository, VisitRepository>();
         services.AddScoped<IPropertyRepository, PropertyRepository>();
         services.AddScoped<IClientRepository , ClientRepository>();
-        
+        services.AddScoped<IFavoritePropertyRepository, FavoritePropertyRepository>();
+
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

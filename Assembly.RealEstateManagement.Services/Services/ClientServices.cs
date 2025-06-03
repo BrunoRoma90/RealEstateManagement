@@ -153,7 +153,7 @@ public class ClientServices : IClientServices
             client.Email,
             client.Password,
             Address.Create(client.Address.Street, client.Address.Number, client.Address.PostalCode, client.Address.City, client.Address.Country),
-            new List<FavoriteProperties>(),
+            new List<FavoriteProperty>(),
             new List<Rating>(),
             new List<Comment>());
 
@@ -233,7 +233,7 @@ public class ClientServices : IClientServices
                 IsValidString(client.Email, existingClient.Account.Email),
                 client.Password ?? string.Empty,
                 existingClient.Address,
-                new List<FavoriteProperties>(),
+                new List<FavoriteProperty>(),
                 new List<Rating>(),
                 new List<Comment>()
             );

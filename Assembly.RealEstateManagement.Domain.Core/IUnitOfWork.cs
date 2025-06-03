@@ -23,6 +23,8 @@ public interface IUnitOfWork : IDisposable
 
     public IVisitRepository VisitRepository { get; }
 
+    public IFavoritePropertyRepository FavoritePropertyRepository { get; }
+
     void BeginTransaction();
     public bool Commit();
 }

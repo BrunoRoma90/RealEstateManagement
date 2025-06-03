@@ -9,7 +9,7 @@ public class Client : AuditableEntity<int>
     public Account Account { get; private set; }
     public Address Address { get; private set; }
     public bool IsRegistered { get; private set; }
-    public List<FavoriteProperties> FavoriteProperties { get; private set; }
+    public List<FavoriteProperty> FavoriteProperties { get; private set; }
     public List<Rating> Ratings { get; private set; }
 
     public List<Comment> Comments { get; private set; }
@@ -17,7 +17,7 @@ public class Client : AuditableEntity<int>
     private Client() { }
 
     private Client(int id, Name name, string email, string password, Address address, bool isRegistered,
-        List<FavoriteProperties> favoriteProperties,
+        List<FavoriteProperty> favoriteProperties,
         List<Rating> ratings,
         List<Comment> comments)
     {
@@ -34,7 +34,7 @@ public class Client : AuditableEntity<int>
     }
 
     private Client(Name name, string email, string password, Address address, bool isRegistered,
-        List<FavoriteProperties> favoriteProperties,
+        List<FavoriteProperty> favoriteProperties,
         List<Rating> ratings,
         List<Comment> comments)
     {   
@@ -50,7 +50,7 @@ public class Client : AuditableEntity<int>
     
     }
 
-    public static Client Create(Name name, string email, string password, Address address, List<FavoriteProperties> favoriteProperties,
+    public static Client Create(Name name, string email, string password, Address address, List<FavoriteProperty> favoriteProperties,
         List<Rating> ratings, List<Comment> comments)
     {
         
@@ -63,7 +63,7 @@ public class Client : AuditableEntity<int>
     //    return new Client(newName, newAccount, newAddress, true, newFavoriteProperties, newRatings, newComments);
     //}
 
-    public void Update(int id,Name newName, string newEmail, string newPassword, Address newAddress, List<FavoriteProperties> newFavoriteProperties,
+    public void Update(int id,Name newName, string newEmail, string newPassword, Address newAddress, List<FavoriteProperty> newFavoriteProperties,
    List<Rating> newRatings, List<Comment> newComments)
     {
         Id = id;
@@ -81,8 +81,31 @@ public class Client : AuditableEntity<int>
         client.IsDeleted = false;
     }
 
+    public void AddFavoriteProperty(Property property)
+    {
+        if (property == null)
+            throw new ArgumentNullException(nameof(property));
+
+        if (FavoriteProperties.Any(fp => fp.PropertyId == property.Id))
+            throw new InvalidOperationException("Property is already in favorites.");
+
+        var favorite = FavoriteProperty.Create(this.Id, property.Id);
+        FavoriteProperties.Add(favorite);
+    }
+
+    public void RemoveFavoriteProperty(int propertyId)
+    {
+        var favorite = FavoriteProperties.FirstOrDefault(fp => fp.PropertyId == propertyId);
+
+        if (favorite == null)
+            throw new InvalidOperationException("Property not found in favorites.");
+
+        FavoriteProperties.Remove(favorite);
+    }
+
+
     private void ValidateClient(Name name, string email, string password, Address address,
-        List<FavoriteProperties> favoriteProperties, List<Rating> ratings, List<Comment> comments)
+        List<FavoriteProperty> favoriteProperties, List<Rating> ratings, List<Comment> comments)
     {
         
         if (name == null)

@@ -11,11 +11,30 @@ internal class ClientRepository : Repository<Client, int>, IClientRepository
     {
     }
 
-    public List<FavoriteProperties> GetFavoritePropertiesbyClientId(int clientId)
+    //public List<FavoriteProperty> GetFavoritePropertiesbyClientId(int clientId)
+    //{
+    //    return DbSet.Where(c => c.Id == clientId)
+    //            .SelectMany(c => c.FavoriteProperties)
+    //            .ToList();
+    //}
+
+  
+    public List<FavoriteProperty> GetFavoritePropertiesbyClientId(int clientId)
     {
-        return DbSet.Where(c => c.Id == clientId)
-                .SelectMany(c => c.FavoriteProperties)
-                .ToList();
+        return DbSet
+            .Include(c => c.FavoriteProperties)
+                .ThenInclude(fp => fp.Property)
+            .Where(c => c.Id == clientId)
+            .SelectMany(c => c.FavoriteProperties)
+            .ToList();
+    }
+
+    public Client? GetClientWithFavorites(int clientId)
+    {
+        return DbSet
+            .Include(c => c.FavoriteProperties)
+                .ThenInclude(fp => fp.Property)
+            .FirstOrDefault(c => c.Id == clientId);
     }
 
     public List<Comment> GetCommentsByClientId(int clientId)
@@ -68,4 +87,5 @@ internal class ClientRepository : Repository<Client, int>, IClientRepository
             .FirstOrDefault(a => a.Account.Email == email);
     }
 
+   
 }
