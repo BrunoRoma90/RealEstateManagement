@@ -42,7 +42,7 @@ public class ClientServices : IClientServices
             },
             IsRegistered = x.IsRegistered,
             FavoriteProperties = _unitOfWork.ClientRepository.GetFavoritePropertiesbyClientId(x.Id)
-            .Select(fP => new FavoritePropertiesDto
+            .Select(fP => new FavoritePropertyDto
             {
                 ClientId = x.Id,
                 Property = new PropertyDto
@@ -111,7 +111,7 @@ public class ClientServices : IClientServices
             },
             IsRegistered = client.IsRegistered,
             FavoriteProperties = _unitOfWork.ClientRepository.GetFavoritePropertiesbyClientId(client.Id)
-            .Select(fP => new FavoritePropertiesDto
+            .Select(fP => new FavoritePropertyDto
             {
                 ClientId = client.Id,
                 Property = new PropertyDto

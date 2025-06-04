@@ -11,7 +11,7 @@ public class ClientDto
     public string Email { get; set; }
     public AddressDto Address { get; set; }
     public bool IsRegistered { get; set; }
-    public List<FavoritePropertiesDto> FavoriteProperties { get; set; }
+    public List<FavoritePropertyDto> FavoriteProperties { get; set; }
     public List<RatingDto> Ratings { get; set; }
     public List<CommentDto> Comments { get; set; }
 }

@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IPropertyServices, PropertyServices>();
         services.AddScoped<IClientServices, ClientServices>();
         services.AddScoped<IVisitServices, VisitServices>();
+        services.AddScoped<IFavoritePropertyService, FavoritePropertyService>();
 
         services.AddScoped<IAuthenticationService, AuthenticationService>();
 

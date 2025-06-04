@@ -11,5 +11,8 @@ namespace Assembly.RealEstateManagement.Domain.Core.Repositories
     {
         bool Exists(int clientId, int propertyId);
         List<FavoriteProperty> GetByClientId(int clientId);
+
+        public FavoriteProperty? GetByClientAndPropertyId(int clientId, int propertyId);
+
     }
 }

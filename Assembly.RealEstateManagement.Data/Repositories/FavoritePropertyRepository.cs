@@ -26,5 +26,10 @@ namespace Assembly.RealEstateManagement.Data.Repositories
             return DbSet.Where(f => f.ClientId == clientId)
                         .ToList();
         }
+
+        public FavoriteProperty? GetByClientAndPropertyId(int clientId, int propertyId)
+        {
+            return DbSet.FirstOrDefault(f => f.ClientId == clientId && f.PropertyId == propertyId);
+        }
     }
 }

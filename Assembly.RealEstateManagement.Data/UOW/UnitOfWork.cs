@@ -30,6 +30,8 @@ internal class UnitOfWork : IUnitOfWork
 
     public IVisitRepository VisitRepository { get; set; }
 
+    public IFavoritePropertyRepository FavoritePropertyRepository { get; set; }
+
 
 
     public UnitOfWork(ApplicationDbContext context, IManagerRepository managerRepository,
@@ -43,7 +45,8 @@ internal class UnitOfWork : IUnitOfWork
         IAdministrativeUserAllContactRepository administrativeUserAllContactRepository,
         IPropertyRepository propertyRepository,
         IClientRepository clientRepository,
-        IVisitRepository visitRepository) 
+        IVisitRepository visitRepository,
+        IFavoritePropertyRepository favoritePropertyRepository) 
     {
         _context = context;
         ManagerRepository = managerRepository;
@@ -58,6 +61,7 @@ internal class UnitOfWork : IUnitOfWork
         PropertyRepository = propertyRepository;
         ClientRepository = clientRepository;
         VisitRepository = visitRepository;
+        FavoritePropertyRepository = favoritePropertyRepository;
     }
 
     public void BeginTransaction()
